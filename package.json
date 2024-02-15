@@ -17,7 +17,8 @@
   },
   "scripts": {
     "start": "nodemon server.js",
-    "dev": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch"
+    "dev": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "test": "jest --color --detectOpenHandles"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.16",

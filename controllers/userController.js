@@ -304,7 +304,51 @@ cont userController = {
         } catch {
             res.sendStatus(400);
         }
-    }
+    },
+	changePageUserPurchases: async function(req, res){
+
+        try{
+
+			let count;
+
+			//console.log(req.body);
+
+			const category = req.params.category;
+			//console.log(category);
+
+			const {change} = req.body;
+			//console.log(change);
+
+			if(category == "awaitingPayment" || category == "succeeded" || category == "orderPacked" || category == "inTransit" || category == "delivered"){
+				count = await Order.find( {status : category, userID : req.session.userID, isCancelled: false} );
+			}else if(category == "allOrders"){
+				count = await Order.find( {isCancelled : false, userID : req.session.userID} );
+			}else{
+				count = await Order.find({userID : req.session.userID, isCancelled: true});
+			}
+
+			if(change == "next"){
+				req.session.pageIndex = req.session.pageIndex + 1;
+			}else if(change == "prev"){
+				req.session.pageIndex = req.session.pageIndex - 1;
+			}else{
+				console.log("error fetching page");
+			}
+
+			if(req.session.pageIndex < 0 || req.session.pageIndex > Math.round(count.length / pageLimit)){
+				console.log("HERE");
+				req.session.pageIndex = 0;
+			}
+
+			currentCategory = category;
+
+			res.sendStatus(200);
+        }catch(error){
+            console.error(error);
+            res.sendStatus(400);
+        }
+
+    },
 }
 
 export default userController;

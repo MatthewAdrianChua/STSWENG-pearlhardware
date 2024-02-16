@@ -1,3 +1,6 @@
+import database from '../model/db.js';
+import { User } from '../model/userSchema.js';
+import { Product } from '../model/productSchema.js';
 
 const cartController = {
 	//getCart

@@ -32,8 +32,7 @@ const loginController = {
         }
         console.log("Invalid email or password");
         res.sendStatus(500);
-
-    },
+    }
 }
 
 

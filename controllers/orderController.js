@@ -6,6 +6,9 @@ import { Order } from '../model/orderSchema.js';
 import { ObjectId } from 'mongodb';
 import { Product } from '../model/productSchema.js';
 
+let currentCategory = "allproducts";
+const pageLimit = 15;
+
 const orderController = {
 	getOrderDetails: async function (req, res) {
 
@@ -275,6 +278,21 @@ const orderController = {
         }
 
     }	
+}
+//Helper functions
+async function sortOrders(order_list, sortValue){
+    if (sortValue !== undefined) {
+        switch (sortValue) {
+            case 'def':
+                break;
+            case 'price_desc':
+                order_list.sort((a, b) => b.amount - a.amount);
+                break;
+            case 'price_asc':
+                order_list.sort((a, b) => a.amount - b.amount);
+                break;		
+        }
+    }
 }
 
 export default orderController;

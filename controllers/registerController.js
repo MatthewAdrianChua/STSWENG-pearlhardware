@@ -65,4 +65,4 @@ const registerController = {
 
 }
 
-export defaul registerController;
+export default registerController;

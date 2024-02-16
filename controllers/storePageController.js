@@ -1,6 +1,6 @@
 import database from '../model/db.js';
 import { Product } from '../model/productSchema.js';
-
+import { User } from '../model/userSchema.js';
 
 let currentCategory = "allproducts";
 const pageLimit = 15;

@@ -1,7 +1,10 @@
 import database from '../model/db.js';
 import { Product } from '../model/productSchema.js';
 import { Image } from '../model/imageSchema.js';
+import { User } from '../model/userSchema.js';
+
 let currentCategory = "allproducts";
+const pageLimit = 15;
 
 const inventoryController = {
 	getAdminInventory: async function (req, res) {
@@ -19,39 +22,7 @@ const inventoryController = {
         try {
             let resp;
             var product_list = await getProductsAdmin(category, req);
-            console.log(product_list)
-            // switch(category){
-            //     case 'welding':
-            //         resp = await Product.find({type: 'Welding'});
-            //         break;
-            //     case 'safety':
-            //         resp = await Product.find({type: 'Safety'});
-            //         break;
-            //     case 'cleaning':
-            //         resp = await Product.find({type: 'Cleaning'});
-            //         break;
-            //     case 'industrial':
-            //         resp = await Product.find({type: 'Industrial'});
-            //         break;
-            //     case 'brass_fittings':
-            //         resp = await Product.find({type: 'Brass Fittings'});
-            //         break;
-            //     default:
-            //         resp = await Product.find({});
-                
-                
-            // }
-
-            // for (let i = 0; i < resp.length; i++) {
-            //     product_list.push({
-            //         name: resp[i].name,
-            //         type: resp[i].type,
-            //         price: resp[i].price,
-            //         quantity: resp[i].quantity,
-            //         productpic: resp[i].productpic,
-            //         p_id: resp[i]._id,
-            //     });
-            // }
+			
             // sortProducts function
             const sortValue = req.query.sortBy;
             console.log(sortValue);

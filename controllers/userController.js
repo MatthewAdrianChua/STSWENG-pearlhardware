@@ -3,8 +3,12 @@
 import database from '../model/db.js';
 import { User } from '../model/userSchema.js';
 import { Order } from '../model/orderSchema.js';
+import { ObjectId } from 'mongodb';
 
-cont userController = {
+let currentCategory = "allproducts";
+const pageLimit = 15;
+
+const userController = {
 	//Gets the profile of the user using the session.userID
 	getUserProfile: async function (req, res) {
         try {

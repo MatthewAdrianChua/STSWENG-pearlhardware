@@ -2,6 +2,7 @@
 //but not including login and registering.
 import database from '../model/db.js';
 import { User } from '../model/userSchema.js';
+import { Order } from '../model/orderSchema.js';
 
 cont userController = {
 	//Gets the profile of the user using the session.userID
@@ -274,7 +275,36 @@ cont userController = {
         req.session.destroy();
         res.redirect('/');
     },
-	
+	getUserOrderDetails: async function(req, res) {
+
+        const orderID = req.params.orderID;
+
+        try{
+
+            const order = await Order.findById(orderID);
+
+            res.render("userorderdetails", {
+                layout: 'userOrders',
+                orderID: order._id,
+                orderDate: order.date,
+                fname: order.firstName,
+                lname: order.lastName,
+                email: order.email,
+                status: order.status,
+                city: order.city,
+                postalCode: order.postalCode,
+                state: order.state,
+                line1: order.line1,
+                line2: order.line2,
+                isCancelled: order.isCancelled,
+                items: order.items,
+                amount: order.amount,
+                paymongoID: order.paymongoID,
+            });
+        } catch {
+            res.sendStatus(400);
+        }
+    }
 }
 
 export default userController;

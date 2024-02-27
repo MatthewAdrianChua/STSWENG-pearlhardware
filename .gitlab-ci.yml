@@ -7,10 +7,6 @@ build-job:       # This job runs in the build stage, which runs first. Install d
   stage: build
   script:
     - apt-get update && apt-get install -y nodejs npm
-    - npm install jest
-    - npm install
-    - npm uninstall bcrypt #bcrpyt need to be uninstalled because its version is for windows in which it wont work on the test environment of gitlab which is ubuntu
-    - npm install bcrypt #install bcrypt in ubuntu environment for ubuntu version
   artifacts:
     paths:
       - node_modules/

@@ -3,7 +3,8 @@ import { User } from '../model/userSchema.js';
 import bcrypt from 'bcrypt';
 import {jest} from '@jest/globals'
 import { describe } from 'node:test';
-import sinon from 'sinon';
+
+jest.useFakeTimers()
 
 jest.mock('../model/userSchema.js'); // Mocking the User model
 

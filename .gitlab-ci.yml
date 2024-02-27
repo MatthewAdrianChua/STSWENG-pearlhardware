@@ -20,6 +20,7 @@ unit-test-job:   # This job runs in the test stage. Runs unit tests on the code
     - apt-get update && apt-get install -y nodejs npm
     - npm install jest
     - npm install
+    - npm uninstall bcrypt
     - npm install bcrypt
     - npm run test
   only:

@@ -13,7 +13,7 @@ describe('Login Controller', () => {
   let req, res;
 
   beforeEach(() => {
-    req = {
+    req = { //this is the user input to be tested
       body: {
         email: 'test12345@email.com',
         password: '12345'

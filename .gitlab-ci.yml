@@ -11,7 +11,7 @@ build-job:       # This job runs in the build stage, which runs first. Install d
     - npm install
     - npm uninstall bcrypt #bcrpyt need to be uninstalled because its version is for windows in which it wont work on the test environment of gitlab which is ubuntu
     - npm install bcrypt #install bcrypt in ubuntu environment for ubuntu version
-  cache:
+  artifacts:
     paths:
       - bin/
   only:

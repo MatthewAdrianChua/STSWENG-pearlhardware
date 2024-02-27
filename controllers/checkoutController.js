@@ -96,12 +96,14 @@ const checkoutController = {
                                 send_email_receipt: false,
                                 show_description: false,
                                 show_line_items: true,
-                                cancel_url: 'https://pearl-hardware-ph.onrender.com',
+                                //cancel_url: 'https://pearl-hardware-ph.onrender.com', //THIS LINE IS FOR PRODUCTION
+                                cancel_url: 'http://localhost:3000/', //THIS IS FOR LOCAL TESTING
                                 description: 'description',
                                 line_items: itemsCheckout,
                                 payment_method_types: ['card', 'gcash'],
                                 reference_number: result._id, //store the order _id in database as the reference number
-                                success_url: 'https://pearl-hardware-ph.onrender.com/checkoutSuccess/' + result._id
+                                //success_url: 'https://pearl-hardware-ph.onrender.com/checkoutSuccess/' + result._id //THIS LINE IS FOR PRODUCTION 
+                                success_url: 'http://localhost:3000/checkoutSuccess/' + result._id //THIS IS FOR LOCAL TESTING
                             }
                         }
                     })

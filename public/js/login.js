@@ -53,6 +53,7 @@ loginSubmit.addEventListener('click', async (e) => {
             logPassword.value = "";
             */
             window.location.href = '/';
+            console.log("login success");
         }else if(response.status == 201){
             window.location.href = '/admin';
         }

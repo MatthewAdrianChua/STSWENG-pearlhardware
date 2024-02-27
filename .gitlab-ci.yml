@@ -24,6 +24,7 @@ unit-test-job:   # This job runs in the test stage. Runs unit tests on the code
   dependencies:
     - build-job
   script:
+    - apt-get update && apt-get install -y nodejs npm
     - npm run test
   only:
     - main

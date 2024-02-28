@@ -69,7 +69,11 @@ router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), bod
     if (await User.findOne({ email: value }).exec()) {
         return Promise.reject('Email already exists!')
     }
-}), body('password').notEmpty(), body('line1').notEmpty(), body('state').notEmpty(), body('city').notEmpty(), body('postalCode').notEmpty().isNumeric(),  registerController.register);
+}), body('password').notEmpty(), body('line1').notEmpty(), body('state').notEmpty(), body('city').notEmpty(), body('postalCode').notEmpty().isNumeric().custom(async value => {
+    if(value.toString().length != 4){
+        return Promise.reject('Postal code should be 4 digits')
+    }
+}),  registerController.register);
 
 router.post('/login', body('email').notEmpty().normalizeEmail().isEmail(), body('password').notEmpty(), loginController.login);
 router.post('/postCheckout', checkoutController.postCheckout);

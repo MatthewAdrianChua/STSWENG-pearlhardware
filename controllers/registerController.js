@@ -23,7 +23,7 @@ const registerController = {
             if (errors.array().at(0).msg === "Email already exists!") {
                 console.log(errors.array().at(0).msg);
                 return res.sendStatus(405); //405 is for email that exists already
-            }else if (errors.array().at(0).msg + " of " + errors.array().at(0).path === "Invalid value of postalCode") {
+            }else if (errors.array().at(0).msg === "Postal code should be 4 digits") {
                 console.log(errors.array().at(0).msg + " of " + errors.array().at(0).path);
                 return res.sendStatus(410); //405 is for email that exists already
             }else {

@@ -117,6 +117,7 @@ const inventoryController = {
                         type: product.type,
                         quantity: product.stock,
                         price: product.price,
+
                         //productpic: 'https://pearl-hardware-ph.onrender.com/image/' + imageSave._id, //use this for production
                         productpic: 'http://localhost:3000/image/' + imageSave._id, 
                         description: product.description

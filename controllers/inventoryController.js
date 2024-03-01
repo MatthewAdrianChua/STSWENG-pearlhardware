@@ -72,7 +72,7 @@ const inventoryController = {
                     type: product.type,
                     quantity: product.quantity,
                     price: product.price,
-                    productpic: 'https://pearl-hardware-ph.onrender.com/image/' + imageSave._id,
+                    productpic: /* 'https://pearl-hardware-ph.onrender.com/image/' */ 'https://localhost:3000/image/' + imageSave._id,
                     description: product.description
                 }).save();
 
@@ -116,7 +116,7 @@ const inventoryController = {
                         type: product.type,
                         quantity: product.stock,
                         price: product.price,
-                        productpic: 'https://pearl-hardware-ph.onrender.com/image/' + imageSave._id,
+                        productpic: /*'https://pearl-hardware-ph.onrender.com/image/'*/ 'https://localhost:3000/image/' + imageSave._id,
                         description: product.description
                     },
                     

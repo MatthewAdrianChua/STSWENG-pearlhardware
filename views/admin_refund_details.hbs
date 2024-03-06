@@ -1,0 +1,19 @@
+<div>
+	<div>{{refundID}}</div>
+	<div>{{email}}</div>
+	<div>{{dateOfOrder}}</div>
+	<div>{{dateOfRefund}}</div>
+	<div>{{itemName}}</div>
+	<div>{{itemID}}</div>
+	<div>{{price}}</div>
+	<div>{{amount}}</div>
+	<div>{{totalAmount}}</div>
+	<div>{{status}}</div>
+	<div>{{reason}}</div>
+	<div>{{comments}}</div>
+	<button type="button" id="refund" data-paymentID="{{paymentID}}" data-refundID={{refundID}}>Refund Customer</button>
+	<button type="button" id="deny">Deny Refund</button>
+	{{#each evidence}}
+	<img src="{{this}}">
+	{{/each}}
+</div>

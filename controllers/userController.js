@@ -304,6 +304,7 @@ const userController = {
                 items: order.items,
                 amount: order.amount,
                 paymongoID: order.paymongoID,
+                script: '../js/userOrder.js'
             });
         } catch {
             res.sendStatus(400);
@@ -353,6 +354,7 @@ const userController = {
         }
 
     },
+
 }
 
 export default userController;

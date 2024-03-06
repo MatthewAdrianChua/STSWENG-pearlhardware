@@ -1,0 +1,16 @@
+{{#each refundList}}
+<div class="grid grid-cols-9 bg-tertiary w-full h-[45px] flex flex-wrap items-center justify-start rounded-[10px] mb-2 px-1 hover:bg-white hover:border border-maincolor">
+			<button class="col-span-5 flex flex-wrap" id="refundInstance" data-index={{this.refundID}}>
+				<div class="grid grid-cols-5 w-full flex flex-wrap items-center justify-center">
+					<div class="px-1 text-secondary text-m text-center border border-t-0 border-b-0 border-maincolor truncate" >{{this.refundID}}</div> 
+					<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{this.date}}</div>
+					<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{this.amountToBeRefunded}}</div>
+					<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{this.email}}</div>
+ 	   				<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor">{{this.status}}</div>
+				</div>
+			</button>
+
+			
+
+	</div>
+{{/each}}

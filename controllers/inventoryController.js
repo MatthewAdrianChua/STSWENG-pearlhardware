@@ -56,6 +56,9 @@ const inventoryController = {
         try {
             const pic = req.file;
             const product = req.body;
+
+            //console.log("PRODUCT");
+            //console.log(product);
     
             if (pic) {
 

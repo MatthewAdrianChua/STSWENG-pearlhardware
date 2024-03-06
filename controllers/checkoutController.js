@@ -24,12 +24,14 @@ const checkoutController = {
         let total = 0; //the total amount the user has to pay
 
         class itemDetails {
-            constructor(name, price, amount, image, ID) {
+            constructor(name, price, amount, image, ID, index) {
                 this.name = name;
                 this.price = price;
                 this.amount = amount;
                 this.image = image;
                 this.ID = ID;
+                this.isRefunded = false;
+                this.index = index;
             }
         }
 
@@ -49,7 +51,7 @@ const checkoutController = {
                 name: item.name,
                 quantity: parseInt(amount[i])
             })
-            itemsDetails.push(new itemDetails(item.name, item.price, amount[i], item.productpic, item._id));
+            itemsDetails.push(new itemDetails(item.name, item.price, amount[i], item.productpic, item._id, i));
             total += item.price * parseInt(amount[i]);
         }
 
@@ -65,6 +67,7 @@ const checkoutController = {
                     status: 'awaitingPayment',
                     amount: parseFloat(total.toFixed(2)),
                     paymongoID: -1, //paymongoID of -1 means there is no record of a transaction in paymongo in other words it is to be ignored as the user did not even go to the checkout page of paymongo
+                    paymentID: -1,
                     line1: user.line1,
                     line2: user.line2,
                     city: user.city,
@@ -125,6 +128,7 @@ const checkoutController = {
                                 res.sendStatus(500);
                             }
                         }
+
                         const addPaymongoID = await Order.findByIdAndUpdate(response.data.attributes.reference_number, { paymongoID: response.data.id }); //after redirecting to paymongo the paymongoID is updated using the paymongo generated id
 
                         res.status(200);
@@ -154,6 +158,7 @@ const checkoutController = {
             .then(response => response.json())
             .then(async response => { //console.log(response)
                 try {
+                    //console.log(response.data.attributes.payments[0].id);
                     const result = await Order.findByIdAndUpdate(ID, {
                         status: response.data.attributes.payment_intent.attributes.status,
                         line1: response.data.attributes.billing.address.line1,
@@ -162,7 +167,8 @@ const checkoutController = {
                         city: response.data.attributes.billing.address.city,
                         state: response.data.attributes.billing.address.state,
                         country: response.data.attributes.billing.address.country,
-                        email: response.data.attributes.billing.email
+                        email: response.data.attributes.billing.email,
+                        paymentID: response.data.attributes.payments[0].id
                     }); //update the status of the order in database using the status in paymongo
                     const user = await User.findByIdAndUpdate(req.session.userID, { cart: [] }) //clears the cart of the user after successfully checking out
                 } catch (err) {

@@ -1,19 +1,48 @@
-<div>
-	<div>{{refundID}}</div>
-	<div>{{email}}</div>
-	<div>{{dateOfOrder}}</div>
-	<div>{{dateOfRefund}}</div>
-	<div>{{itemName}}</div>
-	<div>{{itemID}}</div>
-	<div>{{price}}</div>
-	<div>{{amount}}</div>
-	<div>{{totalAmount}}</div>
-	<div>{{status}}</div>
-	<div>{{reason}}</div>
-	<div>{{comments}}</div>
-	<button type="button" id="refund" data-paymentID="{{paymentID}}" data-refundID={{refundID}}>Refund Customer</button>
-	<button type="button" id="deny">Deny Refund</button>
-	{{#each evidence}}
-	<img src="{{this}}">
-	{{/each}}
+<div class="bg-white bg-opacity-80 p-4 rounded-lg shadow-md max-w-4xl mx-auto my-8">
+	<div class="grid grid-cols-2 gap-4 mb-4">
+		<div class="font-bold">Refund ID:</div>
+		<div>{{refundID}}</div>
+
+		<div class="font-bold">Email:</div>
+		<div>{{email}}</div>
+
+		<div class="font-bold">Date of Order:</div>
+		<div>{{dateOfOrder}}</div>
+
+		<div class="font-bold">Date of Refund:</div>
+		<div>{{dateOfRefund}}</div>
+
+		<div class="font-bold">Item Name:</div>
+		<div>{{itemName}}</div>
+
+		<div class="font-bold">Item ID:</div>
+		<div>{{itemID}}</div>
+
+		<div class="font-bold">Price:</div>
+		<div>{{price}}</div>
+
+		<div class="font-bold">Amount:</div>
+		<div>{{amount}}</div>
+
+		<div class="font-bold">Total Amount:</div>
+		<div>{{totalAmount}}</div>
+
+		<div class="font-bold">Status:</div>
+		<div>{{status}}</div>
+
+		<div class="font-bold">Reason:</div>
+		<div>{{reason}}</div>
+
+		<div class="font-bold">Comments:</div>
+		<div>{{comments}}</div>
+	</div>
+	<div class="flex space-x-4 my-4">
+		<button type="button" id="refund" data-paymentID="{{paymentID}}" data-refundID="{{refundID}}" class="bg-maincolor hover:bg-opacity-90 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">Refund Customer</button>
+		<button type="button" id="deny" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">Deny Refund</button>
+	</div>
+	<div class="grid grid-cols-3 gap-4">
+		{{#each evidence}}
+		<img src="{{this}}" class="rounded shadow-lg">
+		{{/each}}
+	</div>
 </div>

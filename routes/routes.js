@@ -11,6 +11,8 @@ import storePageController from '../controllers/storePageController.js';
 import inventoryController from '../controllers/inventoryController.js';
 import orderController from '../controllers/orderController.js';
 
+import emailVerificationController from '../controllers/emailVerificationController.js';
+
 import bodyParser from 'body-parser';
 import { body, validationResult } from 'express-validator';
 import { User } from '../model/userSchema.js';
@@ -74,6 +76,13 @@ router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), bod
         return Promise.reject('Postal code should be 4 digits')
     }
 }),  registerController.register);
+
+
+////////////////
+/* New Route */
+router.get('/emailVerify', emailVerificationController.getEmailVerify);
+////////////////
+
 
 router.post('/login', body('email').notEmpty().normalizeEmail().isEmail(), body('password').notEmpty(), loginController.login);
 router.post('/postCheckout', checkoutController.postCheckout);

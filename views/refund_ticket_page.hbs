@@ -1,19 +1,20 @@
-<form action="/createRefund" method="POST" enctype="multipart/form-data">
-    <div class="mb-4">
-        <label for="name" class="block text-sm font-medium text-gray-600">Reason</label>
-        <input type="text" id="reason" name="reason" class="mt-1 p-2 w-full border rounded">
+<form action="/createRefund" method="POST" enctype="multipart/form-data" class="max-w-lg mx-auto my-8 p-4 rounded-lg" style="background-color: #30b6ff;">
+    <div class="mb-6">
+        <label for="reason" class="block mb-2 text-sm font-medium text-gray-700">Reason</label>
+        <input type="text" id="reason" name="reason" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500">
     </div>
 
-    <div class="mb-4">
-        <label for="name" class="block text-sm font-medium text-gray-600">Comments</label>
-        <textarea rows="10" cols="100" id="comments" name="comments" class="mt-1 p-2 w-full border rounded"></textarea>
+    <div class="mb-6">
+        <label for="comments" class="block mb-2 text-sm font-medium text-gray-700">Comments</label>
+        <textarea rows="4" id="comments" name="comments" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500"></textarea>
     </div>
   
-    <div class="attachmedia">
-        <label for="formFile" class="block text-sm font-medium text-gray-600">Product Picture</label>
-        <!-- Add multiple attribute to allow multiple file selection -->
+    <div class="mb-6">
+        <label for="formFile" class="block mb-2 text-sm font-medium text-gray-700">Product Picture</label>
         <input class="form-control" type="file" name="productPic" id="formFile" accept="image/*" multiple>
     </div>
 
-    <button type="submit">Submit</button>
+<button type="submit" class="border-2 border-blue-500 py-2 px-4">Submit</button>
+
+    
 </form>

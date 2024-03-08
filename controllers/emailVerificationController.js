@@ -11,7 +11,7 @@ const emailVerificationController = {
         try {
             res.render("emailVerify", {
                 //change script here; did not change it for now
-                script: './js/login.js'
+                script: './js/emailVerify.js'
             });
         } catch {
             res.sendStatus(400);

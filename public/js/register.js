@@ -55,8 +55,7 @@ registerSubmit.addEventListener('click', async (e) => {
         })
 
         if(response.status == 200){ 
-            // window.location.href = '/';
-            window.location.href = '/emailVerify';
+            window.location.href = '/';
         }
         else if(response.status == 500){ 
             console.log("login error! Status code 500");

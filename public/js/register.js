@@ -55,10 +55,11 @@ registerSubmit.addEventListener('click', async (e) => {
         })
 
         if(response.status == 200){ 
-            window.location.href = '/';
+            console.log("Register Success");
+            // window.location.href = '/';
         }
         else if(response.status == 500){ 
-            console.log("login error! Status code 500");
+            console.log("Register error! Status code 500");
         }
 
     }else if(response.status == 405) { //displays email already taken message

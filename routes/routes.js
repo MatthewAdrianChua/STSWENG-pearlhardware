@@ -10,7 +10,6 @@ import adminController from '../controllers/adminController.js';
 import storePageController from '../controllers/storePageController.js';
 import inventoryController from '../controllers/inventoryController.js';
 import orderController from '../controllers/orderController.js';
-
 import emailVerificationController from '../controllers/emailVerificationController.js';
 
 import bodyParser from 'body-parser';

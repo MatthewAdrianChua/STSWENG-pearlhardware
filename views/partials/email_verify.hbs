@@ -2,8 +2,10 @@
     .verify-container {
         height: 100vh;
         width: 100vw;
-        /* background-color: transparent; */
-        background-color: rgba(255, 255, 255, 0.8);
+        
+        background: url('../uploads/cover.png') no-repeat center center fixed;
+        background-size: auto;
+        border: 1px solid black;
 
         display: flex;
         align-items: center;
@@ -13,25 +15,33 @@
     .verify-prompt {
         background-color: white;
         width: 60vw;
-        height: 55vh;
+        height: 60vh;
 
-        padding: 30px;
+        padding: 50px;
 
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: space-around;
+
+        border-radius: 10%/20%;
     }
 
     .verify-logo {
-        height: 30%;
-        width: auto;
-        background-color: #66aaff;
+        height: 120px;
+        width: 120px;
+        {{!-- background-color: #f0f0f0; --}}
+        background-color: transparent;
+        border-radius: 50%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
     }
 
     img {
-        width: 100%;
-        height: auto;
+        width: 100px;
+        height: 100px;
     }
 
     .verify-text {
@@ -55,7 +65,24 @@
             font-size: 1.2rem;
         }
     }
+
+    .verify-resend {
+        width: 40%;
+        padding: 0.7rem;
+        background-color: #69aaFF;
+        border-radius: 10%/50%;
+
+        & .text {
+            text-align: center;
+            color: white;
+        }
+    }
+
+    .verify-resend:hover {
+        background-color: #4077FF;
+    }
 </style>
+
 <!-- 
     Div class names/Vanilla CSS used for now;
     Will do Tailwind for styling later
@@ -64,22 +91,13 @@
 <div class="verify-container">
     <div class="verify-prompt">
         <div class="verify-logo">
-            <!-- Insert mail art here -->
-
-            <img src="../../public/uploads/verified.png" alt="Verify User">
+            <img src="../uploads/verified.png" alt="Verify User">
         </div>
         <div class="verify-text">
-            <!-- Please check your email blah blah -->
-            <p class="text">Your account has been created! Please check your email to verify your account.</p>
+            <p class="text">Your account has been created!<br>Please check your email to verify your account.</p>
         </div>
-
-        <!--
-        <div class="verify-verification">
-            <!-- Insert verification format here: 
-                    redirect button/link, 
-                    4/6-pin OTP
-                    Alpha-numeric OTP
-                    etc.
-                -->
+        <div class="verify-resend">
+            <p class="text">Resend Verification Email</p>
+        </div>
     </div>
 </div>

@@ -17,6 +17,20 @@ const emailVerificationController = {
             res.sendStatus(400);
         }
     }
+	//Handles the actual verification
+	getVerify: async function (req, res) {
+		try {
+			//read query verify?
+			var uid = req.query;
+			
+		}	catch {
+			//redirect to an error, for now, just redirect back to emailVerify
+			res.render("emailVerify", {
+				script: './js/emailVerify.js'
+			});
+		}
+		
+	}
 }
 
 export default emailVerificationController;

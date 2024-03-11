@@ -78,6 +78,7 @@ const refundController = {
                 evidence: imageArray,
                 status: 'For review',
                 paymongoRefundID: -1, //-1 means it has not been refunded yet
+                denialReason: "",
             })
 
             //console.log(createRefund);
@@ -91,41 +92,6 @@ const refundController = {
 
             res.redirect('/getRefund');
             //res.sendStatus(200);
-        }catch(error){
-            console.error(error);
-            res.sendStatus(400);
-        }
-    },
-
-    getAdminRefundManagement: async function(req,res){
-        try{
-
-            const resp = await Refund.find();
-
-            let refundList = []
-
-            //console.log(resp);
-
-
-            for(let x = 0; x<resp.length; x++){
-                const user = await User.findById(resp[x].userID);
-
-                refundList.push({
-                    refundID: resp[x]._id,
-                    date: resp[x].createdDate.toISOString().slice(0, 10),
-                    amountToBeRefunded: parseFloat(resp[x].price) * parseFloat(resp[x].amount),
-                    email: user.email,
-                    status: resp[x].status,
-                })
-            }
-
-            console.log(refundList);
-
-            res.render("admin_refund_management_page", {
-                layout: 'adminMain',
-                script: '../js/adminRefundManagement.js',
-                refundList: refundList,
-            })
         }catch(error){
             console.error(error);
             res.sendStatus(400);
@@ -152,7 +118,7 @@ const refundController = {
             console.log(order.paymentID)
 
             res.render("admin_refund_details", {
-                layout: 'adminMain',
+                layout: 'adminRefund',
                 script: '../js/adminRefundDetails.js',
                 refundID: refund._id,
                 email: user.email,
@@ -205,19 +171,95 @@ const refundController = {
                     console.log(response);
 
                     const updateRefund = await Refund.findByIdAndUpdate(refundID, {
-                        status : 'Refund Approved',
+                        status : 'Refund approved',
                         paymongoRefundID : response.data.id
                     }) 
 
                     //console.log(updateRefund);
                     
-                    console.log(response)})
+                    res.sendStatus(200);
+                    //console.log(response)
+                })
                 .catch(err => console.error(err));
 
         }catch(error){
             console.error(error);
             res.sendStatus(400);
         }
+    },
+
+    denyRefund: async function(req,res){
+
+        try{
+    
+            const {reasonString, refundID} = req.body;
+            //console.log(reasonString);
+
+            const update = await Refund.findByIdAndUpdate(refundID, {
+                status: "Refund denied",
+                denialReason: reasonString
+            })
+
+            res.sendStatus(200);
+
+            }catch(error){
+                console.error(error);
+                res.sendStatus(400);
+            }
+        },
+
+    getAdminRefundManagement: async function(req, res){
+
+        try{
+        const category = req.params.category;
+        console.log(category)
+        let resp;
+
+        switch(category) {
+            case 'refundApproved' :
+                resp = (await Refund.find({status: "Refund approved"})).reverse();
+                break;
+            case 'refundDenied' :
+                resp = (await Refund.find({status: "Refund denied"})).reverse();
+                break;
+            case 'forReview' :
+                resp = await Refund.find({status: "For review"});
+                break;
+            default:
+                resp = (await Refund.find()).reverse();
+                break;
+        }
+
+        let refundList = []
+
+        //console.log(resp);
+
+
+        for(let x = 0; x<resp.length; x++){
+            const user = await User.findById(resp[x].userID);
+
+            refundList.push({
+                refundID: resp[x]._id,
+                date: resp[x].createdDate.toISOString().slice(0, 10),
+                amountToBeRefunded: parseFloat(resp[x].price) * parseFloat(resp[x].amount),
+                email: user.email,
+                status: resp[x].status,
+            })
+        }
+
+        //console.log(refundList);
+
+        res.render("admin_refund_management_page", {
+            layout: 'adminRefund',
+            script: '../js/adminRefundManagement.js',
+            refundList: refundList,
+            category:category,
+        })
+        //res.sendStatus(200);
+    }catch(error){
+        console.error(error);
+        res.sendStatus(400);
+    }
     }
 }
 

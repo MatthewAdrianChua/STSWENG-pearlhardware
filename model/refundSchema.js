@@ -58,6 +58,10 @@ const refundSchema = new Schema({
         required: true,
     },
 
+    denialReason: {
+        type: String,
+    },
+
     createdDate: {
         type: Date,
         required: true,

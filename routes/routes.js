@@ -66,7 +66,7 @@ router.get('/getCartItems', cartController.getCartItems)
 router.get('/AdminOrderDetails/:orderID', orderController.getOrderDetails)
 router.get('/searchOrders', orderController.searchOrders);
 router.get('/getRefund', refundController.getRefund);
-router.get('/getAdminRefundManagement', refundController.getAdminRefundManagement);
+router.get('/getAdminRefundManagement/:category', refundController.getAdminRefundManagement);
 router.get('/getAdminRefundDetails/:refundID', refundController.getAdminRefundDetails);
 
 //POSTS
@@ -97,7 +97,8 @@ router.post('/deleteProduct', controller.deleteProduct);
 router.post('/editProfile/:id', userController.editProfile);
 router.post('/initiateRefund', refundController.initiateRefund);
 router.post('/createRefund', upload.array('productPic', 10), body('name').notEmpty(), body('quantity').notEmpty().isNumeric(), body('price').notEmpty(), refundController.createRefund);
-router.post('/refundCustomer', refundController.refundCustomer)
+router.post('/refundCustomer', refundController.refundCustomer);
+router.post('/denyRefund', refundController.denyRefund);
 
 
 export default router;

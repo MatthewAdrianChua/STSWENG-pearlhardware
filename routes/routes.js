@@ -65,6 +65,9 @@ router.get('/getCartItems', cartController.getCartItems)
 router.get('/AdminOrderDetails/:orderID', orderController.getOrderDetails)
 router.get('/searchOrders', orderController.searchOrders);
 
+router.get('/emailVerify', emailVerificationController.getEmailVerify);
+router.get('/verify', emailVerificationController.getVerify);
+
 //POSTS
 router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), body('email').notEmpty().isEmail().normalizeEmail().custom(async value => {
     if (await User.findOne({ email: value }).exec()) {
@@ -77,10 +80,7 @@ router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), bod
 }),  registerController.register);
 
 
-////////////////
-/* New Route */
-router.get('/emailVerify', emailVerificationController.getEmailVerify);
-////////////////
+
 
 
 router.post('/login', body('email').notEmpty().normalizeEmail().isEmail(), body('password').notEmpty(), loginController.login);

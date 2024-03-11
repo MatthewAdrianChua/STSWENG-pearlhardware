@@ -3,14 +3,9 @@ import { Product } from '../model/productSchema.js';
 import { User } from '../model/userSchema.js';
 import { Order } from '../model/orderSchema.js';
 import { body, validationResult } from 'express-validator';
-import bcrypt from 'bcrypt';
 import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose';
 import { Image } from '../model/imageSchema.js';
-
-const SALT_WORK_FACTOR = 10;
-let currentCategory = "allproducts";
-const pageLimit = 15;
 
 /*
     Checks if file is an image

@@ -12,7 +12,7 @@ const refundController = {
     getRefund: function(req,res){
         try{
             res.render("refund_ticket_page", {
-                layout: 'userprofile',
+                layout: 'adminMain',
                 script: '../js/refundTicketPage.js'
             })
         }catch(error){

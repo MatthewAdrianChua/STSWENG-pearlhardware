@@ -1,3 +1,4 @@
+/*
 import inventoryController from '../controllers/inventoryController.js';
 import { Product } from '../model/productSchema.js';
 import { Image } from '../model/imageSchema.js';
@@ -286,6 +287,154 @@ describe('Inventory controller', () => {
             expect(res.render).not.toContain("Kuromi");
         });
     
+    });
+
+
+
+});
+*/
+
+import inventoryController from '../controllers/inventoryController.js';
+import { Product } from '../model/productSchema.js';
+import { Image } from '../model/imageSchema.js';
+import { User } from '../model/userSchema.js';
+import {jest} from '@jest/globals'
+import { beforeEach, describe } from 'node:test';
+import mongoose from 'mongoose';
+
+jest.useFakeTimers()
+
+// Mock models
+jest.mock('../model/productSchema.js'); // Mocking the Product model
+jest.mock('../model/imageSchema.js'); // Mocking the Image model
+jest.mock('../model/userSchema.js'); // Mocking the User model
+
+describe('Inventory controller', () => {
+
+    // TODO: addProduct
+    describe('addProduct function', () => {
+    
+        it('should add a product without image CHATGPT', async () => {
+            const req = {
+                file: null,
+                body: {
+                    name: 'Test Product',
+                    type: 'Test Type',
+                    quantity: 10,
+                    price: 20,
+                    description: 'Test Description'
+                }
+            };
+    
+            const res = {
+                redirect: jest.fn()
+            };
+    
+            await inventoryController.addProduct(req, res);
+    
+            expect(res.redirect).toHaveBeenCalledWith('/adminInventory/Test Type');
+        });
+    });
+
+
+    // TODO: editProduct
+    describe('editProduct function', () => {
+
+        let req,res;
+
+        beforeEach(() => {
+    
+            res = {
+                redirect: jest.fn()
+            };
+        });
+    
+        it('should edit a product without image', async () => {
+            const product = {
+                    id: '6561902edfb5e2ce06f118de',
+                    name: 'Product',
+                    type: 'Type',
+                    stock: 20,
+                    price: 30,
+                    description: 'Description'
+                };
+
+                req = {
+                    file: null,
+                    body: {
+                        id: '6561902edfb5e2ce06f118de',
+                        name: 'Updated Product',
+                        type: 'Updated Type',
+                        stock: 20,
+                        price: 40,
+                        description: 'Updated Description'
+                    }
+                };
+        
+                res = {
+                    redirect: jest.fn()
+                };
+    
+            jest.spyOn(Product, 'findByIdAndUpdate').mockResolvedValue(product);
+    
+            await inventoryController.editProduct(req, res);
+    
+            expect(res.redirect).toHaveBeenCalledWith('/adminInventory/allproducts');
+        });
+    
+        it('should send status 400 on error', async () => {
+            const req = {
+                file: null,
+                body: {
+                    // Invalid body data to simulate error
+                }
+            };
+    
+            const res = {
+                sendStatus: jest.fn()
+            };
+    
+            await inventoryController.editProduct(req, res);
+    
+            expect(res.sendStatus).toHaveBeenCalledWith(400);
+        });
+    });
+
+
+    // TODO: searchInventory
+    describe('searchInventory function', () => {
+        it('should search for products in inventory', async () => {
+            const req = {
+                query: {
+                    product_query: 'test_query',
+                    sortBy: 'test_sort' // Mocking query parameters
+                }
+            };
+    
+            const mockProductList = [
+                { 
+                    name: 'Test Product',
+                    type: 'Test Type',
+                    price: 20,
+                    quantity: 10,
+                    productpic: 'test_pic',
+                    _id: '6561902edfb5e2ce06f118de'
+                }
+            ];
+    
+            const mockRenderFunction = jest.fn(); // Mocking res.render function
+    
+            const res = {
+                render: mockRenderFunction
+            };
+
+            jest.spyOn(Product, 'find').mockResolvedValue(mockProductList);
+    
+            await inventoryController.searchInventory(req, res);
+    
+            expect(Product.find).toHaveBeenCalledWith({ name: new RegExp('.*test_query.*', 'i') }, { __v: 0 });
+            expect(mockRenderFunction).toHaveBeenCalledWith("adminInventory", { layout: 'adminInven', product_list: mockProductList, buffer: 'test_query' });
+        });
     });
 
 

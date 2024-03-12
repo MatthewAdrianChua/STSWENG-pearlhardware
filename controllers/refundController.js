@@ -117,24 +117,33 @@ const refundController = {
 
             console.log(order.paymentID)
 
-            res.render("admin_refund_details", {
-                layout: 'adminRefund',
-                script: '../js/adminRefundDetails.js',
-                refundID: refund._id,
-                email: user.email,
-                dateOfOrder: order.date,
-                dateOfRefund: refund.createdDate,
-                itemName: refund.itemName,
-                itemID: refund.itemID,
-                price: refund.price,
-                amount: refund.amount,
-                totalAmount: refund.totalAmount,
-                status: refund.status,
-                reason: refund.reason,
-                comments: refund.comments,
-                evidence: images,
-                paymentID: order.paymentID,
-            })
+            const userVerify = await User.findById(req.session.userID)
+                if (userVerify.isAuthorized == true) {
+                    console.log("AUTHORIZED")
+                    res.render("admin_refund_details", {
+                        layout: 'adminRefund',
+                        script: '../js/adminRefundDetails.js',
+                        refundID: refund._id,
+                        email: user.email,
+                        dateOfOrder: order.date,
+                        dateOfRefund: refund.createdDate,
+                        itemName: refund.itemName,
+                        itemID: refund.itemID,
+                        price: refund.price,
+                        amount: refund.amount,
+                        totalAmount: refund.totalAmount,
+                        status: refund.status,
+                        reason: refund.reason,
+                        comments: refund.comments,
+                        evidence: images,
+                        paymentID: order.paymentID,
+                        denialReason: refund.denialReason,
+                    });
+                } else {
+                    console.log("UNAUTHORIZED");
+                    res.sendStatus(400);
+                }
+
         }catch(error){
             console.error(error);
             res.sendStatus(400);
@@ -248,10 +257,71 @@ const refundController = {
         }
 
         //console.log(refundList);
+        const userVerify = await User.findById(req.session.userID)
+                if (userVerify.isAuthorized == true) {
+                    console.log("AUTHORIZED")
+                    res.render("admin_refund_management_page", {
+                        layout: 'adminRefund',
+                        script: '../js/adminRefundManagement.js',
+                        refundList: refundList,
+                        category:category,
+                    });
+                } else {
+                    console.log("UNAUTHORIZED");
+                    res.sendStatus(400);
+                }
+                
+        //res.sendStatus(200);
+    }catch(error){
+        console.error(error);
+        res.sendStatus(400);
+    }
+    },
 
-        res.render("admin_refund_management_page", {
-            layout: 'adminRefund',
-            script: '../js/adminRefundManagement.js',
+    getUserRefundManagement: async function(req, res){
+
+        try{
+        const category = req.params.category;
+        console.log(category)
+        let resp;
+
+        switch(category) {
+            case 'refundApproved' :
+                resp = (await Refund.find({status: "Refund approved", userID: req.session.userID})).reverse();
+                break;
+            case 'refundDenied' :
+                resp = (await Refund.find({status: "Refund denied", userID: req.session.userID})).reverse();
+                break;
+            case 'forReview' :
+                resp = await Refund.find({status: "For review", userID: req.session.userID});
+                break;
+            default:
+                resp = (await Refund.find({userID : req.session.userID})).reverse();
+                break;
+        }
+
+        let refundList = []
+
+        //console.log(resp);
+
+
+        for(let x = 0; x<resp.length; x++){
+            const user = await User.findById(resp[x].userID);
+
+            refundList.push({
+                refundID: resp[x]._id,
+                date: resp[x].createdDate.toISOString().slice(0, 10),
+                amountToBeRefunded: parseFloat(resp[x].price) * parseFloat(resp[x].amount),
+                email: user.email,
+                status: resp[x].status,
+            })
+        }
+
+        //console.log(refundList);
+
+        res.render("user_refund_management_page", {
+            layout: 'userRefund',
+            script: '../js/userRefundManagement.js',
             refundList: refundList,
             category:category,
         })
@@ -260,7 +330,51 @@ const refundController = {
         console.error(error);
         res.sendStatus(400);
     }
-    }
+    },
+
+    getUserRefundDetails: async function(req,res){
+
+        try{
+
+            const refundID = req.params.refundID;
+            console.log(refundID);
+
+            const refund = await Refund.findById(refundID);
+            const user = await User.findById(refund.userID);
+            const order = await Order.findById(refund.orderID);
+
+            const images = [];
+
+            for(let x = 0; x < refund.evidence.length; x++){
+                images.push('http://localhost:3000/refundImage/' + refund.evidence[x]);
+            }
+
+            console.log(order.paymentID)
+
+            res.render("user_refund_details", {
+                layout: 'userRefund',
+                //script: '../js/userRefundDetails.js',
+                refundID: refund._id,
+                email: user.email,
+                dateOfOrder: order.date,
+                dateOfRefund: refund.createdDate,
+                itemName: refund.itemName,
+                itemID: refund.itemID,
+                price: refund.price,
+                amount: refund.amount,
+                totalAmount: refund.totalAmount,
+                status: refund.status,
+                reason: refund.reason,
+                comments: refund.comments,
+                evidence: images,
+                paymentID: order.paymentID,
+                denialReason: refund.denialReason,
+            })
+        }catch(error){
+            console.error(error);
+            res.sendStatus(400);
+        }
+    },
 }
 
 export default refundController;

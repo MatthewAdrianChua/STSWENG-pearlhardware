@@ -68,6 +68,8 @@ router.get('/searchOrders', orderController.searchOrders);
 router.get('/getRefund', refundController.getRefund);
 router.get('/getAdminRefundManagement/:category', refundController.getAdminRefundManagement);
 router.get('/getAdminRefundDetails/:refundID', refundController.getAdminRefundDetails);
+router.get('/getUserRefundManagement/:category', refundController.getUserRefundManagement);
+router.get('/getUserRefundDetails/:refundID', refundController.getUserRefundDetails);
 
 //POSTS
 router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), body('email').notEmpty().isEmail().normalizeEmail().custom(async value => {

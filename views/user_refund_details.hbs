@@ -66,32 +66,6 @@
             </div>
         </div>
     </div>
-
-    {{#if (eq "For review" status)}}
-    <div class="flex justify-start space-x-4 mb-6" id="options">
-        <button type="button" id="refund" data-paymentID="{{paymentID}}" data-refundID="{{refundID}}" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">Refund Customer</button>
-        <button type="button" id="deny" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">Deny Refund</button>
-    </div>
-    <div id="reasonDiv">
-        <div>Please add reason for denial</div>
-        <textarea row="100" cols="100" class="mt-1 p-2 w-full border rounded" placeholder="reason*" id="reason"></textarea>
-        <div>
-            <button type="button" id="submitDeny" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out" data-refundID="{{refundID}}">Please fill out reason first</button>
-            <button type="button" id="cancel" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out">Cancel</button>
-        </div>
-    </div>
-    {{else}}
-        {{#if (eq "Refund approved" status)}}
-            <div class="flex justify-start space-x-4 mb-6">
-                <button type="button" id="refund" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out" disabled>Customer Refunded</button>
-            </div>
-        {{else}}
-            <div class="flex justify-start space-x-4 mb-6">
-                <button type="button" id="deny" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded transition duration-150 ease-in-out" disabled>Refund Denied</button>
-            </div>
-        {{/if}}
-    {{/if}}
-
     
     <div class="grid grid-cols-3 gap-4">
         {{#each evidence}}

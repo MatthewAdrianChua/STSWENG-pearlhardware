@@ -16,7 +16,7 @@ const emailVerificationController = {
         } catch {
             res.sendStatus(400);
         }
-    }
+    },
 	//Handles the actual verification
 	getVerify: async function (req, res) {
 		try {

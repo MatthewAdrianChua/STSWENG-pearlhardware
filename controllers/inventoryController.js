@@ -146,7 +146,8 @@ const inventoryController = {
 
             res.redirect('/adminInventory/' + currentCategory);
 
-        } catch {
+        } catch(error) {
+            console.error(error);
             res.sendStatus(400);
         }
     },
@@ -160,7 +161,8 @@ const inventoryController = {
 
         console.log("Searching for " + query);
 
-        const resp = await Product.find({ name: new RegExp('.*' + query + '.*', 'i') }, { __v: 0 }).lean();
+        //const resp = await Product.find({ name: new RegExp('.*' + query + '.*', 'i') }, { __v: 0 }).lean();
+        const resp = await Product.find({ name: new RegExp('.*' + query + '.*', 'i') }, { __v: 0 });
         
         for (let i = 0; i < resp.length; i++) {
             product_list.push({
@@ -169,14 +171,14 @@ const inventoryController = {
                 price: resp[i].price,
                 quantity: resp[i].quantity,
                 productpic: resp[i].productpic,
-                p_id: resp[i]._id
+                _id: resp[i]._id
             });
             
         }
 
         // sortProducts function
         const sortValue = req.query.sortBy;
-        console.log(sortValue);
+        console.log(product_list);
         sortProducts(product_list, sortValue);
 
         res.render("adminInventory", { layout: 'adminInven', product_list: product_list, buffer: query });

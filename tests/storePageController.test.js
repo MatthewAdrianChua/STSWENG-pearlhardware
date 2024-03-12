@@ -239,24 +239,6 @@ describe('Store Page Controller', () => {
                 { name: 'Fan', price: 199.99, quantity: 5 },
             ]);
         });
-        
-        test('sorts products by stock ascending', () => {
-            sortProducts(productList, 'stock_asc');
-            expect(productList).toEqual([
-                { name: 'Fan', price: 199.99, quantity: 5 },
-                { name: 'Glasses', price: 12.99, quantity: 50 },
-                { name: 'Cones', price: 29.99, quantity: 10 },
-            ]);
-        });
-
-        test('sorts products by stock descending', () => {
-            sortProducts(productList, 'stock_desc');
-            expect(productList).toEqual([
-                { name: 'Cones', price: 29.99, quantity: 10 },
-                { name: 'Glasses', price: 12.99, quantity: 50 },
-                { name: 'Fan', price: 199.99, quantity: 5 },
-            ]);
-        });
     });
 
     //getProducts

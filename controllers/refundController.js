@@ -9,11 +9,23 @@ import { formatPrice } from '../util/helpers.js';
 Handlebars.registerHelper('formatPrice', formatPrice);
 
 const refundController = {
-    getRefund: function(req,res){
+    getRefund: async function(req,res){
+
+        const product = await Product.findById(req.session.productID);
+        const order = await Order.findById(req.session.refundOrderID);
+        const userID = await User.findById(req.session.userID);
+
         try{
             res.render("refund_ticket_page", {
-                layout: 'adminMain',
-                script: '../js/refundTicketPage.js'
+                layout: 'userOrders',
+                script: '../js/refundTicketPage.js',
+                email: userID.email,
+                orderDate : order.date,
+                itemName: product.name,
+                itemID : product._id,
+                price: product.price,
+                amount: order.items[req.session.refundItemIndex].amount,
+                totalAmount: parseFloat(product.price) * parseFloat(order.items[req.session.refundItemIndex].amount).toFixed(2),
             })
         }catch(error){
             console.error(error);
@@ -94,7 +106,7 @@ const refundController = {
                 $set: {'items.$.isRefunded': true}
             });
 
-            res.redirect('/getRefund');
+            res.redirect('/getUserRefundDetails/' + saveRefund._id);
             //res.sendStatus(200);
         }catch(error){
             console.error(error);

@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const verificationSchema = new Schema({
-
-    userEmail: String,
+	
+    userID: String,
 	hash: String,
 	created: Date,
 	expires: Date

@@ -3,6 +3,10 @@ import { Order } from '../model/orderSchema.js';
 import { Refund } from '../model/refundSchema.js'
 import { refundImage } from '../model/refundImages.js';
 import { Product } from '../model/productSchema.js';
+import Handlebars from 'handlebars';
+import { formatPrice } from '../util/helpers.js';
+
+Handlebars.registerHelper('formatPrice', formatPrice);
 
 const refundController = {
     getRefund: function(req,res){

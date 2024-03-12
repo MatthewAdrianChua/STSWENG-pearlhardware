@@ -33,10 +33,10 @@
                 <div class="break-words">{{itemID}}</div>
 
                 <div class="font-bold">Price:</div>
-                <div class="break-words">{{price}}</div>
+                <div class="break-words">{{formatPrice price}}</div>
 
                 <div class="font-bold">Amount:</div>
-                <div class="break-words">{{amount}}</div>
+                <div class="break-words">{{formatPrice amount}}</div>
             </div>
         </div>
 
@@ -47,7 +47,7 @@
             </div>
             <div class="grid grid-cols-2 gap-6 text-blue-900">
                 <div class="font-bold">Total Amount:</div>
-                <div class="break-words">{{totalAmount}}</div>
+                <div class="break-words">{{formatPrice totalAmount}}</div>
 
                 <div class="font-bold">Reason:</div>
                 <div class="break-words">{{reason}}</div>

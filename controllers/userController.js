@@ -4,6 +4,10 @@ import database from '../model/db.js';
 import { User } from '../model/userSchema.js';
 import { Order } from '../model/orderSchema.js';
 import { ObjectId } from 'mongodb';
+import Handlebars from 'handlebars';
+import { formatPrice } from '../util/helpers.js';
+
+Handlebars.registerHelper('formatPrice', formatPrice);
 
 let currentCategory = "allproducts";
 const pageLimit = 15;
@@ -304,6 +308,7 @@ const userController = {
                 items: order.items,
                 amount: order.amount,
                 paymongoID: order.paymongoID,
+                script: '../js/userOrder.js'
             });
         } catch {
             res.sendStatus(400);
@@ -353,6 +358,7 @@ const userController = {
         }
 
     },
+
 }
 
 export default userController;

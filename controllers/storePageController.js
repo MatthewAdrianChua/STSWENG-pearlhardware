@@ -1,6 +1,10 @@
 import database from '../model/db.js';
 import { Product } from '../model/productSchema.js';
 import { User } from '../model/userSchema.js';
+import Handlebars from 'handlebars';
+import { formatPrice } from '../util/helpers.js';
+
+Handlebars.registerHelper('formatPrice', formatPrice);
 
 let currentCategory = "allproducts";
 const pageLimit = 15;

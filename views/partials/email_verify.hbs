@@ -24,37 +24,39 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-between;
     }
 
     .verify-logo {
-        min-height: 120px;
-        min-width: 120px;
-        max-height: 300px;
-        max-width: 300px;
+        width: 15%;
 
         {{!-- background-color: #f0f0f0; --}}
         background-color: transparent;
         border-radius: 50%;
 
         display: flex;
-        align-items: center;
-        justify-content: space-around;
     }
 
     .verfify-logo img {
-        width: 80%;
-        height: 80%;
+        min-height: 100px;
+        min-width: 100px;
+        max-height: 280px;
+        max-width: 280px;
+
+        overflow: hidden;
     }
 
     .verify-text {
-        height: 50%;
-        width: 100%;
+        min-height: 30px;
+        min-width: 120px;
+        max-height: 70px;
+        max-width: 250px;
+
         background-color: transparent;
 
-        display: flex;
+        {{!-- display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-around; --}}
 
         text-align: center;
 
@@ -65,7 +67,7 @@
 
             color: black;
             font-weight: 500;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
 
             user-select: none;
         }

@@ -13,8 +13,12 @@ const SALT_WORK_FACTOR = 10;
 let transporter = nodemailer.createTransport({
 	service: "gmail",
 	auth: {
-		user: process.env.AUTH_EMAIL, //CHANGE THESE TO ACTUAL VALUES
-		pass: process.env.AUTH_PASS
+		type: 'OAuth2',
+		user: process.env.AUTH_EMAIL,
+		pass: process.env.AUTH_PASS,
+		clientId: process.env.OAUTH_CLIENTID,
+		clientSecret: process.env.OAUTH_CLIENT_SECRET,
+		refreshToken: process.env.OAUTH_REFRESH_TOKEN
 	}
 });
 
@@ -80,7 +84,6 @@ const registerController = {
             console.log(result);
 			//send the email here
 			sendVerificationEmail(result, res);
-			
             res.sendStatus(200);
         } catch (err) {
             console.log("Username already exists!");
@@ -107,6 +110,8 @@ const sendVerificationEmail = async ({_id, email}, res) => {
 	}
 	const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
     const hash = await bcrypt.hash(uniqueString, salt);
+	const test = await bcrypt.compare(uniqueString, hash);
+	console.log("Does the hash compare? " + test);
 	const newVerification  = new Verification({
 		userID: _id,
 		hash: hash,
@@ -118,11 +123,11 @@ const sendVerificationEmail = async ({_id, email}, res) => {
 		console.log(result);
 		transporter.sendMail(mailOptions);
 		console.log("Sent mail!");
-		res.sendStatus(200);
+		//res.sendStatus(200);
 	} catch (err) {
 		console.log("Error sending email!");
 		console.error(err);
-		res.sendStatus(500);
+		//res.sendStatus(500);
 	}
 	
 }

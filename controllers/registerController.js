@@ -91,6 +91,26 @@ const registerController = {
             res.sendStatus(500);
         }
     },
+	resendVerification: async function(req, res) {
+		try{
+			const user = await User.findById(req.session.userID, {_id: 1, email: 1});
+			console.log(user);
+			if(user){
+				sendVerificationEmail(user, res);
+				console.log("Sent mail!");
+				res.sendStatus(200);
+			}
+			else{
+				console.log("Error resending email");
+				//console.error(err);
+				res.sendStatus(500);
+			}
+		}catch(err){
+			console.log("Error resending email");
+			console.error(err);
+			res.sendStatus(500);
+		}
+	},
 
 }
 
@@ -110,8 +130,6 @@ const sendVerificationEmail = async ({_id, email}, res) => {
 	}
 	const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
     const hash = await bcrypt.hash(uniqueString, salt);
-	const test = await bcrypt.compare(uniqueString, hash);
-	console.log("Does the hash compare? " + test);
 	const newVerification  = new Verification({
 		userID: _id,
 		hash: hash,

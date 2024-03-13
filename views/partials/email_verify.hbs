@@ -24,34 +24,39 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-between;
     }
 
     .verify-logo {
-        height: 120px;
-        width: 120px;
+        width: 15%;
+
         {{!-- background-color: #f0f0f0; --}}
         background-color: transparent;
         border-radius: 50%;
 
         display: flex;
-        align-items: center;
-        justify-content: space-around;
     }
 
     .verfify-logo img {
-        width: 100px;
-        height: 100px;
+        min-height: 100px;
+        min-width: 100px;
+        max-height: 280px;
+        max-width: 280px;
+
+        overflow: hidden;
     }
 
     .verify-text {
-        height: 50%;
-        width: 100%;
+        min-height: 30px;
+        min-width: 120px;
+        max-height: 70px;
+        max-width: 250px;
+
         background-color: transparent;
 
-        display: flex;
+        {{!-- display: flex;
         align-items: center;
-        justify-content: space-around;
+        justify-content: space-around; --}}
 
         text-align: center;
 
@@ -62,15 +67,22 @@
 
             color: black;
             font-weight: 500;
-            font-size: 1.4rem;
+            font-size: 1.1rem;
+
+            user-select: none;
         }
     }
 
     .verify-resend {
         width: 40%;
+        min-height: 5vh;
         padding: 0.5rem;
         background-color: #69aaFF;
         border-radius: 10%/40%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
 
         & .text {
             text-align: center;
@@ -78,6 +90,8 @@
 
             font-size: 1rem;
             font-weight: 600;
+
+            user-select: none;
         }
     }
 
@@ -94,13 +108,24 @@
 <div class="verify-container">
     <div class="verify-prompt">
         <div class="verify-logo">
-            <img src="../uploads/verified.png" alt="Verify User">
+            {{#if error}}
+                <img src="../uploads/error.png" alt="Verify Error">
+            {{else}}
+                <img src="../uploads/verified.png" alt="Verify User">
+            {{/if}}
         </div>
         <div class="verify-text">
-            <p class="text">Your account has been created!<br>Please check your email to verify your account.</p>
+            {{#if error}}
+                <p class="text">{{err_message}}</p>
+            {{else}}
+                <p class="text">Your account has been created!<br>Please check your email to verify your account.</p>
+            {{/if}}
         </div>
-        <div class="verify-resend">
-            <p class="text">Resend Verification Email</p>
-        </div>
+		{{#if (or err_code=36 err_code=0)}}
+			<div class="verify-resend">
+				<p class="text">Resend Verification Email</p>
+			</div>
+		{{/if}}
+		
     </div>
 </div>

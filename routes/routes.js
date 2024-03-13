@@ -79,10 +79,6 @@ router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), bod
     }
 }),  registerController.register);
 
-
-
-
-
 router.post('/login', body('email').notEmpty().normalizeEmail().isEmail(), body('password').notEmpty(), loginController.login);
 router.post('/postCheckout', checkoutController.postCheckout);
 router.post('/add-to-cart', cartController.addToCart);
@@ -98,6 +94,7 @@ router.post('/showProduct', controller.showProduct);
 router.post('/hideProduct', controller.hideProduct);
 router.post('/deleteProduct', controller.deleteProduct);
 router.post('/editProfile/:id', userController.editProfile);
+router.post('/resendVerification', registerController.resendVerification);
 
 
 export default router;

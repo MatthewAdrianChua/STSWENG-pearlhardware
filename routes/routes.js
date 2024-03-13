@@ -10,6 +10,7 @@ import adminController from '../controllers/adminController.js';
 import storePageController from '../controllers/storePageController.js';
 import inventoryController from '../controllers/inventoryController.js';
 import orderController from '../controllers/orderController.js';
+import emailVerificationController from '../controllers/emailVerificationController.js';
 
 import bodyParser from 'body-parser';
 import { body, validationResult } from 'express-validator';
@@ -64,6 +65,9 @@ router.get('/getCartItems', cartController.getCartItems)
 router.get('/AdminOrderDetails/:orderID', orderController.getOrderDetails)
 router.get('/searchOrders', orderController.searchOrders);
 
+router.get('/emailVerify', emailVerificationController.getEmailVerify);
+router.get('/verify', emailVerificationController.getVerify);
+
 //POSTS
 router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), body('email').notEmpty().isEmail().normalizeEmail().custom(async value => {
     if (await User.findOne({ email: value }).exec()) {
@@ -90,6 +94,7 @@ router.post('/showProduct', controller.showProduct);
 router.post('/hideProduct', controller.hideProduct);
 router.post('/deleteProduct', controller.deleteProduct);
 router.post('/editProfile/:id', userController.editProfile);
+router.post('/resendVerification', registerController.resendVerification);
 
 
 export default router;

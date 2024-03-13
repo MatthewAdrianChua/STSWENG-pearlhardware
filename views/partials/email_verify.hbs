@@ -1,0 +1,134 @@
+<style>
+    .verify-container {
+        height: 100vh;
+        width: 100vw;
+        
+        background: url('../uploads/cover.png') no-repeat center center fixed;
+        background-size: auto;
+        border: 1px solid black;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        z-index: 2;
+    }
+
+    .verify-prompt {
+        background-color: white;
+        width: 60vw;
+        height: 60vh;
+
+        padding: 50px;
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .verify-logo {
+        width: 15%;
+
+        {{!-- background-color: #f0f0f0; --}}
+        background-color: transparent;
+        border-radius: 50%;
+
+        display: flex;
+    }
+
+    .verfify-logo img {
+        min-height: 100px;
+        min-width: 100px;
+        max-height: 280px;
+        max-width: 280px;
+
+        overflow: hidden;
+    }
+
+    .verify-text {
+        min-height: 30px;
+        min-width: 120px;
+        max-height: 70px;
+        max-width: 250px;
+
+        background-color: transparent;
+
+        {{!-- display: flex;
+        align-items: center;
+        justify-content: space-around; --}}
+
+        text-align: center;
+
+        & .text {
+            width: auto;
+            height: auto;
+            background-color: transparent;
+
+            color: black;
+            font-weight: 500;
+            font-size: 1.1rem;
+
+            user-select: none;
+        }
+    }
+
+    .verify-resend {
+        width: 40%;
+        min-height: 5vh;
+        padding: 0.5rem;
+        background-color: #69aaFF;
+        border-radius: 10%/40%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        & .text {
+            text-align: center;
+            color: white;
+
+            font-size: 1rem;
+            font-weight: 600;
+
+            user-select: none;
+        }
+    }
+
+    .verify-resend:hover {
+        background-color: #4077FF;
+    }
+</style>
+
+<!-- 
+    Div class names/Vanilla CSS used for now;
+    Will do Tailwind for styling later
+ -->
+
+<div class="verify-container">
+    <div class="verify-prompt">
+        <div class="verify-logo">
+            {{#if error}}
+                <img src="../uploads/error.png" alt="Verify Error">
+            {{else}}
+                <img src="../uploads/verify.png" alt="Verify User">
+            {{/if}}
+        </div>
+        <div class="verify-text">
+            {{#if error}}
+                <p class="text">{{err_message}}</p>
+            {{else}}
+                <p class="text">Your account has been created!<br>Please check your email to verify your account.</p>
+            {{/if}}
+        </div>
+        <div class="verify-resend">
+            <p class="text">Resend Verification Email</p>
+        </div>
+		{{#if (or err_code=36 err_code=0)}}
+			<div class="verify-resend">
+				<p class="text">Resend Verification Email</p>
+			</div>
+		{{/if}}
+		
+    </div>
+</div>

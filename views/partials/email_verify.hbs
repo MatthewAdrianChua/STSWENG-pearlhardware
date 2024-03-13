@@ -111,7 +111,7 @@
             {{#if error}}
                 <img src="../uploads/error.png" alt="Verify Error">
             {{else}}
-                <img src="../uploads/verified.png" alt="Verify User">
+                <img src="../uploads/verify.png" alt="Verify User">
             {{/if}}
         </div>
         <div class="verify-text">
@@ -120,6 +120,9 @@
             {{else}}
                 <p class="text">Your account has been created!<br>Please check your email to verify your account.</p>
             {{/if}}
+        </div>
+        <div class="verify-resend">
+            <p class="text">Resend Verification Email</p>
         </div>
 		{{#if (or err_code=36 err_code=0)}}
 			<div class="verify-resend">

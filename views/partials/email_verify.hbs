@@ -28,8 +28,11 @@
     }
 
     .verify-logo {
-        height: 120px;
-        width: 120px;
+        min-height: 120px;
+        min-width: 120px;
+        max-height: 300px;
+        max-width: 300px;
+
         {{!-- background-color: #f0f0f0; --}}
         background-color: transparent;
         border-radius: 50%;
@@ -40,8 +43,8 @@
     }
 
     .verfify-logo img {
-        width: 100px;
-        height: 100px;
+        width: 80%;
+        height: 80%;
     }
 
     .verify-text {
@@ -63,14 +66,21 @@
             color: black;
             font-weight: 500;
             font-size: 1.4rem;
+
+            user-select: none;
         }
     }
 
     .verify-resend {
         width: 40%;
+        min-height: 5vh;
         padding: 0.5rem;
         background-color: #69aaFF;
         border-radius: 10%/40%;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
 
         & .text {
             text-align: center;
@@ -78,6 +88,8 @@
 
             font-size: 1rem;
             font-weight: 600;
+
+            user-select: none;
         }
     }
 
@@ -94,10 +106,18 @@
 <div class="verify-container">
     <div class="verify-prompt">
         <div class="verify-logo">
-            <img src="../uploads/verified.png" alt="Verify User">
+            {{#if error}}
+                <img src="../uploads/error.png" alt="Verify Error">
+            {{else}}
+                <img src="../uploads/verify.png" alt="Verify User">
+            {{/if}}
         </div>
         <div class="verify-text">
-            <p class="text">Your account has been created!<br>Please check your email to verify your account.</p>
+            {{#if error}}
+                <p class="text">Verification Failed!</p>
+            {{else}}
+                <p class="text">Your account has been created!<br>Please check your email to verify your account.</p>
+            {{/if}}
         </div>
         <div class="verify-resend">
             <p class="text">Resend Verification Email</p>

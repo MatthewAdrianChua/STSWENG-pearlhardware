@@ -25,63 +25,85 @@ const emailVerificationController = {
 			//read query
 			let uid = req.query.t
 			let uis = req.query.s;
-			
-			//console.log("uid =" + uid);
-			//console.log("uis =" + uis);
+
 			const verification = await Verification.find({userID: uid});
 			console.log(verification);
 			if (verification.length > 0){
-				const {expires} = verification[0]; //THIS MAY BE WRONG!!
+				const {expires} = verification[0];
 				
 				if(expires < Date.now()){ //expired
 					Verification.deleteOne({userID: uid})
 						.then(result => {
-							User.delete({_id: uid}).then(() => {console.log("Link has expired! Sign up again.")})
-								.catch((error) => {console.log("Error deleting user")});
+							User.delete({_id: uid})
+								.then(() => {
+									console.log("Link has expired! Sign up again.");
+									renderErrorPage(res, uid, "Verification link has expired! Press the button below to recieve another verification email.");
+								})
+								.catch((error) => {
+									console.log("Error deleting user");
+									renderErrorPage(res, uid, "Error verifying account! Please try again. Error code: 32", 32);
+								});
 						})
-						.catch((error) => {console.log("Error deleting verification record!"); /*WE SHOULD REDIRECT FROM HERE*/});
+						.catch((error) => {
+							console.log("Error deleting verification record!"); 
+							renderErrorPage(res, uid, "Error verifying account! Please try again. Error code: 33", 33);
+						});
 				}
 				else{
-					const {hash} = verification[0]; //MAY ALSO BE WRONG HOW DOES THIS WORK?
-					console.log("hash= "+ hash);
+					const {hash} = verification[0];
 					const cmp = await bcrypt.compare(uis, hash);
-					console.log("test = " + cmp);
 					if(cmp){
-						console.log("Here1");
 						User.findByIdAndUpdate(uid, {isVerified: true})
 								.then(() =>{
-									console.log("Here3");
 									Verification.deleteOne({userID: uid})
-									.then(() => {
-										//redirect to a success page
-										/*
-										res.render("verifySuccess");
-										*/
+									.then(() => { //SUCCESS
 										res.redirect("/");
 									})
-									.catch((error) => {console.log("Error deleting verification record!"); /*WE SHOULD REDIRECT FROM HERE*/});
+									.catch((error) => {
+										console.log("Error deleting verification record!");
+										renderErrorPage(res, uid, "Error verifying account! Please try again. Error code: 34", 34);
+									});
 								})
-								.catch((error) => {console.log("Invalid link! USER NOT FOUND"); /*WE SHOULD REDIRECT FROM HERE*/})
-						console.log("Here2");
+								.catch((error) => {
+									console.log("Invalid link! USER NOT FOUND");
+									renderErrorPage(res, uid, "Error verifying account! Please try again. Error code: 35", 35);
+									})
 					}
 					else{
-						console.log("Invalid link! HASH FAILED");/*WE SHOULD REDIRECT FROM HERE */
+						console.log("Invalid link! HASH FAILED");
+						renderErrorPage(res, uid, "Error verifying account! Please try again. Error code: 36", 36);
 					}
 				}
 			
 			}	else{
 				console.log("No valid record was found or has been verified already! Please sign up or log in.");
-				//render an error.
+				renderErrorPage(res, uid, "No valid record was found or has been verified already! Please sign up or log in.", 37);
 			}
 		}	catch {
-			//redirect to an error, for now, just redirect back to emailVerify
-			console.log("An error has occurred trying to verify user!");
-			res.render("emailVerify", {
-				script: './js/emailVerify.js'
-			});
+			let uid = req.query.t;
+			console.log("No valid record was found or has been verified already! Please sign up or log in.");
+			renderErrorPage(res, uid, "No valid record was found or has been verified already! Please sign up or log in.", 37);
 		}
 		
 	}
+}
+
+function renderErrorPage(res, uid, err, err_code = 0){
+	
+	//delete verification records of a user if error, so that we don't conflict multiple records of the same user.
+	Verification.deleteMany({userID: uid})
+	.then()
+	.catch((error) => {
+		console.log("Error deleting verification record!");
+		renderErrorPage(res, "Error verifying account! Please try again. Error code: 34", 34);
+	});
+	
+	res.render("emailVerify", {
+		error: true,
+		err_message: err,
+		err_code: err_code,
+		script: './js/emailVerify.js'
+	});
 }
 
 export default emailVerificationController;

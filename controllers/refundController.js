@@ -16,6 +16,7 @@ const refundController = {
         const userID = await User.findById(req.session.userID);
 
         try{
+            if(userID.isVerified == true){
             res.render("refund_ticket_page", {
                 layout: 'userOrders',
                 script: '../js/refundTicketPage.js',
@@ -27,6 +28,9 @@ const refundController = {
                 amount: order.items[req.session.refundItemIndex].amount,
                 totalAmount: parseFloat(product.price) * parseFloat(order.items[req.session.refundItemIndex].amount).toFixed(2),
             })
+        }else{
+            res.redirect('/emailVerify?sk=true');
+        }
         }catch(error){
             console.error(error);
             res.sendStatus(400);
@@ -317,12 +321,12 @@ const refundController = {
         }
 
         let refundList = []
+        const user = await User.findById(req.session.userID);
 
         //console.log(resp);
 
 
         for(let x = 0; x<resp.length; x++){
-            const user = await User.findById(resp[x].userID);
 
             refundList.push({
                 refundID: resp[x]._id,
@@ -334,13 +338,16 @@ const refundController = {
         }
 
         //console.log(refundList);
-
+        if(user.isVerified == true){
         res.render("user_refund_management_page", {
             layout: 'userRefund',
             script: '../js/userRefundManagement.js',
             refundList: refundList,
             category:category,
         })
+    }else{
+        res.redirect('/emailVerify?sk=true');
+    }
         //res.sendStatus(200);
     }catch(error){
         console.error(error);

@@ -10,6 +10,7 @@ import adminController from '../controllers/adminController.js';
 import storePageController from '../controllers/storePageController.js';
 import inventoryController from '../controllers/inventoryController.js';
 import orderController from '../controllers/orderController.js';
+import emailVerificationController from '../controllers/emailVerificationController.js';
 import refundController from '../controllers/refundController.js';
 
 import bodyParser from 'body-parser';
@@ -71,6 +72,9 @@ router.get('/getAdminRefundDetails/:refundID', refundController.getAdminRefundDe
 router.get('/getUserRefundManagement/:category', refundController.getUserRefundManagement);
 router.get('/getUserRefundDetails/:refundID', refundController.getUserRefundDetails);
 
+router.get('/emailVerify', emailVerificationController.getEmailVerify);
+router.get('/verify', emailVerificationController.getVerify);
+
 //POSTS
 router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), body('email').notEmpty().isEmail().normalizeEmail().custom(async value => {
     if (await User.findOne({ email: value }).exec()) {
@@ -97,6 +101,8 @@ router.post('/showProduct', controller.showProduct);
 router.post('/hideProduct', controller.hideProduct);
 router.post('/deleteProduct', controller.deleteProduct);
 router.post('/editProfile/:id', userController.editProfile);
+router.post('/resendVerification', registerController.resendVerification);
+router.post('/checkVerified', userController.checkVerified);
 router.post('/initiateRefund', refundController.initiateRefund);
 router.post('/createRefund', upload.array('productPic', 10), body('name').notEmpty(), body('quantity').notEmpty().isNumeric(), body('price').notEmpty(), refundController.createRefund);
 router.post('/refundCustomer', refundController.refundCustomer);

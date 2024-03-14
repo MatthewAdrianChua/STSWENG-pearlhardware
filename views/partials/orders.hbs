@@ -75,7 +75,7 @@ function selectOption(option) {
 			<div id="selectedOption" class="hidden bg-white border border-gray-300 mx-2 py-1 w-32"></div>
 			<button class="col-span-2 flex flex-wrap" id="orderInstance" data-index={{this.orderID}}>
 				<div class="grid grid-cols-2 w-full flex flex-wrap items-center justify-center">
-					<div class="px-1 text-secondary text-m text-center border border-t-0 border-b-0 border-maincolor truncate">&#8369; {{this.amount}}</div>
+					<div class="px-1 text-secondary text-m text-center border border-t-0 border-b-0 border-maincolor truncate">&#8369; {{formatPrice this.amount}}</div>
  	   				<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{this.paymongoID}}</div>
 				</div>
 

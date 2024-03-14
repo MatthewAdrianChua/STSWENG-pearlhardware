@@ -1,0 +1,26 @@
+<div class="mx-10 my-5 py-0 pl-2 border-b-4 border-b-maincolor font-Inika text-2xl w-48 ">Refund requests</div>
+{{#unless buffer }}
+		{{> sort_orders}}
+	{{/unless}}
+	<div class="grid grid-cols-5 bg-maincolor w-[95%] h-[45px] flex flex-wrap items-center justify-start rounded-[10px_10px_0px_0px] mx-auto px-2">
+			<div class="font-Inknut text-white text-sm text-center border border-t-0 border-b-0 border-white flex-1">Refund ID</div>
+			<div class="font-Inknut text-white text-sm text-center border border-l-0 border-t-0 border-b-0 border-white flex-1">Date</div>
+			<div class="font-Inknut text-white text-sm text-center border border-l-0 border-t-0 border-b-0 border-white flex-1">Amount to be Refund</div>
+			<div class="font-Inknut text-white text-sm text-center border border-l-0 border-t-0 border-b-0 border-white flex-1">Email</div>
+			<div class="font-Inknut text-white text-sm text-center border border-l-0 border-t-0 border-b-0 border-white flex-1">Status</div>
+	</div>
+
+{{#each refundList}}
+			
+<div class="bg-white bg-opacity-80 py-2 px-1 rounded-md w-[95%] mx-auto my-auto shadow-md ">
+			<button class="grid grid-cols-5 bg-tertiary w-full h-[45px] flex flex-wrap items-center justify-start rounded-[10px] mb-2 px-1 hover:bg-white hover:border border-maincolor" id="refundInstance" data-index={{this.refundID}}>
+				
+					<div class="px-1 text-secondary text-m text-center border border-t-0 border-b-0 border-maincolor truncate" >{{this.refundID}}</div> 
+					<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{this.date}}</div>
+					<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{formatPrice this.amountToBeRefunded}}</div>
+					<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{this.email}}</div>
+ 	   				<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor">{{this.status}}</div>
+				
+			</button>
+	</div>
+{{/each}}

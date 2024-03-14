@@ -7,6 +7,7 @@ import bcrypt from 'bcrypt';
 import { ObjectId } from 'mongodb';
 import mongoose from 'mongoose';
 import { Image } from '../model/imageSchema.js';
+import { refundImage } from '../model/refundImages.js'
 
 const SALT_WORK_FACTOR = 10;
 let currentCategory = "allproducts";
@@ -28,6 +29,21 @@ const controller = {
 
         try {
             const image = await Image.findById(id);
+
+            res.set('Content-Type', 'image/jpeg');
+            res.send(image.img.data);
+        } catch (error) {
+            console.error(error);
+            res.status(500).send('Server error');
+        }
+      },
+
+      refundImage: async (req, res) => {
+        console.log("Image request received");
+        const { id } = req.params;
+
+        try {
+            const image = await refundImage.findById(id);
 
             res.set('Content-Type', 'image/jpeg');
             res.send(image.img.data);

@@ -95,6 +95,7 @@ router.post('/hideProduct', controller.hideProduct);
 router.post('/deleteProduct', controller.deleteProduct);
 router.post('/editProfile/:id', userController.editProfile);
 router.post('/resendVerification', registerController.resendVerification);
+router.post('/checkVerified', userController.checkVerified);
 
 
 export default router;

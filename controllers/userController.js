@@ -12,7 +12,6 @@ const userController = {
 	//Gets the profile of the user using the session.userID
 	getUserProfile: async function (req, res) {
         try {
-            
             const user = await User.findById(req.session.userID);
             let userData = {
                 id: user._id,
@@ -353,6 +352,18 @@ const userController = {
         }
 
     },
+	checkVerified: async function (req, res){
+		try {
+            const ver = await User.findById(req.session.userID, {isVerified: 1});
+            console.log("Verified? " + ver.isVerified + ": " + ver._id );
+			res.send({
+				isVerified: ver.isVerified,
+				id: ver._id
+			});
+        } catch {
+            res.sendStatus(400);
+        }
+	},		
 }
 
 export default userController;

@@ -82,8 +82,7 @@ const registerController = {
         try {
             const result = await newUser.save();
             console.log(result);
-			//send the email here
-			sendVerificationEmail(result, res);
+			//sendVerificationEmail(result, res);
             res.sendStatus(200);
         } catch (err) {
             console.log("Username already exists!");

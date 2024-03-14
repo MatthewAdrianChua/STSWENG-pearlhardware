@@ -42,6 +42,8 @@ registerSubmit.addEventListener('click', async (e) => {
         }
     })
 
+    console.log(response.status);
+
     if(response.status == 200){ //registers user and clears input fields
         console.log("register success!");
 
@@ -55,10 +57,11 @@ registerSubmit.addEventListener('click', async (e) => {
         })
 
         if(response.status == 200){ 
-            window.location.href = '/';
+            console.log("Register Success: " + response.status);
+            window.location.href = '/emailVerify';
         }
         else if(response.status == 500){ 
-            console.log("login error! Status code 500");
+            console.log("Register error! Status code 500");
         }
 
     }else if(response.status == 405) { //displays email already taken message
@@ -73,7 +76,7 @@ registerSubmit.addEventListener('click', async (e) => {
     }else if(response.status == 410){ //displays invalid email format message
         console.log("OKAY")
         console.error(`An error has occurred, Status code = ${response.status}`);
-        errorDisplay.textContent = "Invalid postal code!";
+        errorDisplay.textContent = "Postal code up to 4 digits only!";
         errorDisplay.style.color = "red";
     }
 })

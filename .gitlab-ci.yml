@@ -7,21 +7,33 @@ build-job:       # This job runs in the build stage, which runs first. Install d
   stage: build
   script:
     - apt-get update && apt-get install -y nodejs npm
-    - npm install jest
     - npm install
+    - npm install jest
+    - npm uninstall bcrypt #bcrpyt need to be uninstalled because its version is for windows in which it wont work on the test environment of gitlab which is ubuntu
+    - npm install bcrypt #install bcrypt in ubuntu environment for ubuntu version
+  artifacts:
+    paths:
+      - node_modules/
   only:
     - main
     - staging
     - QA-feature-refactoring
+    - QA-feature-emailVerification
+    - QA-feature-refundSystem
 
 unit-test-job:   # This job runs in the test stage. Runs unit tests on the code
   stage: test    # It only starts when the job in the build stage completes successfully.
+  dependencies:
+    - build-job
   script:
+    - apt-get update && apt-get install -y nodejs npm
     - npm run test
   only:
     - main
     - staging
     - QA-feature-refactoring
+    - QA-feature-emailVerification
+    - QA-feature-refundSystem
 
 deploy-job:      # This job runs in the deploy stage.Only runs when commits are pushed to main
   stage: deploy  # It only runs when *both* jobs in the test stage complete successfully.

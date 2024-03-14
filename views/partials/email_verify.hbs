@@ -118,17 +118,26 @@
             {{#if error}}
                 <p class="text">{{err_message}}</p>
             {{else}}
-                <p class="text">Your account has been created!<br>Please check your email to verify your account.</p>
+				{{#if skipped}}
+					<p class="text">Press the button below to recieve a verification email.
+					</p>
+				{{else}}
+					<p class="text">Your account has been created!
+					<br>Press the button below to recieve a verification email.
+					<br>You can also verify later through your profile.</p>
+				{{/if}
             {{/if}}
         </div>
-        <div class="verify-resend">
-            <p class="text">Resend Verification Email</p>
-        </div>
-		{{!-- {{#if (or err_code=36 err_code=0)}}
+		{{#if (or err_code=36 err_code=0)}}
 			<div class="verify-resend">
-				<p class="text">Resend Verification Email</p>
+				<p class="text">Send Verification Email</p>
 			</div>
-		{{/if}} --}}
+			<div class="verify-skip">
+				<a href="/">
+					<p>Skip for now.</p>
+				</a>
+			</div>
+		{{/if}}
 		
     </div>
 </div>

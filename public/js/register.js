@@ -73,7 +73,7 @@ registerSubmit.addEventListener('click', async (e) => {
     }else if(response.status == 410){ //displays invalid email format message
         console.log("OKAY")
         console.error(`An error has occurred, Status code = ${response.status}`);
-        errorDisplay.textContent = "Invalid postal code!";
+        errorDisplay.textContent = "Postal code up to 4 digits only!";
         errorDisplay.style.color = "red";
     }
 })

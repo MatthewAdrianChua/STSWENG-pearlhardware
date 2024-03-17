@@ -2,7 +2,6 @@ import loginController from '../controllers/loginController.js';
 import { User } from '../model/userSchema.js';
 import {jest} from '@jest/globals'
 import { describe } from 'node:test';
-import mongoose from 'mongoose';
 
 jest.useFakeTimers()
 
@@ -82,7 +81,3 @@ describe('Login Controller', () => {
     });
   });
 });
-
-afterAll(() => { 
-  mongoose.connection.close()
-})

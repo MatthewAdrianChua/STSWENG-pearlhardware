@@ -27,8 +27,11 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm install jest
+      working-directory: ./nodemodules
     - run: npm install bcrypt
+      working-directory: ./nodemodules
     - run: npm ci
+      working-directory: ./nodemodules
 
   test:
 

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body class="flex flex-col bg-white">
+<div class="bg-white p-6 rounded-lg shadow-md max-w-7xl mx-auto my-8">
+    <div class="flex flex-col justify-center items-center h-full lg:w-1/2 p-4 mx-auto">
+        <form action="/createRefund" method="POST" enctype="multipart/form-data" class="bg-blue-500 rounded-lg shadow-md p-4">
+            <!-- Reason of return -->
+            <div class="mb-6">                                         <!--text-gray-700-->
+                <label for="reason" class="block mb-2 text-sm font-medium text-white">Reason of return</label>
+                    <select id="reason" name="reason" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500" required>
+                    <option value="Damaged/Faulty Item">Damaged/Faulty Item</option>
+                    <option value="Received Wrong Item">Received Wrong Item</option>
+                    <option value="Expired Item">Expired Item</option>
+                    <option value="Counterfeit">Counterfeit</option>
+                    <option value="Not As Advertised">Not As Advertised</option>
+                    <option value="Missing Freebie/Accessory">Missing Freebie/Accessory</option>
+                    <option value="Missing Item">Missing Item</option>
+                    <option value="Incomplete Delivery">Incomplete Delivery</option>
+                    <option value="Package Not Received">Package Not Received</option>
+                    </select>    
+            </div>
+
+            <!-- Comments -->
+            <div class="mb-6">
+                <label for="comments" class="block mb-2 text-sm font-medium text-white">Comments</label>
+                <textarea rows="4" id="comments" name="comments" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-indigo-500" required></textarea>
+            </div>
+
+            <!-- Evidence of refund (photo) -->
+            <div class="mb-6">
+                <label for="formFile" class="block mb-2 text-sm font-medium text-white">Evidence of refund (photo)</label>
+                <input class="form-control" type="file" name="productPic" id="formFile" accept="image/*" multiple required>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="bg-white text-black py-2 px-4 rounded hover:bg-blue-800">Submit</button>
+        </form>
+    </div>
+                        
+    <div class="flex flex-wrap justify-between mb-6">
+       
+        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:border-r md:border-blue-200 pr-4">
+            <div class="border-b border-blue-500 pb-2 mb-4">
+                <h2 class="text-2xl font-bold text-blue-800">Refund Information</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-6 text-blue-900 mb-6">
+                <div class="font-bold">Email:</div>
+                <div class="break-words">{{email}}</div>
+
+                <div class="font-bold">Date of Order:</div>
+                <div class="break-words">{{orderDate}}</div>
+
+            </div>
+        </div>
+
+       
+        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:border-r md:border-blue-200 px-4">
+            <div class="border-b border-blue-500 pb-2 mb-4">
+                <h2 class="text-2xl font-bold text-blue-800">Item Information</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-6 text-blue-900 mb-6">
+                <div class="font-bold">Item Name:</div>
+                <div class="break-words">{{itemName}}</div>
+
+                <div class="font-bold">Item ID:</div>
+                <div class="break-words">{{itemID}}</div>
+
+                <div class="font-bold">Price:</div>
+                <div class="break-words">{{formatPrice price}}</div>
+
+                <div class="font-bold">Amount:</div>
+                <div class="break-words">{{amount}}</div>
+            </div>
+        </div>
+
+        
+        <div class="w-full md:w-1/3 pl-4">
+            <div class="border-b border-blue-500 pb-2 mb-4">
+                <h2 class="text-2xl font-bold text-blue-800">Total</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-6 text-blue-900">
+                <div class="font-bold">Total Amount:</div>
+                <div class="break-words">{{formatPrice totalAmount}}</div>
+
+            </div>
+        </div>
+    </div>
+
+                    
+                    {{#if statusIsDenied}}
+                        <div class="text-2xl font-medium text-white">Reason of denial: {{reasonOfDenial}}</div>
+                    {{/if}}
+                    <div class="text-2xl font-medium text-white">Reason of return: {{reasonOfReturn}}</div>
+                    <div class="text-2xl font-medium text-white">Comments: {{comments}}</div>
+                    <!-- Display Evidence of refund (photo) -->
+                    {{#if evidencePhotos}}
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Evidence of Refund</h3>
+                            {{#each evidencePhotos}}
+                                <img src="{{this}}" alt="Evidence Photo" class="rounded shadow-lg mb-2">
+                            {{/each}}
+                        </div>
+                    {{/if}}
+                
+            
+        
+    
+    {{> footer}}
+</body>
+</html>
+

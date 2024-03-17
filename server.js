@@ -55,6 +55,7 @@ const hbs = exphbs.create({ //A new handlebar extension instantiation that inclu
             return a==b;
         },
         multiply: function(a, b) {return (a * b).toFixed(2);},
+		or: function (a, b) { return a || b; },
     }
 })
 app.engine("hbs", hbs.engine);

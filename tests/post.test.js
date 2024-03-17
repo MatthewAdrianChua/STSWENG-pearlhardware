@@ -1,3 +1,0 @@
-describe('Post controller', () => {
-   
-});

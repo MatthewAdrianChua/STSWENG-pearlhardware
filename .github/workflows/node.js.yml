@@ -26,7 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install --lockfile-version 3 bcrypt
+    - run: apt-get update && apt-get install -y nodejs npm
+    - run: npm install bcrypt
     - run: npm ci
 
   test:

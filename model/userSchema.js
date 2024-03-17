@@ -9,6 +9,12 @@ const userSchema = new Schema({
         required: true,
         default: false,
     },
+	
+	isVerified:{
+        type: Boolean,
+        required: true,
+        default: false,
+    },
 
     firstName: {
         type: String,

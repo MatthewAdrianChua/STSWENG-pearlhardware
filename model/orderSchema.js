@@ -74,6 +74,11 @@ const orderSchema = new mongoose.Schema({
         required: true
     },
 
+    paymentID:{
+        type: mongoose.SchemaTypes.String,
+        required: true
+    }
+
 })
 
 export const Order = mongoose.model('Order', orderSchema);

@@ -5,7 +5,7 @@
 		<div class="bg-tertiary rounded shadow p-4 hover:bg-white hover:border hover:text-maincolor">
 			<img class="h-44 w-44 mx-auto object-cover" src={{this.productpic}} alt="Product Image">
 			<h2 class="text-xl font-semibold mt-2 text-center">{{this.name}}</h2>
-			<p class="text-center mt-1">&#8369; {{this.price}}</p>	
+			<p class="text-center mt-1">&#8369; {{formatPrice this.price}}</p>	
 		</div>
 	</a>
     {{/each}}

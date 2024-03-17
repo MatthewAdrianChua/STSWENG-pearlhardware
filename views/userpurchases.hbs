@@ -52,7 +52,7 @@ function selectOption(option) {
 			<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor">{{this.email}}</div>
  	   		<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor">{{this.date}}</div>
 			<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor">{{this.status}}</div>
- 	   		<div class="px-1 text-secondary text-m text-center border border-t-0 border-b-0 border-maincolor truncate">&#8369; {{this.amount}}</div>
+ 	   		<div class="px-1 text-secondary text-m text-center border border-t-0 border-b-0 border-maincolor truncate">&#8369; {{formatPrice this.amount}}</div>
  	   		<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{this.paymongoID}}</div>
 			<div class="px-1 text-secondary text-m text-center border border-l-0 border-t-0 border-b-0 border-maincolor truncate">{{this.isCancelled}}</div>
 		</button>

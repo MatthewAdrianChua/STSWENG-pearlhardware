@@ -10,6 +10,8 @@ import adminController from '../controllers/adminController.js';
 import storePageController from '../controllers/storePageController.js';
 import inventoryController from '../controllers/inventoryController.js';
 import orderController from '../controllers/orderController.js';
+import emailVerificationController from '../controllers/emailVerificationController.js';
+import refundController from '../controllers/refundController.js';
 
 import bodyParser from 'body-parser';
 import { body, validationResult } from 'express-validator';
@@ -47,6 +49,7 @@ router.get('/userSearchPurchases', userController.searchUserPurchases);
 //router.get('/searchProducts', controller.searchProducts); Possible duplicate
 
 router.get('/image/:id', controller.image);
+router.get('/refundImage/:id', controller.refundImage);
 
 router.get('/checkout', checkoutController.checkout);
 router.get('/checkoutSuccess/:orderID', checkoutController.checkoutSuccess);
@@ -63,6 +66,14 @@ router.get('/admin', adminController.getAdmin);
 router.get('/getCartItems', cartController.getCartItems)
 router.get('/AdminOrderDetails/:orderID', orderController.getOrderDetails)
 router.get('/searchOrders', orderController.searchOrders);
+router.get('/getRefund', refundController.getRefund);
+router.get('/getAdminRefundManagement/:category', refundController.getAdminRefundManagement);
+router.get('/getAdminRefundDetails/:refundID', refundController.getAdminRefundDetails);
+router.get('/getUserRefundManagement/:category', refundController.getUserRefundManagement);
+router.get('/getUserRefundDetails/:refundID', refundController.getUserRefundDetails);
+
+router.get('/emailVerify', emailVerificationController.getEmailVerify);
+router.get('/verify', emailVerificationController.getVerify);
 
 //POSTS
 router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), body('email').notEmpty().isEmail().normalizeEmail().custom(async value => {
@@ -90,6 +101,12 @@ router.post('/showProduct', controller.showProduct);
 router.post('/hideProduct', controller.hideProduct);
 router.post('/deleteProduct', controller.deleteProduct);
 router.post('/editProfile/:id', userController.editProfile);
+router.post('/resendVerification', registerController.resendVerification);
+router.post('/checkVerified', userController.checkVerified);
+router.post('/initiateRefund', refundController.initiateRefund);
+router.post('/createRefund', upload.array('productPic', 10), body('name').notEmpty(), body('quantity').notEmpty().isNumeric(), body('price').notEmpty(), refundController.createRefund);
+router.post('/refundCustomer', refundController.refundCustomer);
+router.post('/denyRefund', refundController.denyRefund);
 
 
 export default router;

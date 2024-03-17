@@ -1,0 +1,11 @@
+git pull
+git
+git help branch
+git checkout help
+git checkout'
+git checkout
+git -h
+git checkout -h
+git pull
+git checkout dev-feature-emailVerification
+doskey /history >> history.txt

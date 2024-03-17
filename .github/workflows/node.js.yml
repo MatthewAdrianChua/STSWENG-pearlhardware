@@ -12,7 +12,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
 
     strategy:
       matrix:
@@ -32,7 +32,7 @@ jobs:
 
   test:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [build]
 
     strategy:
@@ -51,7 +51,7 @@ jobs:
 
   deploy:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: [test]
 
     strategy:

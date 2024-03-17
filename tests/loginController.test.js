@@ -3,6 +3,7 @@ import { User } from '../model/userSchema.js';
 import bcrypt from 'bcrypt';
 import {jest} from '@jest/globals'
 import { describe } from 'node:test';
+import mongoose from 'mongoose';
 
 jest.useFakeTimers()
 
@@ -130,3 +131,7 @@ describe('Login Controller', () => {
     });
   });
 });
+
+afterAll(() => { 
+  mongoose.connection.close()
+})

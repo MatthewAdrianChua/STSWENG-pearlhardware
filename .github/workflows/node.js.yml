@@ -26,10 +26,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm install
-    - run: npm install jest
-    - run: npm uninstall bcrypt
-    - run: npm install bcrypt
+    - run: rm -rf node_modules/
+    - run: npm update
 
   test:
 

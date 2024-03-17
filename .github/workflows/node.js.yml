@@ -26,9 +26,9 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
     - run: npm uninstall bcrypt
     - run: npm install bcrypt
+    - run: npm ci
 
   test:
 

@@ -5,9 +5,9 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master" , "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem"]
+    branches: [ "master" , "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem", "QA-feature-guestCheckout", "QA-feature-reviews"]
   pull_request:
-    branches: [ "master", "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem" ]
+    branches: [ "master", "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem", "QA-feature-guestCheckout", "QA-feature-reviews" ]
 
 jobs:
   build:

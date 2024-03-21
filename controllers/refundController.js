@@ -11,11 +11,12 @@ Handlebars.registerHelper('formatPrice', formatPrice);
 const refundController = {
     getRefund: async function(req,res){
 
-        const product = await Product.findById(req.session.productID);
-        const order = await Order.findById(req.session.refundOrderID);
-        const userID = await User.findById(req.session.userID);
-
         try{
+            const product = await Product.findById(req.session.productID);
+            const order = await Order.findById(req.session.refundOrderID);
+            const userID = await User.findById(req.session.userID);
+
+
             if(userID.isVerified == true){
             res.render("refund_ticket_page", {
                 layout: 'userOrders',

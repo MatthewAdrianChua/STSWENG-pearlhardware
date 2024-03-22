@@ -10,6 +10,41 @@
   #originalBtn, #hoverBtn {
     transition: opacity 0.3s ease;
 }
+
+    #add-review-button {
+        user-select: none;
+        cursor: pointer;
+
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+
+        height: 2.5rem;
+        width: 10vw;
+        background-color: #0980D3;
+        border-radius: 22.5px;
+
+        font-family: Inika;
+        font-size: 1.25rem;
+        color: white;
+    }
+
+    #add-review-button:hover {
+        background-color: #ffffff;
+        border-radius: 22.5px;
+        color: #0980D3;
+    }
+
+    #submitBtn:hover {
+        background-color: #ffffff;
+        border-radius: 22.5px;
+        color: #0980D3;
+    }
+
+    #submitBtn:hover img {
+        filter: invert(35%) sepia(90%) saturate(1792%) hue-rotate(184deg) brightness(89%) contrast(93%);
+    }
+
 </style>
 	
 	<script>
@@ -37,14 +72,18 @@
                 <p id="err"></p>
                 <input type="hidden" id="p_id" value="{{product._id}}">
 				
-				<div class="relative mt-5 mb-2"  form="add">
- 				   <button id="submitBtn" class="flex items-center w-auto h-12 px-4 bg-maincolor rounded-full text-white text-2xl font-Inika ml-auto mr-5">
+				<div class="relative mt-5 mb-2 flex items-center"  form="add">
+ 				   <button id="submitBtn" class="flex items-center w-auto h-10 px-3 bg-maincolor rounded-full text-white text-xl font-Inika ml-auto mr-5">
  				       <img class="w-5 mr-2" src="../uploads/cart.png" alt="Cart Icon" />
     				    Add to Cart
     				</button>
 
-    				<button id="hoverBtn" type="submit" class="w-auto h-12 px-4 pt-2 bg-white hidden border border-maincolor border-2 rounded-full text-maincolor text-2xl font-Inika ml-auto mr-5">
-    				    <img class="w-5 mr-2 pt-1" src="../uploads/basket.png" alt="Cart Icon" />
+                    <div id="add-review-button">
+                        <p>Edit Review</p>
+                    </div>
+
+    				<button id="hoverBtn" type="submit" class="w-10 h-10 px-2 bg-white hidden border border-maincolor border-2 rounded-full text-maincolor text-2xl font-Inika ml-auto mr-5">
+    				    <img class="w-5 mr-2 pt-1" src="../uploads/basket.png" alt="Cart Icon">
     				    Add to Cart
    					</button>
 				</div>

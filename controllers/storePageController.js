@@ -3,6 +3,7 @@ import { Product } from '../model/productSchema.js';
 import { User } from '../model/userSchema.js';
 import Handlebars from 'handlebars';
 import { formatPrice } from '../util/helpers.js';
+import { Review } from "../model/reviewSchema.js";
 
 Handlebars.registerHelper('formatPrice', formatPrice);
 
@@ -141,11 +142,22 @@ const storePageController = {
     getProduct: async function (req, res) {
         console.log("getting product!");
         var query = req.query.id;
+		let sumRating = 0;
         try {
             const product_result = await Product.find({ _id: query }, { __v: 0 }).lean();
             //console.log(product_result);
+			const reviews = await Review.find({productID: query}, {__v: 0}).lean();
+			
+			for (let i = 0; i < reviews.length; i++){
+				console.log(reviews[i].rating);
+				sumRating += reviews[i].rating;
+			}
+			
             return res.render("productDesc", {
                 product: product_result[0],
+				review_list: reviews,
+				ratingAve: sumRating/reviews.length,
+				ratingNo: reviews.length,
                 script: "./js/add_to_cart.js",
             });
         }

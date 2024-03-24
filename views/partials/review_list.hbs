@@ -1,38 +1,34 @@
-<style>
-    .reviews-container {
-        display: hidden;
-    }
-</style>
-
-
-
 <div class="reviews-container">
-    {{!-- 
-        {{#if review_list}}
-            {{#each}}
-
-            {{/each}}
-        {{/if}}
-     --}}
-     <div class="one-review-container">
-        <div class="star-rating">
-            {{!-- 
-                {{#each <whatever variable use for user rating on a product>}}
-                    <img src="DOWNLOAD IMAGE OF STAR FIRST">
-                {{/each}}            
-             --}}
-        </div>
-        <div class="review-user">
-
-        </div>
-        <div class="review-content">
-
-        </div>
-        <div class="review-footer">
-            {{!-- 
-                <LIKE BUTTON>
-                <KEBAB ICON BUTTON ON THE OTHER END>
-             --}}
-        </div>
-     </div>
+	{{#if review_list}}
+		{{#each review_list}}
+			<div class="one-review-container">
+				<div class="star-rating">
+					{{!-- 
+						{{#each <whatever variable use for user rating on a product>}}
+							<img src="DOWNLOAD IMAGE OF STAR FIRST">
+						{{/each}}            
+					 --}}
+					 {{this.rating}}
+				</div>
+				<div class="review-user">
+					{{this.authorName}}
+				</div>
+				<div class="review-header">
+					{{this.header}}
+				</div>
+				<div class="review-content">
+					{{this.body}}
+				</div>
+				<div class="review-footer">
+					{{!-- 
+						<LIKE BUTTON>
+						<KEBAB ICON BUTTON ON THE OTHER END>
+					 --}}
+				</div>
+			 </div>
+		{{/each}}
+	{{else}}
+		<!-- Add prompt here that product has no reviews. -->
+		<p> THIS PRODUCT HAS NO REVIEWS </p>
+	{{/if}}
 </div>

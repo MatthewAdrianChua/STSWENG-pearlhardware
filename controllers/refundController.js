@@ -206,11 +206,15 @@ const refundController = {
                     }) 
 
                     //console.log(updateRefund);
-                    
                     res.sendStatus(200);
-                    //console.log(response)
+                    
+                    console.log(response);
                 })
-                .catch(err => console.error(err));
+                .catch(err => {console.error(err)
+                     res.sendStatus(400)});
+
+            return 200;
+            //res.sendStatus(200);
 
         }catch(error){
             console.error(error);

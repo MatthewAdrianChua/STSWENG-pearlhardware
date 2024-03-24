@@ -61,7 +61,25 @@
         <div class="pl-10 flex flex-col justify-start w-full">
             <h2 class="font-Inknut text-secondary text-[32px] mt-5">{{product.name}}</h2>
             <p class="font-Inknut text-secondary text-2xl pb-2">&#8369; {{formatPrice product.price}}</p>
-        
+			
+			<!-- RATING CLASS -->
+			<p class="font-Inknut text-secondary text"> 
+			Product rating: 
+			{{#if ratingAve}}
+				{{ ratingAve }}
+			{{else}}
+				0
+			{{/if}}
+			Stars
+
+			(
+			{{#if ratingNo}}
+				{{ratingNo}}
+			{{else}}
+				No
+			{{/if}} 
+			Ratings )</p>
+			
             <p class="text-[17px] pb-2">{{product.description}}</p>
             <span class="text-[17px] pb-3">In Stock: {{product.quantity}}</span>
         
@@ -79,7 +97,7 @@
     				</button>
 
                     <div id="add-review-button">
-                        <p>Edit Review</p>
+                        <p>Add Review</p>
                     </div>
 				</div>
             </form>

@@ -5,6 +5,7 @@ import { User } from '../model/userSchema.js';
 import { Order } from '../model/orderSchema.js';
 import { ObjectId } from 'mongodb';
 import { Product } from '../model/productSchema.js';
+import mongoose from 'mongoose';
 
 let currentCategory = "allproducts";
 const pageLimit = 15;
@@ -55,17 +56,15 @@ const orderController = {
         // sortOrders function
 		const sortValue = req.query.sortBy;
         console.log(sortValue);
-		try{
-			const id = new mongoose.Types.ObjectId(query);
-			console.log(id);
+		try{	
 			if (sortValue == "date_asc"){
-				resp = await Order.find({ _id: id }, { __v: 0 }).sort({date: 'asc'}).lean();
+				resp = await Order.find({ _id: query }, { __v: 0 }).sort({date: 'asc'});
 			}
 			else if (sortValue == "date_desc"){
-				resp = await Order.find({ _id: id }, { __v: 0 }).sort({date: 'desc'}).lean();
+				resp = await Order.find({ _id: query }, { __v: 0 }).sort({date: 'desc'});
 			}
 			else {
-				resp = await Order.find({ _id: id }, { __v: 0 }).lean();
+				resp = await Order.find({ _id: query }, { __v: 0 });
 				sortOrders(resp, sortValue);
 			}
 			for(let i = 0; i < resp.length; i++) {
@@ -86,9 +85,11 @@ const orderController = {
             req.session.prevPage = false;
             req.session.pageIndex = 0;
             currentCategory = "search";
+            //res.sendStatus(200);
 		}
-		catch{
-			console.log("Failed!");
+		catch(error){
+            //res.sendStatus(400);
+            console.error(error);
 		}
 		res.render("adminOrders", {layout: 'adminMain',order_list: order_list, buffer: query, nextPage: req.session.nextPage, prevPage: req.session.prevPage, script: '/./js/adminOrders.js'});
     },

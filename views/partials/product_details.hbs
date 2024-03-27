@@ -121,9 +121,11 @@
 
         if (reviewOverlay.style.display === 'none' || reviewOverlay.style.display === '') {
             reviewOverlay.style.display = 'block';
+			document.body.style.overflow = "hidden"
         }
         else {
             reviewOverlay.style.display = 'none';
+			document.body.style.overflow = ""
         }
     }
 </script>

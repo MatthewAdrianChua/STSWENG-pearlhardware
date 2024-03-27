@@ -146,21 +146,34 @@ const storePageController = {
 		let dateSplit;
         try {
             const product_result = await Product.find({ _id: query }, { __v: 0 }).lean();
- 
-			const reviews = await Review.find({productID: query}, {__v: 0}).lean();
+			let reviews = await Review.find({productID: query}, {__v: 0}).lean();
 			//Reviews are default sorted newest to oldest. Can be changed on a later date!
 			reviews.sort((a, b) => b.dateCreated - a.dateCreated);
 			
+			let userReviewIndex = -1;
 			for (let i = 0; i < reviews.length; i++){
 				dateSplit = reviews[i].dateCreated.toString().split(" ");
 				//console.log(reviews[i]);
 				sumRating += reviews[i].rating;
 				reviews[i].dateCreated = dateSplit[1] + ". " + dateSplit[2] + ", " + dateSplit[3] + " " + dateSplit[4]; 
+				if(reviews[i].authorID == req.session.userID){
+					console.log("FOUND REVIEW WRITTEN BY USER at " + i);
+					userReviewIndex = i;
+				}
 			}
 			
 			let ratingAve = sumRating/reviews.length;
+			let user_review;
+			if(userReviewIndex != -1){
+				user_review = reviews[userReviewIndex];
+				let reviewsH = reviews.slice(0, userReviewIndex);
+				let reviewsL = reviews.slice(userReviewIndex + 1);
+				reviews = reviewsH.concat(reviewsL);
+			}
+
             return res.render("productDesc", {
                 product: product_result[0],
+				user_review: user_review,
 				review_list: reviews,
 				ratingAve: ratingAve.toFixed(1),
 				ratingNo: reviews.length,

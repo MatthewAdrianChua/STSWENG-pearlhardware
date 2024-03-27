@@ -88,12 +88,49 @@
 		font-family: Inika;
 		font-weight: 800;
 	}
+	
+	.userButton{
+		margin: 0 10px 0 10px;
+		padding: 10px;
+		background-color: gray;
+	}
 </style>
 
 <div class="reviews-container">
 	<div id="product-reviews">
 		<p>Product Reviews</p>
 	</div>
+
+	{{#if user_review}}
+			<div class="one-review-container">
+				<div class="star-rating">
+					{{!-- 
+						{{#each <whatever variable use for user rating on a product>}}
+							<img src="DOWNLOAD IMAGE OF STAR FIRST">
+						{{/each}}            
+					 --}}
+					 {{user_review.rating}} stars 
+				</div>
+				<div class="review-date">
+					Reviewed on {{user_review.dateCreated}}
+				</div>
+				<div class="review-user">
+					by: {{user_review.authorName}} (Your review)
+				</div>
+				<div class="review-header">
+					{{user_review.header}}
+				</div>
+				<div class="review-content">
+					{{user_review.body}}
+				</div>
+				<div class="review-footer">
+					<button class="userButton" id="editBtn"> Edit review </button>
+					<button class="userButton" id="delBtn"> Delete review </button>
+					I need this for testing. Please change as you see fit. The css for this is in review_list.hbs (line 92)
+				</div>
+			 </div>
+	{{/if}}
+	
 	{{#if review_list}}
 		{{#each review_list}}
 			<div class="one-review-container">

@@ -1,51 +1,49 @@
 {{#if product}}
-
 	<style>
-  #originalBtn:hover {
-      display: none;
-  }
-  #originalBtn:hover + #hoverBtn {
-      display: flex;
-  }
-  #originalBtn, #hoverBtn {
-    transition: opacity 0.3s ease;
-}
+		#originalBtn:hover {
+			display: none;
+		}
+		#originalBtn:hover + #hoverBtn {
+			display: flex;
+		}
+		#originalBtn, #hoverBtn {
+			transition: opacity 0.3s ease;
+		}
 
-    #add-review-button {
-        user-select: none;
-        cursor: pointer;
+		#add-review-button {
+			user-select: none;
+			cursor: pointer;
 
-        display: flex;
-        align-items: center;
-        justify-content: space-around;
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
 
-        height: 2.5rem;
-        padding: 0 1vw;
-        background-color: #0980D3;
-        border-radius: 22.5px;
+			height: 2.5rem;
+			padding: 0 1vw;
+			background-color: #0980D3;
+			border-radius: 22.5px;
 
-        font-family: Inika;
-        font-size: 1.25rem;
-        color: white;
-    }
+			font-family: Inika;
+			font-size: 1.25rem;
+			color: white;
+		}
 
-    #add-review-button:hover {
-        background-color: #ffffff;
-        border-radius: 22.5px;
-        color: #0980D3;
-    }
+		#add-review-button:hover {
+			background-color: #ffffff;
+			border-radius: 22.5px;
+			color: #0980D3;
+		}
 
-    #submitBtn:hover {
-        background-color: #ffffff;
-        border-radius: 22.5px;
-        color: #0980D3;
-    }
+		#submitBtn:hover {
+			background-color: #ffffff;
+			border-radius: 22.5px;
+			color: #0980D3;
+		}
 
-    #submitBtn:hover img {
-        filter: invert(35%) sepia(90%) saturate(1792%) hue-rotate(184deg) brightness(89%) contrast(93%);
-    }
-
-</style>
+		#submitBtn:hover img {
+			filter: invert(35%) sepia(90%) saturate(1792%) hue-rotate(184deg) brightness(89%) contrast(93%);
+		}
+	</style>
 	
 	<script>
 		console.log("Recieved product: ");
@@ -100,16 +98,11 @@
                         <p>Add Review</p>
                     </div>
 				</div>
-            </form>
-                            
+            </form> 
         </div>
-
     </div>
-
 </div>
 
-
-			
 	</div>
 {{else}}
 	<h1>No product found!</h1>

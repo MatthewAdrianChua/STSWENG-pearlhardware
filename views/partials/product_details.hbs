@@ -96,7 +96,7 @@
     				    Add to Cart
     				</button>
 
-                    <div id="add-review-button">
+                    <div id="add-review-button" onclick="toggleReview()">
                         <p>Add Review</p>
                     </div>
 				</div>
@@ -114,3 +114,10 @@
 {{else}}
 	<h1>No product found!</h1>
 {{/if}}
+
+<script>
+    function toggleReview() {
+        const addReview = document.getElementById('toggleReview');
+        addReview.style.display = (addReview.style.display === 'none' || addReview.style.display === '') ? 'block' : 'none';
+    }
+</script>

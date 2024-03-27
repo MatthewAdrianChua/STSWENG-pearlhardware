@@ -1,0 +1,166 @@
+<style>
+    .review-add-toggle-container {
+        display: none;
+
+        background-color: rgba(0, 0, 0, 0.4);
+        height: 100%;
+        width: 100vw;
+
+        position: fixed;
+        top: 0;
+        z-index: 999;
+
+        overflow-y: scroll;
+    }
+
+    .review-add-container {
+        background-color: rgba(9, 128, 211, 1);
+        opacity: 1;
+
+        color: white;
+        font-family: Inika;
+
+        width: 60vw;
+
+        margin: 10vh auto;
+
+        border-radius: 23px;
+    }
+
+    .review-add-title {
+        height: 10vh;
+        padding: 2vh 2vw;
+
+        font-size: 4vh;
+        font-weight: 600;
+    }
+
+    .review-add-inputs {
+        background-color: white;
+        border-radius: 0 0 23px 23px;
+    }
+
+    {{!-- HEADER STYLES --}}
+    .review-input-header {
+        width: 100%;
+
+        color: black;
+
+        padding: 2vh 2vw;
+    }
+
+    .review-input-header label {
+        font-weight: 600;
+        font-size: 3vh;
+    }
+
+    .header-textbox {
+        width: 100%;
+        height: 20vh;
+
+        border: 1px solid #888888;
+        margin-top: 1vh;
+        padding: 1vh 1vw;
+
+        overflow: clip;
+
+        font-size: 2.5vh;
+
+        resize: none;
+    }
+
+    {{!-- CONTENT STYLES --}}
+    .review-input-content {
+        color: black;
+
+        padding: 2vh 2vw;
+    }
+
+    .review-input-content label {
+        font-weight: 600;
+        font-size: 3vh;
+    }
+
+    .content-textbox {
+        width: 100%;
+        height: 70vh;
+
+        border: 1px solid #888888;
+        margin-top: 1vh;
+        padding: 1vh 1vw;
+
+        overflow: clip;
+
+        font-size: 2.5vh;
+
+        resize: none;
+    }
+
+    .header-limit, .content-limit {
+        width: 100%;
+        height: 2vh;
+        color: #777777;
+        font-size: 2vh;
+        text-align: end;
+    }
+
+
+    {{!-- SUBMIT BUTTON --}}
+    .review-add-submit {
+        background-color: rgba(9, 128, 211, 1);
+        width: 10vw;
+        height: auto;
+
+        margin-top: 2vh;
+        margin-left: 3vw;
+        margin-bottom: 6vh;
+        padding: 1vh 2vw;
+        
+        font-size: 3vh;
+        font-weight: 600;
+
+        border: 1px solid rgb(9, 128, 211);
+        border-radius: 90px;
+    }
+
+    .review-add-submit:hover {
+        color: rgb(9, 128, 211);
+        background-color: white;
+        border-radius: 90px;
+    }
+
+
+    {{!-- SHARED --}}
+    .header-textbox, .content-textbox {
+        border-radius: 12px;
+    }
+</style>
+
+<div class="review-add-toggle-container" id="toggleReview">
+    <div class="review-add-container">
+        <p class="review-add-title">Review the product</p>
+        <div class="review-add-inputs">
+            <form method="POST" enctype="application/x-www-form-urlencoded">
+                <div class="review-input-header">
+                    <label>Review Header</label>
+                    <textarea class="header-textbox" name="rev-head" rows="3" columns="100" placeholder="Type your review summary here..."></textarea>
+                    <p class="header-limit">
+                        50
+                        {{!-- {{this.header_limit}} --}}
+                    </p>
+                </div>
+                <div class="review-input-content">
+                    <label>Review Content</label>
+                    <textarea class="content-textbox" name="rev-cont" columns="100" placeholder="Type your product review here..."></textarea>
+                    <p class="content-limit">
+                        200
+                        {{!-- {{this.content_limit}} --}}
+                    </p>
+                </div>
+                <button type="submit" class="review-add-submit">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

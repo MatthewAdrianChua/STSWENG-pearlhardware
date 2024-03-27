@@ -151,7 +151,10 @@
     .cancel-overlay:hover {
         background-color: #f0f0f0;
     }
-
+	
+	.review-input-rating{
+		color:black;
+	}
 
     {{!-- SHARED --}}
     .header-textbox, .content-textbox {
@@ -163,7 +166,7 @@
     <div class="review-add-container">
         <p class="review-add-title">Review the product</p>
         <div class="review-add-inputs">
-            <form method="POST" enctype="application/x-www-form-urlencoded">
+            <!-- <form method="POST" enctype="application/x-www-form-urlencoded"> -->
                 <div class="review-input-header">
                     <label>Review Header</label>
                     <textarea class="header-textbox" name="rev-head" rows="3" columns="100" placeholder="Type your review summary here..."></textarea>
@@ -172,6 +175,24 @@
                         {{!-- {{this.header_limit}} --}}
                     </p>
                 </div>
+				<div class="review-input-rating">
+					<p>Rating: 
+					<input type="radio" id="rating1" name="ratingVal" value=1 />
+					<label for="rating1">1⭐</label>
+					
+					<input type="radio" id="rating2" name="ratingVal" value=2 />
+					<label for="rating2">2⭐</label>
+					
+					<input type="radio" id="rating3" name="ratingVal" value=3 />
+					<label for="rating3">3⭐</label>
+					
+					<input type="radio" id="rating4" name="ratingVal" value=4 />
+					<label for="rating4">4⭐</label>
+					
+					<input type="radio" id="rating5" name="ratingVal" value=5 />
+					<label for="rating5">5⭐</label>
+					</p>
+				</div>
                 <div class="review-input-content">
                     <label>Review Content</label>
                     <textarea class="content-textbox" name="rev-cont" columns="100" placeholder="Type your product review here..."></textarea>
@@ -186,7 +207,7 @@
                     <span class="cancel-overlay" onclick="toggleReview()">
                         Cancel
                     </span>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 </div>

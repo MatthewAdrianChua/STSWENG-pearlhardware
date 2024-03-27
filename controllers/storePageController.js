@@ -143,20 +143,26 @@ const storePageController = {
         console.log("getting product!");
         var query = req.query.id;
 		let sumRating = 0;
+		let dateSplit;
         try {
             const product_result = await Product.find({ _id: query }, { __v: 0 }).lean();
-            //console.log(product_result);
+ 
 			const reviews = await Review.find({productID: query}, {__v: 0}).lean();
+			//Reviews are default sorted newest to oldest. Can be changed on a later date!
+			reviews.sort((a, b) => b.dateCreated - a.dateCreated);
 			
 			for (let i = 0; i < reviews.length; i++){
-				console.log(reviews[i].rating);
+				dateSplit = reviews[i].dateCreated.toString().split(" ");
+				//console.log(reviews[i]);
 				sumRating += reviews[i].rating;
+				reviews[i].dateCreated = dateSplit[1] + ". " + dateSplit[2] + ", " + dateSplit[3] + " " + dateSplit[4]; 
 			}
 			
+			let ratingAve = sumRating/reviews.length;
             return res.render("productDesc", {
                 product: product_result[0],
 				review_list: reviews,
-				ratingAve: sumRating/reviews.length,
+				ratingAve: ratingAve.toFixed(1),
 				ratingNo: reviews.length,
                 script: "./js/add_to_cart.js",
             });
@@ -171,7 +177,6 @@ async function sortProducts(product_list, sortValue) {
     if (sortValue !== undefined) {
         switch (sortValue) {
             case 'def':
-
                 break;
             case 'price_asc':
                 product_list.sort((a, b) => a.price - b.price);

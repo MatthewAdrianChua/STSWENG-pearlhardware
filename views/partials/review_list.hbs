@@ -103,10 +103,13 @@
 							<img src="DOWNLOAD IMAGE OF STAR FIRST">
 						{{/each}}            
 					 --}}
-					 {{this.rating}}
+					 {{this.rating}} stars 
+				</div>
+				<div class="review-date">
+					Reviewed on {{this.dateCreated}}
 				</div>
 				<div class="review-user">
-					{{this.authorName}}
+					by: {{this.authorName}}
 				</div>
 				<div class="review-header">
 					{{this.header}}
@@ -166,4 +169,5 @@
 				</div>
 		</div> --}}
 	{{/if}}
+	<script src="./js/review.js"></script>
 </div>

@@ -96,7 +96,7 @@
     				    Add to Cart
     				</button>
 
-                    <div id="add-review-button" onclick="toggleReview()">
+                    <div id="add-review-button" onclick="toggleReview(event)">
                         <p>Add Review</p>
                     </div>
 				</div>
@@ -117,7 +117,13 @@
 
 <script>
     function toggleReview() {
-        const addReview = document.getElementById('toggleReview');
-        addReview.style.display = (addReview.style.display === 'none' || addReview.style.display === '') ? 'block' : 'none';
+        const reviewOverlay = document.getElementById('toggleReview');
+
+        if (reviewOverlay.style.display === 'none' || reviewOverlay.style.display === '') {
+            reviewOverlay.style.display = 'block';
+        }
+        else {
+            reviewOverlay.style.display = 'none';
+        }
     }
 </script>

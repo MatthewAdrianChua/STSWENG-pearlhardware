@@ -104,7 +104,6 @@
         text-align: end;
     }
 
-
     {{!-- SUBMIT BUTTON --}}
     .review-add-submit {
         background-color: rgba(9, 128, 211, 1);
@@ -121,12 +120,36 @@
 
         border: 1px solid rgb(9, 128, 211);
         border-radius: 90px;
+
+        user-select: none;
     }
 
     .review-add-submit:hover {
         color: rgb(9, 128, 211);
         background-color: white;
         border-radius: 90px;
+    }
+
+    .cancel-overlay {
+        background-color: white;
+        color: black;
+        width: 10vw;
+        height: auto;
+        padding: 1vh 2vw;
+        
+        font-size: 2.5vh;
+        
+        margin-left: 1vw;
+
+        border: 1px solid #f0f0f0;
+        border-radius: 90px;
+
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .cancel-overlay:hover {
+        background-color: #f0f0f0;
     }
 
 
@@ -136,7 +159,7 @@
     }
 </style>
 
-<div class="review-add-toggle-container" id="toggleReview">
+<div class="review-add-toggle-container" id="toggleReview" onclick="">
     <div class="review-add-container">
         <p class="review-add-title">Review the product</p>
         <div class="review-add-inputs">
@@ -157,9 +180,12 @@
                         {{!-- {{this.content_limit}} --}}
                     </p>
                 </div>
-                <button type="submit" class="review-add-submit">
-                    Submit
-                </button>
+                    <button type="submit" class="review-add-submit">
+                        Submit
+                    </button>
+                    <span class="cancel-overlay" onclick="toggleReview()">
+                        Cancel
+                    </span>
             </form>
         </div>
     </div>

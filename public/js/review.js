@@ -4,6 +4,11 @@ let addButton = doc.querySelector("#add-review-button");
 let delButton = doc.querySelector("#delBtn");
 let editButton = doc.querySelector("#editBtn");
 
+//hide review button if not logged in
+if(!doc.querySelector("form[action='/logout']")){
+	addButton.style.display="none";
+}
+
 if(editButton != null && delButton != null){ //User already has a review & is logged in
 	addButton.innerHTML = "<p>Edit Review</p>"
 	
@@ -13,11 +18,7 @@ if(editButton != null && delButton != null){ //User already has a review & is lo
 	
 	//deletebutton click listener
 	delButton.addEventListener('click', setPromptDelete);
-	
-	/*reviewButton.addEventListener('click', async function(){
-		
-	});*/
-	
+
 }
 else{
 	addButton.addEventListener('click', toggleReview);
@@ -47,9 +48,10 @@ function getInputReviewValues() {
 
 async function add(){
 	//check if logged in
+	/*
 	if(!doc.querySelector("form[action='/logout']")){
 		window.location.href = '/login?';
-	}
+	}*/
 	
 	let {header, content, id, rating} = getInputReviewValues();
 	

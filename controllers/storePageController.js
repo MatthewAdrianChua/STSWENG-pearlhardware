@@ -152,10 +152,12 @@ const storePageController = {
 			
 			let userReviewIndex = -1;
 			for (let i = 0; i < reviews.length; i++){
-				dateSplit = reviews[i].dateCreated.toString().split(" ");
 				//console.log(reviews[i]);
 				sumRating += reviews[i].rating;
-				reviews[i].dateCreated = dateSplit[1] + ". " + dateSplit[2] + ", " + dateSplit[3] + " " + dateSplit[4]; 
+				reviews[i].dateCreated = formatDate(reviews[i].dateCreated)
+				if(reviews[i].dateUpdated != null && reviews[i].dateUpdated != undefined){
+					reviews[i].dateUpdated = formatDate(reviews[i].dateUpdated);
+				}
 				if(reviews[i].authorID == req.session.userID){
 					//console.log("FOUND REVIEW WRITTEN BY USER at " + i);
 					userReviewIndex = i;
@@ -170,7 +172,6 @@ const storePageController = {
 				let reviewsL = reviews.slice(userReviewIndex + 1);
 				reviews = reviewsH.concat(reviewsL);
 			}
-
             return res.render("productDesc", {
                 product: product_result[0],
 				user_review: user_review,
@@ -282,6 +283,12 @@ async function getProducts(category, req) {
 	}catch(error){
 		console.error(error);
 	}
+}
+
+//takes a date and formats it to DAY MM. dd, YYYY HH:mm:ss
+function formatDate(d){
+	let split = d.toString().split(" ");
+	return split[1] + ". " + split[2] + ", " + split[3] + " " + split[4]; 
 }
 
 export default storePageController;

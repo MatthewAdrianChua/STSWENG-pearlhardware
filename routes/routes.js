@@ -110,6 +110,7 @@ router.post('/refundCustomer', refundController.refundCustomer);
 router.post('/denyRefund', refundController.denyRefund);
 router.post('/addReview', reviewController.addReviews);
 router.post('/delReview', reviewController.delReviews);
+router.post('/editReview', reviewController.editReviews);
 
 
 export default router;

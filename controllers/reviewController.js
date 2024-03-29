@@ -34,7 +34,25 @@ const reviewController = {
 		
 		
 	},
-	//editReviews: async function(req, res){},
+	editReviews: async function(req, res){
+		let { id, header, content, rating } = req.body;
+		Review.updateOne(
+			{productID: id, authorID: req.session.userID},
+			{
+				header: header,
+				body: content,
+				rating: rating,
+				dateUpdated: Date.now()
+			}
+		).then(() => {
+			res.sendStatus(200);
+		})
+		.catch((e) => {
+			console.log("Error trying to edit review");
+			console.error(e);
+			res.sendStatus(500);
+		});
+	},
 	delReviews: async function(req, res){
 		let { id } = req.body;
 		Review.deleteOne({productID: id, authorID: req.session.userID})

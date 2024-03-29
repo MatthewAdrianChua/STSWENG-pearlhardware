@@ -21,47 +21,77 @@ if(editButton != null && delButton != null){ //User already has a review & is lo
 }
 else{
 	addButton.addEventListener('click', toggleReview);
-	reviewButton.addEventListener('click', async function add(){
-		//check if logged in
-		if(!doc.querySelector("form[action='/logout']")){
-			window.location.href = '/login?';
+	reviewButton.addEventListener('click', add);
+}
+
+function getInputReviewValues() {
+	let id = doc.querySelector('#p_id').value;
+	let header = doc.querySelector('.header-textbox').value;
+	let content = doc.querySelector('.content-textbox').value;
+	let rating = doc.querySelector("input[type='radio']:checked");
+	
+	if(rating == null){
+		console.log("oh no! RATING WAS NULL!");
+		rating = 1;
+	}
+	else{
+		rating = rating.value;
+	}
+	return {
+		id: id,
+		header: header,
+		content: content,
+		rating: rating
+	}
+}
+
+async function add(){
+	//check if logged in
+	if(!doc.querySelector("form[action='/logout']")){
+		window.location.href = '/login?';
+	}
+	
+	let {header, content, id, rating} = getInputReviewValues();
+	
+	//we should be able to pass a flag for anonymous rating
+	let data = JSON.stringify({header, content, id, rating});
+	
+	let res = await fetch('/addReview', {
+		method: "POST",
+		body: data,
+		headers: {
+			"Content-Type": "application/json"
 		}
-		
-		let id = doc.querySelector('#p_id').value;
-		let header = doc.querySelector('.header-textbox').value;
-		let content = doc.querySelector('.content-textbox').value;
-		let rating = doc.querySelector("input[type='radio']:checked");
-		if(rating == null){
-			console.log("oh no! RATING WAS NULL!");
-			rating = 1;
-		}
-		else{
-			rating = rating.value;
-		}
-		//we should be able to pass a flag for anonymous rating
-		let data = JSON.stringify({header, content, id, rating});
-		
-		let res = await fetch('/addReview', {
-			method: "POST",
-			body: data,
-			headers: {
-				"Content-Type": "application/json"
-			}
-		});
-		
-		if(res.status == 200){
-			alert("Succesfully posted review!");
-			location.reload();
-		}
-		else{
-			alert("Error!");
-		}	
 	});
+	
+	if(res.status == 200){
+		alert("Succesfully posted review!");
+		location.reload();
+	}
+	else{
+		alert("Error!");
+	}	
 }
 
 async function edit(){
+	console.log(getInputReviewValues());
+	let res = await fetch('/editReview', {
+		method: "POST",
+		body: JSON.stringify(getInputReviewValues()),
+		headers: {
+			"Content-Type": "application/json"
+		}
+	});
 	
+	if(res.status == 200){
+		alert("Succesfully updated review!");
+		location.reload();
+	}
+	else{
+		alert("Error!");
+	}
 }
+
 async function del(){
 	let id = doc.querySelector('#p_id').value;
 	let res = await fetch('/delReview', {

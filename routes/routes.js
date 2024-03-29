@@ -109,6 +109,7 @@ router.post('/createRefund', upload.array('productPic', 10), body('name').notEmp
 router.post('/refundCustomer', refundController.refundCustomer);
 router.post('/denyRefund', refundController.denyRefund);
 router.post('/addReview', reviewController.addReviews);
+router.post('/delReview', reviewController.delReviews);
 
 
 export default router;

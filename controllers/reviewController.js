@@ -35,7 +35,18 @@ const reviewController = {
 		
 	},
 	//editReviews: async function(req, res){},
-	//deleteReviews: async function(req, res){},
+	delReviews: async function(req, res){
+		let { id } = req.body;
+		Review.deleteOne({productID: id, authorID: req.session.userID})
+			.then(() => {
+				res.sendStatus(200);
+			})
+			.catch((e) => {
+				console.log("Error trying to delete review");
+				console.error(e);
+				res.sendStatus(500);
+			});
+	}
 };
 
 export default reviewController;

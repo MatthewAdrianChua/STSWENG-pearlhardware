@@ -113,7 +113,10 @@
 					 {{user_review.rating}} stars 
 				</div>
 				<div class="review-date">
-					Reviewed on {{user_review.dateCreated}}
+					Reviewed on {{user_review.dateCreated}} 
+					{{#if user_review.dateUpdated}}
+					(Last edited on: {{user_review.dateUpdated}})
+					{{/if}}
 				</div>
 				<div class="review-user">
 					by: {{user_review.authorName}} (Your review)
@@ -145,6 +148,9 @@
 				</div>
 				<div class="review-date">
 					Reviewed on {{this.dateCreated}}
+					{{#if this.dateUpdated}}
+					(Last edited on: {{this.dateUpdated}})
+					{{/if}}
 				</div>
 				<div class="review-user">
 					by: {{this.authorName}}

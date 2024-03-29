@@ -103,6 +103,7 @@
 
 	{{#if user_review}}
 			<div class="one-review-container">
+				<input type="hidden" id="userReviewRating" value="{{user_review.rating}}" />
 				<div class="star-rating">
 					{{!-- 
 						{{#each <whatever variable use for user rating on a product>}}
@@ -117,10 +118,10 @@
 				<div class="review-user">
 					by: {{user_review.authorName}} (Your review)
 				</div>
-				<div class="review-header">
+				<div class="review-header" id="userReviewHeader">
 					{{user_review.header}}
 				</div>
-				<div class="review-content">
+				<div class="review-content" id="userReviewContent">
 					{{user_review.body}}
 				</div>
 				<div class="review-footer">
@@ -163,48 +164,50 @@
 			 </div>
 		{{/each}}
 	{{else}}
-		<!-- Add prompt here that product has no reviews. -->
-		<p id="no-reviews"> THIS PRODUCT HAS NO REVIEWS </p>
+		{{#unless user_review}}
+			<!-- Add prompt here that product has no reviews. -->
+			<p id="no-reviews"> THIS PRODUCT HAS NO REVIEWS </p>
 
-		{{!-- The big chungus comment below can be used for basic, no-brain testing; --}}
-		{{!-- <div class="one-review-container">
-				<div class="star-rating">
-					 69.420
-				</div>
-				<div class="review-user">
-					Name NoName
-				</div>
-				<div class="review-header">
-					Jusko Po BAD PRODUCT
-				</div>
-				<div class="review-content">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et hendrerit nisl, et ultricies nibh. Donec facilisis dolor sed auctor varius. Integer at ante non lectus convallis pretium eget vitae tellus. Duis tempus, metus ac pretium blandit, purus tellus iaculis turpis, id eleifend nulla enim et quam. Proin suscipit velit id justo maximus pulvinar. Nulla ultrices rhoncus turpis, eu semper sem pellentesque at. Ut ac augue nec orci blandit venenatis eget et velit. Ut rhoncus magna id arcu tempus semper. Ut varius ex et nisl consectetur, vel tincidunt sem scelerisque. Phasellus maximus lacus quis diam imperdiet, eu luctus elit volutpat. Nulla ac tellus sit amet mauris luctus porttitor eu ut magna. Vivamus dolor ipsum, consectetur in nulla nec, accumsan iaculis lorem. Nullam varius lacus hendrerit lacus facilisis, vel iaculis arcu ullamcorper.
-					<br>
-					Morbi fringilla lectus lectus, sit amet maximus elit congue sed. Sed aliquam est sit amet dui venenatis, quis interdum mauris pretium. Nullam a leo sed tortor scelerisque sodales sed sed orci. Phasellus dictum, ante vitae hendrerit elementum, est ipsum finibus erat, non sagittis felis nisl nec ipsum. Morbi dapibus purus in interdum sagittis. Nullam gravida sollicitudin turpis. Nulla nibh metus, tincidunt in quam eget, tincidunt accumsan diam. Donec suscipit.
-				</div>
-				<div class="review-footer">
-					 LIKEY
-				</div>
-		</div>
-		<div class="one-review-container">
-				<div class="star-rating">
-					 69.420
-				</div>
-				<div class="review-user">
-					Name NoName
-				</div>
-				<div class="review-header">
-					Jusko Po BAD PRODUCT
-				</div>
-				<div class="review-content">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et hendrerit nisl, et ultricies nibh. Donec facilisis dolor sed auctor varius. Integer at ante non lectus convallis pretium eget vitae tellus. Duis tempus, metus ac pretium blandit, purus tellus iaculis turpis, id eleifend nulla enim et quam. Proin suscipit velit id justo maximus pulvinar. Nulla ultrices rhoncus turpis, eu semper sem pellentesque at. Ut ac augue nec orci blandit venenatis eget et velit. Ut rhoncus magna id arcu tempus semper. Ut varius ex et nisl consectetur, vel tincidunt sem scelerisque. Phasellus maximus lacus quis diam imperdiet, eu luctus elit volutpat. Nulla ac tellus sit amet mauris luctus porttitor eu ut magna. Vivamus dolor ipsum, consectetur in nulla nec, accumsan iaculis lorem. Nullam varius lacus hendrerit lacus facilisis, vel iaculis arcu ullamcorper.
-					<br>
-					Morbi fringilla lectus lectus, sit amet maximus elit congue sed. Sed aliquam est sit amet dui venenatis, quis interdum mauris pretium. Nullam a leo sed tortor scelerisque sodales sed sed orci. Phasellus dictum, ante vitae hendrerit elementum, est ipsum finibus erat, non sagittis felis nisl nec ipsum. Morbi dapibus purus in interdum sagittis. Nullam gravida sollicitudin turpis. Nulla nibh metus, tincidunt in quam eget, tincidunt accumsan diam. Donec suscipit.
-				</div>
-				<div class="review-footer">
-					 LIKEY
-				</div>
-		</div> --}}
+			{{!-- The big chungus comment below can be used for basic, no-brain testing; --}}
+			{{!-- <div class="one-review-container">
+					<div class="star-rating">
+						 69.420
+					</div>
+					<div class="review-user">
+						Name NoName
+					</div>
+					<div class="review-header">
+						Jusko Po BAD PRODUCT
+					</div>
+					<div class="review-content">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et hendrerit nisl, et ultricies nibh. Donec facilisis dolor sed auctor varius. Integer at ante non lectus convallis pretium eget vitae tellus. Duis tempus, metus ac pretium blandit, purus tellus iaculis turpis, id eleifend nulla enim et quam. Proin suscipit velit id justo maximus pulvinar. Nulla ultrices rhoncus turpis, eu semper sem pellentesque at. Ut ac augue nec orci blandit venenatis eget et velit. Ut rhoncus magna id arcu tempus semper. Ut varius ex et nisl consectetur, vel tincidunt sem scelerisque. Phasellus maximus lacus quis diam imperdiet, eu luctus elit volutpat. Nulla ac tellus sit amet mauris luctus porttitor eu ut magna. Vivamus dolor ipsum, consectetur in nulla nec, accumsan iaculis lorem. Nullam varius lacus hendrerit lacus facilisis, vel iaculis arcu ullamcorper.
+						<br>
+						Morbi fringilla lectus lectus, sit amet maximus elit congue sed. Sed aliquam est sit amet dui venenatis, quis interdum mauris pretium. Nullam a leo sed tortor scelerisque sodales sed sed orci. Phasellus dictum, ante vitae hendrerit elementum, est ipsum finibus erat, non sagittis felis nisl nec ipsum. Morbi dapibus purus in interdum sagittis. Nullam gravida sollicitudin turpis. Nulla nibh metus, tincidunt in quam eget, tincidunt accumsan diam. Donec suscipit.
+					</div>
+					<div class="review-footer">
+						 LIKEY
+					</div>
+			</div>
+			<div class="one-review-container">
+					<div class="star-rating">
+						 69.420
+					</div>
+					<div class="review-user">
+						Name NoName
+					</div>
+					<div class="review-header">
+						Jusko Po BAD PRODUCT
+					</div>
+					<div class="review-content">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et hendrerit nisl, et ultricies nibh. Donec facilisis dolor sed auctor varius. Integer at ante non lectus convallis pretium eget vitae tellus. Duis tempus, metus ac pretium blandit, purus tellus iaculis turpis, id eleifend nulla enim et quam. Proin suscipit velit id justo maximus pulvinar. Nulla ultrices rhoncus turpis, eu semper sem pellentesque at. Ut ac augue nec orci blandit venenatis eget et velit. Ut rhoncus magna id arcu tempus semper. Ut varius ex et nisl consectetur, vel tincidunt sem scelerisque. Phasellus maximus lacus quis diam imperdiet, eu luctus elit volutpat. Nulla ac tellus sit amet mauris luctus porttitor eu ut magna. Vivamus dolor ipsum, consectetur in nulla nec, accumsan iaculis lorem. Nullam varius lacus hendrerit lacus facilisis, vel iaculis arcu ullamcorper.
+						<br>
+						Morbi fringilla lectus lectus, sit amet maximus elit congue sed. Sed aliquam est sit amet dui venenatis, quis interdum mauris pretium. Nullam a leo sed tortor scelerisque sodales sed sed orci. Phasellus dictum, ante vitae hendrerit elementum, est ipsum finibus erat, non sagittis felis nisl nec ipsum. Morbi dapibus purus in interdum sagittis. Nullam gravida sollicitudin turpis. Nulla nibh metus, tincidunt in quam eget, tincidunt accumsan diam. Donec suscipit.
+					</div>
+					<div class="review-footer">
+						 LIKEY
+					</div>
+			</div> --}}
+		{{/unless}}
 	{{/if}}
 	<script src="./js/review.js"></script>
 </div>

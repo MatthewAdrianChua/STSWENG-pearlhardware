@@ -140,7 +140,7 @@ const storePageController = {
     //using the product ID in the query, it will send the data to products.hbs to render
     //the webpage for that specific product
     getProduct: async function (req, res) {
-        console.log("getting product!");
+        //console.log("getting product!");
         var query = req.query.id;
 		let sumRating = 0;
 		let dateSplit;
@@ -157,7 +157,7 @@ const storePageController = {
 				sumRating += reviews[i].rating;
 				reviews[i].dateCreated = dateSplit[1] + ". " + dateSplit[2] + ", " + dateSplit[3] + " " + dateSplit[4]; 
 				if(reviews[i].authorID == req.session.userID){
-					console.log("FOUND REVIEW WRITTEN BY USER at " + i);
+					//console.log("FOUND REVIEW WRITTEN BY USER at " + i);
 					userReviewIndex = i;
 				}
 			}

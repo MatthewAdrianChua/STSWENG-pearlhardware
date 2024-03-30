@@ -1,4 +1,10 @@
 let doc = document;
+let headerCounter = doc.querySelector(".header-limit");
+let contentCounter = doc.querySelector(".content-limit");
+
+let headerMax = parseInt(headerCounter.innerHTML.trim());
+let contentMax = parseInt(contentCounter.innerHTML.trim());;
+
 let reviewButton = doc.querySelector(".review-add-submit");
 let addButton = doc.querySelector("#add-review-button");
 let delButton = doc.querySelector("#delBtn");
@@ -14,6 +20,27 @@ if(!doc.querySelector("form[action='/logout']")){
 //Attach eventlistener to remove the error text in rating
 doc.querySelector(".review-input-rating").addEventListener('change', function () {
 	errText.style.display="none";
+});
+
+//attach eventlisteners to change the character counters
+doc.querySelector('.header-textbox').addEventListener('input', function (){
+	headerCounter.innerHTML = headerMax - doc.querySelector('.header-textbox').value.length
+	if(parseInt(headerCounter.innerHTML) >= 0){
+		headerCounter.style.color = "#777777";
+	}
+	else{
+		headerCounter.style.color = "#FF0000";
+	}
+});
+
+doc.querySelector('.content-textbox').addEventListener('input', function (){
+	contentCounter.innerHTML = contentMax - doc.querySelector('.content-textbox').value.length
+	if(parseInt(contentCounter.innerHTML) >= 0){
+		contentCounter.style.color = "#777777";
+	}
+	else{
+		contentCounter.style.color = "#FF0000";
+	}
 });
 
 if(editButton != null && delButton != null){ //User already has a review & is logged in
@@ -55,9 +82,10 @@ async function add(){
 	let {header, content, id, rating, anon} = getInputReviewValues();
 	
 	//we should be able to pass a flag for anonymous rating
-	let data = JSON.stringify({header, content, id, rating, anon});
 	
-	if(rating != null){
+	
+	if(!errorCheck({header, content, rating})){
+		let data = JSON.stringify({header, content, id, rating, anon});
 		let res = await fetch('/addReview', {
 			method: "POST",
 			body: data,
@@ -74,18 +102,16 @@ async function add(){
 			alert("Error!");
 		}	
 	}
-	else{
-		showError("Rating cannot be empty! Please rate the product.");
-	}
 }
 
 async function edit(){
 	let {header, content, id, rating, anon} = getInputReviewValues();
 	
 	//we should be able to pass a flag for anonymous rating
-	let data = JSON.stringify({header, content, id, rating, anon});
 	
-	if(rating != null){
+	
+	if(!errorCheck({header, content, rating})){
+		let data = JSON.stringify({header, content, id, rating, anon});
 		let res = await fetch('/editReview', {
 			method: "POST",
 			body: data,
@@ -101,9 +127,6 @@ async function edit(){
 		else{
 			alert("Error!");
 		}
-	}
-	else{
-		showError("Rating cannot be empty! Please rate the product.");
 	}
 }
 
@@ -191,4 +214,28 @@ async function setPromptEdit(){
 function showError(e){
 	errText.innerHTML=e;
 	errText.style.display="block";
+}
+
+function errorCheck(data){
+	let {header, content, rating} = data;
+	console.log(header);
+	console.log(content);
+	console.log(rating);
+	if(data.rating == null){
+		showError("Rating cannot be empty! Please rate the product.");
+		return true;
+	}
+	else if(data.header == "" && data.content != ""){
+		showError("Cannot have empty header when review body is not empty! Consider putting your review in the header instead.");
+		return true;
+	}
+	else if(parseInt(headerCounter.innerHTML) < 0){
+		showError("Header is too long!");
+		return true;
+	}
+	else if(parseInt(contentCounter.innerHTML) < 0){
+		showError("Review content is too long!");
+		return true;
+	}
+	return false;
 }

@@ -164,7 +164,13 @@ const storePageController = {
 				}
 			}
 			
-			let ratingAve = sumRating/reviews.length;
+			let ratingAve;
+			if(reviews.length <= 0){
+				ratingAve = 0;
+			}
+			else{
+				ratingAve = sumRating/reviews.length;
+			}
 			let user_review;
 			if(userReviewIndex != -1){
 				user_review = reviews[userReviewIndex];

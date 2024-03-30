@@ -121,12 +121,18 @@
 				<div class="review-user">
 					by: {{user_review.authorName}} (Your review)
 				</div>
-				<div class="review-header" id="userReviewHeader">
-					{{user_review.header}}
-				</div>
-				<div class="review-content" id="userReviewContent">
-					{{user_review.body}}
-				</div>
+				{{#if user_review.header}}
+					<div class="review-header" id="userReviewHeader">
+						{{user_review.header}}
+					</div>
+				{{/if}}
+				
+				{{#if user_review.body}}
+					<div class="review-content" id="userReviewContent">
+						{{user_review.body}}
+					</div>
+				{{/if}}
+				
 				<div class="review-footer">
 					<button class="userButton" id="editBtn"> Edit review </button>
 					<button class="userButton" id="delBtn"> Delete review </button>
@@ -155,12 +161,18 @@
 				<div class="review-user">
 					by: {{this.authorName}}
 				</div>
-				<div class="review-header">
-					{{this.header}}
-				</div>
-				<div class="review-content">
-					{{this.body}}
-				</div>
+				{{#if this.header}}
+					<div class="review-header">
+						{{this.header}}
+					</div>
+				{{/if}}
+				
+				{{#if this.body}}
+					<div class="review-content">
+						{{this.body}}
+					</div>
+				{{/if}}
+				
 				<div class="review-footer">
 					{{!-- 
 						<LIKE BUTTON>

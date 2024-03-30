@@ -3,11 +3,18 @@ let reviewButton = doc.querySelector(".review-add-submit");
 let addButton = doc.querySelector("#add-review-button");
 let delButton = doc.querySelector("#delBtn");
 let editButton = doc.querySelector("#editBtn");
+let errText = doc.querySelector("#errText");
+let anonCheck = doc.querySelector("#anonCheck");
 
 //hide review button if not logged in
 if(!doc.querySelector("form[action='/logout']")){
 	addButton.style.display="none";
 }
+
+//Attach eventlistener to remove the error text in rating
+doc.querySelector(".review-input-rating").addEventListener('change', function () {
+	errText.style.display="none";
+});
 
 if(editButton != null && delButton != null){ //User already has a review & is logged in
 	addButton.innerHTML = "<p>Edit Review</p>"
@@ -26,71 +33,77 @@ else{
 }
 
 function getInputReviewValues() {
-	let id = doc.querySelector('#p_id').value;
-	let header = doc.querySelector('.header-textbox').value;
-	let content = doc.querySelector('.content-textbox').value;
-	let rating = doc.querySelector("input[type='radio']:checked");
-	
-	if(rating == null){
-		console.log("oh no! RATING WAS NULL!");
-		rating = 1;
+	let anon = false;
+	let rating = null;
+	let ratingInput = doc.querySelector("input[type='radio']:checked"); 
+	if (doc.querySelector("#anon:checked") != null){
+		anon = true;
 	}
-	else{
-		rating = rating.value;
+	if(ratingInput != null){
+		rating = ratingInput.value;
 	}
 	return {
-		id: id,
-		header: header,
-		content: content,
-		rating: rating
+		id: doc.querySelector('#p_id').value,
+		header: doc.querySelector('.header-textbox').value,
+		content: doc.querySelector('.content-textbox').value,
+		rating: rating,
+		anon: anon
 	}
 }
 
 async function add(){
-	//check if logged in
-	/*
-	if(!doc.querySelector("form[action='/logout']")){
-		window.location.href = '/login?';
-	}*/
-	
-	let {header, content, id, rating} = getInputReviewValues();
+	let {header, content, id, rating, anon} = getInputReviewValues();
 	
 	//we should be able to pass a flag for anonymous rating
-	let data = JSON.stringify({header, content, id, rating});
+	let data = JSON.stringify({header, content, id, rating, anon});
 	
-	let res = await fetch('/addReview', {
-		method: "POST",
-		body: data,
-		headers: {
-			"Content-Type": "application/json"
+	if(rating != null){
+		let res = await fetch('/addReview', {
+			method: "POST",
+			body: data,
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+		
+		if(res.status == 200){
+			alert("Succesfully posted review!");
+			location.reload();
 		}
-	});
-	
-	if(res.status == 200){
-		alert("Succesfully posted review!");
-		location.reload();
+		else{
+			alert("Error!");
+		}	
 	}
 	else{
-		alert("Error!");
-	}	
+		showError("Rating cannot be empty! Please rate the product.");
+	}
 }
 
 async function edit(){
-	console.log(getInputReviewValues());
-	let res = await fetch('/editReview', {
-		method: "POST",
-		body: JSON.stringify(getInputReviewValues()),
-		headers: {
-			"Content-Type": "application/json"
-		}
-	});
+	let {header, content, id, rating, anon} = getInputReviewValues();
 	
-	if(res.status == 200){
-		alert("Succesfully updated review!");
-		location.reload();
+	//we should be able to pass a flag for anonymous rating
+	let data = JSON.stringify({header, content, id, rating, anon});
+	
+	if(rating != null){
+		let res = await fetch('/editReview', {
+			method: "POST",
+			body: data,
+			headers: {
+				"Content-Type": "application/json"
+			}
+		});
+		
+		if(res.status == 200){
+			alert("Succesfully updated review!");
+			location.reload();
+		}
+		else{
+			alert("Error!");
+		}
 	}
 	else{
-		alert("Error!");
+		showError("Rating cannot be empty! Please rate the product.");
 	}
 }
 
@@ -118,6 +131,7 @@ async function setPromptDelete(){
 	doc.querySelector('.review-input-header').style.display="none";
 	doc.querySelector('.review-input-rating').style.display="none";
 	doc.querySelector('.review-input-content').style.display="none";
+	anonCheck.style.display="none";
 	
 	reviewButton.innerHTML = "Delete";
 	reviewButton.removeEventListener('click', edit);
@@ -131,6 +145,7 @@ async function setPromptEdit(){
 	doc.querySelector('.review-input-header').style.display="block";
 	doc.querySelector('.review-input-rating').style.display="block";
 	doc.querySelector('.review-input-content').style.display="block";
+	anonCheck.style.display="block";
 	
 	//Change prompt text
 	doc.querySelector('.review-add-title').innerHTML = "Update your review";
@@ -145,8 +160,24 @@ async function setPromptEdit(){
 	let rating = doc.querySelector(ratingQuery);
 	
 	//fill input areas with old data
-	header.innerHTML = doc.querySelector("#userReviewHeader").innerHTML.trim();
-	content.innerHTML = doc.querySelector("#userReviewContent").innerHTML.trim();
+	let userHeader = doc.querySelector("#userReviewHeader");
+	let userContent = doc.querySelector("#userReviewContent");
+	if(userHeader != null){
+		userHeader = userHeader.innerHTML.trim();
+	}
+	else{
+		userHeader = "";
+	}
+	
+	if(userContent != null){
+		userContent = userContent.innerHTML.trim();
+	}
+	else{
+		userContent = "";
+	}
+	
+	header.innerHTML = userHeader;
+	content.innerHTML = userContent;
 	rating.setAttribute("checked","");
 	
 	//review button event change
@@ -155,4 +186,9 @@ async function setPromptEdit(){
 	reviewButton.addEventListener('click', edit);
 	
 	toggleReview(event);
+}
+
+function showError(e){
+	errText.innerHTML=e;
+	errText.style.display="block";
 }

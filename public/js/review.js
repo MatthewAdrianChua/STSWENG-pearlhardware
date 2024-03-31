@@ -150,6 +150,8 @@ async function del(){
 
 async function setPromptDelete(){
 	doc.querySelector('.review-add-title').innerHTML = "Are you sure you want to delete your review?";
+	doc.querySelector('.review-add-title').style.fontSize = "3vh";
+	doc.querySelector('.review-add-submit').style.marginTop = "4vh";
 	//If there, remove input areas
 	doc.querySelector('.review-input-header').style.display="none";
 	doc.querySelector('.review-input-rating').style.display="none";

@@ -2,7 +2,7 @@
 	.reviews-container {
 		background-color: white;
 		min-height: 20vh;
-		width: 75vw;
+		width: 50vw;
 		margin: 0 auto 5vh;
 
 		display: flex;
@@ -16,7 +16,7 @@
 	.one-review-container {
 		background-color: white;
 		width: 100%;
-		height: 80vh;
+		min-height: 20vh;
 		padding: 1vh 2vw;
 
 		border-bottom: 1px solid #cccccc;
@@ -70,12 +70,18 @@
 		background-color: white;
 		height: 50vh;
 
+		overflow: hidden;
+
 		font-size: 2.5vh;
 	}
 
 	.review-footer {
 		background-color: white;
-		height: 5vh;
+		height: 10vh;
+		padding-top: 1vh;
+		padding-bottom: 1vh;
+		padding-left: auto;
+		padding-right: auto;
 
 		display: flex;
 		align-items: center;
@@ -90,9 +96,19 @@
 	}
 	
 	.userButton{
-		margin: 0 10px 0 10px;
-		padding: 10px;
-		background-color: gray;
+		margin-left: 1vw;
+		padding: 1vh 1vw;
+		color: white;
+		background-color: #0980D3;
+		border: 1px solid #0980D3;
+
+		font-size: 1.5ch;
+		font-weight: 600;
+
+		&:hover {
+			background-color: white;
+			color: #0980D3;
+		}
 	}
 </style>
 
@@ -136,9 +152,10 @@
 				<div class="review-footer">
 					<button class="userButton" id="editBtn"> Edit review </button>
 					<button class="userButton" id="delBtn"> Delete review </button>
-					I need this for testing. Please change as you see fit. The css for this is in review_list.hbs (line 92)
+					{{!-- I need this for testing. Please change as you see fit. The css for this is in review_list.hbs (line 92) --}}
 				</div>
 			 </div>
+			 
 	{{/if}}
 	
 	{{#if review_list}}
@@ -191,6 +208,12 @@
 					<div class="star-rating">
 						 69.420
 					</div>
+					<div class="review-date">
+						Reviewed on {{user_review.dateCreated}} 
+						{{#if user_review.dateUpdated}}
+						(Last edited on: {{user_review.dateUpdated}})
+						{{/if}}
+					</div>
 					<div class="review-user">
 						Name NoName
 					</div>
@@ -203,13 +226,21 @@
 						Morbi fringilla lectus lectus, sit amet maximus elit congue sed. Sed aliquam est sit amet dui venenatis, quis interdum mauris pretium. Nullam a leo sed tortor scelerisque sodales sed sed orci. Phasellus dictum, ante vitae hendrerit elementum, est ipsum finibus erat, non sagittis felis nisl nec ipsum. Morbi dapibus purus in interdum sagittis. Nullam gravida sollicitudin turpis. Nulla nibh metus, tincidunt in quam eget, tincidunt accumsan diam. Donec suscipit.
 					</div>
 					<div class="review-footer">
-						 LIKEY
+						<button class="userButton" id="editBtn"> LIKEY </button>
+						<button class="userButton" id="editBtn"> Edit review </button>
+						<button class="userButton" id="delBtn"> Delete review </button>
 					</div>
 			</div>
 			<div class="one-review-container">
 					<div class="star-rating">
 						 69.420
 					</div>
+					<div class="review-date">
+						Reviewed on {{user_review.dateCreated}} 
+						{{#if user_review.dateUpdated}}
+						(Last edited on: {{user_review.dateUpdated}})
+						{{/if}}
+					</div>
 					<div class="review-user">
 						Name NoName
 					</div>
@@ -222,7 +253,9 @@
 						Morbi fringilla lectus lectus, sit amet maximus elit congue sed. Sed aliquam est sit amet dui venenatis, quis interdum mauris pretium. Nullam a leo sed tortor scelerisque sodales sed sed orci. Phasellus dictum, ante vitae hendrerit elementum, est ipsum finibus erat, non sagittis felis nisl nec ipsum. Morbi dapibus purus in interdum sagittis. Nullam gravida sollicitudin turpis. Nulla nibh metus, tincidunt in quam eget, tincidunt accumsan diam. Donec suscipit.
 					</div>
 					<div class="review-footer">
-						 LIKEY
+						<button class="userButton" id="editBtn"> LIKEY </button>
+						<button class="userButton" id="editBtn"> Edit review </button>
+						<button class="userButton" id="delBtn"> Delete review </button>
 					</div>
 			</div> --}}
 		{{/unless}}

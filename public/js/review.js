@@ -156,6 +156,7 @@ async function setPromptDelete(){
 	doc.querySelector('.review-input-header').style.display="none";
 	doc.querySelector('.review-input-rating').style.display="none";
 	doc.querySelector('.review-input-content').style.display="none";
+	errText.style.display="none";
 	anonCheck.style.display="none";
 	
 	reviewButton.innerHTML = "Delete";

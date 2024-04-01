@@ -16,10 +16,10 @@ const req = {
     }
 };
 
-// // Mocking the renderErrorPage function
-// jest.mock('../controllers/emailVerificationController.js', () => ({
-//     renderErrorPage: jest.fn(),
-// }));
+// Mocking the renderErrorPage function
+jest.mock('../controllers/emailVerificationController.js', () => ({
+    renderErrorPage: jest.fn(),
+}));
 
 describe('Email Verification Controller', () => {
     //getEmailVerify
@@ -67,84 +67,84 @@ describe('Email Verification Controller', () => {
     });
 
     //getVerify
-    // describe('getVerify', () => {
-    //     let req, res;
+    describe('getVerify', () => {
+        let req, res;
       
-    //     beforeEach(() => {
-    //         req = {
-    //             query: { t: 'userID', s: 'someHashValue' },
-    //         };
-    //         res = {
-    //             render: jest.fn(),
-    //             redirect: jest.fn(),
-    //         };
-    //     });
+        beforeEach(() => {
+            req = {
+                query: { t: 'userID', s: 'someHashValue' },
+            };
+            res = {
+                render: jest.fn(),
+                redirect: jest.fn(),
+            };
+        });
       
-    //     afterEach(() => {
-    //         jest.clearAllMocks();
-    //     });
+        afterEach(() => {
+            jest.clearAllMocks();
+        });
       
-    //     it('should handle valid verification', async () => {
-    //         const verification = [{ expires: Date.now() + 1000, hash: 'hashedValue' }];
-    //         jest.spyOn(Verification, 'find').mockResolvedValueOnce(verification);
-    //         jest.spyOn(User, 'findByIdAndUpdate').mockResolvedValueOnce();
+        // it('should handle valid verification', async () => {
+        //     const verification = [{ expires: Date.now() + 1000, hash: 'hashedValue' }];
+        //     jest.spyOn(Verification, 'find').mockResolvedValueOnce(verification);
+        //     jest.spyOn(User, 'findByIdAndUpdate').mockResolvedValueOnce();
         
-    //         await emailVerificationController.getVerify(req, res);
+        //     await emailVerificationController.getVerify(req, res);
         
-    //         expect(Verification.find).toHaveBeenCalledWith({ userID: 'userID' });
-    //         expect(User.findByIdAndUpdate).toHaveBeenCalledWith('userID', { $set: { isVerified: true } });
-    //         expect(Verification.deleteOne).toHaveBeenCalled();
-    //         expect(res.redirect).toHaveBeenCalledWith('/');
-    //     });
+        //     expect(Verification.find).toHaveBeenCalledWith({ userID: 'userID' });
+        //     expect(User.findByIdAndUpdate).toHaveBeenCalledWith('userID', { isVerified: true });
+        //     expect(Verification.deleteOne).toHaveBeenCalled();
+        //     expect(res.redirect).toHaveBeenCalledWith('/');
+        // });
       
-    //     it('should handle expired verification link', async () => {
-    //         const verification = [{ expires: Date.now() - 1000 }];
-    //         jest.spyOn(Verification, 'find').mockResolvedValueOnce(verification);
+        // it('should handle expired verification link', async () => {
+        //     const verification = [{ expires: Date.now() - 1000 }];
+        //     jest.spyOn(Verification, 'find').mockResolvedValueOnce(verification);
+
+        //     await emailVerificationController.getVerify(req, res);
         
-    //         await emailVerificationController.getVerify(req, res);
-        
-    //         expect(Verification.find).toHaveBeenCalledWith({ userID: 'userID' });
-    //         expect(res.render).toHaveBeenCalledWith('emailVerify', {
-    //             error: true,
-    //             err_message: 'Verification link has expired! Press the button below to recieve another verification email.',
-    //             err_code: 32,
-    //             script: './js/emailVerify.js',
-    //         });
-    //     });
+        //     expect(Verification.find).toHaveBeenCalledWith({ userID: 'userID' });
+        //     expect(res.render).toHaveBeenCalledWith('emailVerify', {
+        //         error: true,
+        //         err_message: 'Verification link has expired! Press the button below to recieve another verification email.',
+        //         err_code: 32,
+        //         script: './js/emailVerify.js',
+        //     });
+        // });
       
-    //     it('should handle invalid verification link', async () => {
-    //         const verification = [{ expires: Date.now() + 1000, hash: 'hashedValue' }];
-    //         jest.spyOn(Verification, 'find').mockResolvedValueOnce(verification);
-    //         jest.spyOn(User, 'findByIdAndUpdate').mockResolvedValueOnce();
+        // it('should handle invalid verification link', async () => {
+        //     const verification = [{ expires: Date.now() + 1000, hash: 'hashedValue' }];
+        //     jest.spyOn(Verification, 'find').mockResolvedValueOnce(verification);
+        //     jest.spyOn(User, 'findByIdAndUpdate').mockResolvedValueOnce();
         
-    //         // Simulating a failed hash comparison
-    //         jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(false);
+        //     // Simulating a failed hash comparison
+        //     jest.spyOn(bcrypt, 'compare').mockResolvedValueOnce(false);
         
-    //         await emailVerificationController.getVerify(req, res);
+        //     await emailVerificationController.getVerify(req, res);
         
-    //         expect(Verification.find).toHaveBeenCalledWith({ userID: 'userID' });
-    //         expect(User.findByIdAndUpdate).not.toHaveBeenCalled();
-    //         expect(Verification.deleteOne).toHaveBeenCalled();
-    //         expect(res.render).toHaveBeenCalledWith('emailVerify', {
-    //             error: true,
-    //             err_message: 'Error verifying account! Please try again. Error code: 36',
-    //             err_code: 36,
-    //             script: './js/emailVerify.js',
-    //         });
-    //     });
+        //     expect(Verification.find).toHaveBeenCalledWith({ userID: 'userID' });
+        //     expect(User.findByIdAndUpdate).not.toHaveBeenCalled();
+        //     expect(Verification.deleteOne).toHaveBeenCalled();
+        //     expect(res.render).toHaveBeenCalledWith('emailVerify', {
+        //         error: true,
+        //         err_message: 'Error verifying account! Please try again. Error code: 36',
+        //         err_code: 36,
+        //         script: './js/emailVerify.js',
+        //     });
+        // });
       
-    //     it('should handle errors gracefully', async () => {
-    //         jest.spyOn(Verification, 'find').mockRejectedValueOnce(new Error('Test error'));
+        it('should handle errors gracefully', async () => {
+            jest.spyOn(Verification, 'find').mockRejectedValueOnce(new Error('Test error'));
         
-    //         await emailVerificationController.getVerify(req, res);
+            await emailVerificationController.getVerify(req, res);
         
-    //         expect(Verification.find).toHaveBeenCalledWith({ userID: 'userID' });
-    //         expect(res.render).toHaveBeenCalledWith('emailVerify', {
-    //             error: true,
-    //             err_message: 'No valid record was found or has been verified already! Please sign up or log in.',
-    //             err_code: 37,
-    //             script: './js/emailVerify.js',
-    //         });
-    //     });
-    // });
+            expect(Verification.find).toHaveBeenCalledWith({ userID: 'userID' });
+            expect(res.render).toHaveBeenCalledWith('emailVerify', {
+                error: true,
+                err_message: 'No valid record was found or has been verified already! Please sign up or log in.',
+                err_code: 37,
+                script: './js/emailVerify.js',
+            });
+        });
+    });
 });

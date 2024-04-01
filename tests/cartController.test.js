@@ -7,157 +7,229 @@ import { beforeEach, describe } from 'node:test';
 
 jest.useFakeTimers();
 
-// Mocking the User and Product models
-jest.mock('../model/userSchema.js', () => ({
+// jest.mock('../model/userSchema');
+// jest.mock('../model/productSchema');
+// Mocking dependencies
+jest.mock('../model/db.js', () => ({
     User: {
-      find: jest.fn(),
-      updateOne: jest.fn(),
+        find: jest.fn(),
+        updateOne: jest.fn(),
     },
-  }));
-  
-  jest.mock('../model/productSchema.js', () => ({
+}));
+jest.mock('../model/userSchema.js', () => ({
+    User: jest.fn(),
+}));
+jest.mock('../model/productSchema.js', () => ({
     Product: {
-      find: jest.fn(),
+        find: jest.fn(),
     },
-  }));
-  
-  // Mocking the request and response objects
-  const reqWithUserID = {
-    session: { userID: 'mockUserID', fName: 'John' },
-    body: { id: 'mockProductID', quant: 1 },
-  };
-  
-  const reqWithoutUserID = {
-    session: {},
-  };
-  
-  const res = {
-    render: jest.fn(),
-    sendStatus: jest.fn(),
-  };
-  
-describe('Cart Controller', () => {
-    //getCart
-    describe('getCart', () => {
-        // beforeEach(() => {
-        //     jest.clearAllMocks();
-        // });
-    
-        // it('should render cart if user is logged in and cart items exist', async () => {
-        //     const mockCart = [
-        //     { product: { _id: 'mockProductID1', price: 10 }, quantity: 2, uniqueID: 'uniqueID1' },
-        //     { product: { _id: 'mockProductID2', price: 15 }, quantity: 1, uniqueID: 'uniqueID2' },
-        //     ];
-    
-        //     // Mock User.find to return mockCart
-        //     jest.spyOn(User, 'find').mockResolvedValueOnce([{ cart: mockCart }]);
-    
-        //     // Mock Product.find to return mock products
-        //     jest.spyOn(Product, 'find').mockResolvedValueOnce([
-        //         { _id: 'mockProductID1', isShown: true },
-        //         { _id: 'mockProductID2', isShown: true },
-        //     ]);
-    
-        //     await cartController.getCart(reqWithUserID, res);
-    
-        //     // Check if User.find is called with the correct parameter
-        //     expect(User.find).toHaveBeenCalledWith({ _id: 'mockUserID' }, { cart: 1 });
-    
-        //     // Check if Product.find is called with the correct parameters
-        //     expect(Product.find).toHaveBeenCalledWith(
-        //     { _id: 'mockProductID1', isShown: true } // ObjectId converted
-        //     );
-    
-        //     // Check if res.render is called with the correct parameters
-        //     expect(res.render).toHaveBeenCalledWith('add_to_cart', {
-        //     cart_result: mockCart,
-        //     total: '35.00', // calculated total from mockCart prices and quantities
-        //     script: './js/checkout.js',
-        //     });
-    
-        //     // Check if res.sendStatus is not called
-        //     expect(res.sendStatus).not.toHaveBeenCalled();
-        // });
-    
-        // it('should render login page if user is not logged in', async () => {
-        //     await cartController.getCart(reqWithoutUserID, res);
-    
-        //     // Check if res.render is called with the correct parameters
-        //     expect(res.render).toHaveBeenCalledWith('login', { script: './js/login.js' });
-    
-        //     // Check if res.sendStatus is not called
-        //     expect(res.sendStatus).not.toHaveBeenCalled();
-        // });
-    });   
+}));
 
-    //addToCart
-    describe('addToCart', () => {
-        // beforeEach(() => {
-        //     jest.clearAllMocks();
-        //   });
-      
-        //   it('should add product to cart if user is logged in', async () => {
-        //     const mockProduct = { _id: 'mockProductID', name: 'Mock Product' };
-        //     const mockUser = { _id: 'mockUserID', cart: [] };
-        //     const exisitingItem = [{cart: [{quantity: 1}] }];
-      
-        //     // Mock Product.find to return mock product
-        //     jest.spyOn(Product, 'find').mockResolvedValueOnce([mockProduct]);
+describe('cartController', () => {
+  describe('getCart', () => {
+    let req;
+    let res;
 
-        //     // Mock User.find to return mock user
-        //     jest.spyOn(User, 'find').mockResolvedValueOnce([mockUser]);
-
-        //     //Mock the response for exisitingItem with a non-empty cart
-        //     jest.spyOn(User, 'find').mockResolvedValueOnce(exisitingItem);
-      
-        //     // Call the function
-        //     await cartController.addToCart(reqWithUserID, res);
-      
-        //     // Check if Product.find is called with the correct parameter
-        //     expect(Product.find).toHaveBeenCalledWith({ _id: 'mockProductID' }, { __v: 0 });
-      
-        //     // Check if User.find is called with the correct parameter
-        //     expect(User.find).toHaveBeenCalledWith({ _id: 'mockUserID' });
-      
-        //     // Check if User.updateOne is called with the correct parameter to add product to cart
-        //     expect(User.updateOne).toHaveBeenCalledWith(
-        //       { _id: 'mockUserID' },
-        //       {
-        //         $push: {
-        //           cart: { product: mockProduct, quantity: 1, uniqueID: 'mockUserID:mockProductID' }
-        //         }
-        //       }
-        //     );
-      
-        //     // Check if redirect is called
-        //     expect(res.redirect).toHaveBeenCalledWith('/cart?');
-        //   });
-      
-        //   it('should not add product to cart if user is not logged in', async () => {
-        //     // Call the function
-        //     await cartController.addToCart(reqWithoutUserID, res);
-      
-        //     // Check if Product.find is not called
-        //     expect(Product.find).not.toHaveBeenCalled();
-      
-        //     // Check if User.find is not called
-        //     expect(User.find).not.toHaveBeenCalled();
-      
-        //     // Check if User.updateOne is not called
-        //     expect(User.updateOne).not.toHaveBeenCalled();
-      
-        //     // Check if redirect is not called
-        //     expect(res.redirect).not.toHaveBeenCalled();
-        //   });
+    beforeEach(() => {
+      req = {
+          session: { userID: 'mockUserID', fName: 'John' }
+      };
+      res = {
+          render: jest.fn(),
+          sendStatus: jest.fn()
+      };
+      jest.clearAllMocks();
     });
 
-    //getCartItems
-    describe('getCartItems', () => {
-    
+    // it('should render cart if user is logged in and cart items exist', async () => {
+    //   const mockCart = [
+    //     { product: { _id: 'mockProductID1', price: 10 }, quantity: 2, uniqueID: 'uniqueID1' },
+    //     { product: { _id: 'mockProductID2', price: 15 }, quantity: 1, uniqueID: 'uniqueID2' },
+    //   ];
+
+    //   jest.spyOn(User, 'find').mockResolvedValueOnce([{ cart: mockCart }]);
+
+    //   jest.spyOn(Product, 'find').mockResolvedValueOnce([{ _id: 'mockProductID1', isShown: true }]);
+
+    //   jest.spyOn(Product, 'find').mockResolvedValueOnce([]); // Simulate product not found for the second cart item
+
+    //   await cartController.getCart(req, res);
+
+    //   expect(User.find).toHaveBeenCalledWith({ _id: 'mockUserID' }, { cart: 1 });
+
+    //   expect(Product.find).toHaveBeenCalledWith({ _id: 'mockProductID1', isShown: true });
+
+    //   expect(Product.find).toHaveBeenCalledWith({ _id: 'mockProductID2', isShown: true });
+
+    //   expect(res.render).toHaveBeenCalledWith('add_to_cart', {
+    //     cart_result: [{ product: { _id: 'mockProductID1', price: 10 }, quantity: 2, uniqueID: 'uniqueID1' }],
+    //     total: '20.00',
+    //     script: './js/checkout.js'
+    //   });
+    // });
+
+    // it('should render login page if user is not logged in', async () => {
+    //   req.session.userID = null;
+
+    //   await cartController.getCart(req, res);
+
+    //   expect(res.render).toHaveBeenCalledWith('login', { script: './js/login.js' });
+    // });
+
+    // it('should handle errors when rendering login page', async () => {
+    //   req.session.userID = null;
+    //   res.render.mockImplementationOnce(() => { throw new Error('Render error'); });
+
+    //   await cartController.getCart(req, res);
+
+    //   expect(res.sendStatus).toHaveBeenCalledWith(400);
+    // });
+    test('should render login page if user is not logged in', async () => {
+        const req = { session: { userID: null } };
+        const res = {
+            render: jest.fn().mockImplementation((view) => {
+                expect(view).toBe('login');
+                return res;
+            }),
+            sendStatus: jest.fn(),
+        };
+
+        await cartController.getCart(req, res);
+
+        expect(res.render).toHaveBeenCalledWith('login', { script: './js/login.js' });
     });
 
-    //removeFromCart
-    describe('removeFromCart', () => {
+    // test('should render add_to_cart page if userID is not null and cart items are found', async () => {
+    //     const req = { session: { userID: 'user123' } };
+    //     const res = {
+    //         render: jest.fn().mockImplementation((view, data) => {
+    //             expect(view).toBe('add_to_cart');
+    //             expect(data.cart_result).toHaveLength(1); // Assuming there's one item in the cart for the test
+    //             expect(data.total).toBe('10.00'); // Assuming total is $10.00 for the test
+    //             expect(data.script).toBe('./js/checkout.js');
+    //             return res;
+    //         }),
+    //     };
+
+    //     // Mocking User.find to return mock cart data
+    //     const mockCartData = [{ product: { _id: 'product123', price: 10 }, quantity: 1 }];
+    //     require('../model/db.js').User.find.mockResolvedValue([{ cart: mockCartData }]);
+
+    //     // Mocking Product.find to return found product
+    //     require('../model/productSchema.js').Product.find.mockResolvedValue([{ _id: 'product123', isShown: true }]);
+
+    //     await cartController.getCart(req, res);
+
+    //     expect(res.render).toHaveBeenCalled();
+    // });
+
+  });
+
+  //addToCart
+//   describe('addToCart', () => {
+
+//   });
+
+//   //getCartItems
+//   describe('getCartItems', () => {
+//     let req;
+//     let res;
+
+//     beforeEach(() => {
+//         req = { session: { userID: 'mockUserID' } };
+//         res = {
+//             status: jest.fn().mockReturnThis(),
+//             send: jest.fn()
+//         };
+//         jest.clearAllMocks();
+//     });
+
+//     it('should send items in user\'s cart if user is logged in', async () => {
+//         const mockCartItems = [
+//             { product: { _id: 'mockProductID1', name: 'Product 1', price: 10 }, quantity: 2 },
+//             { product: { _id: 'mockProductID2', name: 'Product 2', price: 15 }, quantity: 1 }
+//         ];
+//         jest.spyOn(User, 'find').mockResolvedValueOnce([{ cart: mockCartItems }]);
     
-    });
+//         await cartController.getCartItems(req, res);
+
+//         expect(User.find).toHaveBeenCalledWith({ _id: 'mockUserID' }, { cart: 1 });
+//         expect(res.status).toHaveBeenCalledWith(200);
+//         expect(res.send).toHaveBeenCalledWith(mockCartItems);
+//     });
+
+//     it('should send status 400 if user is not logged in', async () => {
+//         req.session.userID = undefined;
+
+//         await cartController.getCartItems(req, res);
+
+//         expect(User.find).not.toHaveBeenCalled();
+//         expect(res.status).toHaveBeenCalledWith(400);
+//         expect(res.send).toHaveBeenCalledWith('User not logged in');
+//     });
+//   });
+
+  //removeFromCart
+//   describe('removeFromCart', () => {
+//     let req;
+//     let res;
+
+//     beforeEach(() => {
+//         req = {
+//         session: {
+//             userID: '123',
+//         },
+//         query: {
+//             uid: '456',
+//         },
+//         };
+//         res = {
+//         redirect: jest.fn(),
+//         };
+
+//         // Mock the User model
+//         User.updateOne = jest.fn().mockResolvedValue({
+//         matchedCount: 1,
+//         modifiedCount: 1,
+//         });
+//     });
+
+//     it('should remove product from user cart and redirect to /cart', async () => {
+//         await cartController.removeFromCart(req, res);
+
+//         expect(User.updateOne).toHaveBeenCalledWith(
+//         {
+//             _id: '123',
+//             cart: { $elemMatch: { uniqueID: '456' } },
+//         },
+//         {
+//             $pull: {
+//             cart: { uniqueID: '456' },
+//             },
+//         }
+//         );
+//         expect(res.redirect).toHaveBeenCalledWith('/cart');
+//     });
+
+//     it('should do nothing if product not found in user cart', async () => {
+//         User.updateOne = jest.fn().mockResolvedValue({
+//         matchedCount: 0,
+//         modifiedCount: 0,
+//         });
+
+//         await cartController.removeFromCart(req, res);
+
+//         expect(User.updateOne).toHaveBeenCalled();
+//         expect(res.redirect).not.toHaveBeenCalled();
+//     });
+
+//     it('should send 400 if user is not logged in', async () => {
+//         req.session = null;
+
+//         await cartController.removeFromCart(req, res);
+
+//         expect(res.sendStatus).toHaveBeenCalledWith(400);
+//     });
+//   });
 });
+

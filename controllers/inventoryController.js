@@ -147,7 +147,7 @@ const inventoryController = {
             res.redirect('/adminInventory/' + currentCategory);
 
         } catch {
-            res.sendStatus(400);
+            res.sendStatus(500);
         }
     },
 	//searchInventory

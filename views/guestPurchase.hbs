@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<body class="flex flex-col bg-white">
+<div class="bg-white p-6 rounded-lg shadow-md max-w-7xl mx-auto my-8">
+    <div class="flex flex-col justify-center items-center h-full lg:w-1/2 p-4 mx-auto">
+        
+            <div class="input-container">
+                    <input type="text" id ="regfname" placeholder="First name*">
+                    <input type="text" id ="reglname" placeholder="Last name*">
+                    <input type="text" id ="regemail" placeholder="Email*">
+                </div>
+            
+                <div class="input-container">
+                    <input type="text" id= "regline1" placeholder="Address line 1*">
+                    <input type="text" id= "regline2" placeholder="Address line 2">
+                    <input type="text" id= "regcity" placeholder="City*">
+                    <input type="text" id= "regstate" placeholder="State*">
+                    <input type="text" id= "regpostalcode" placeholder="Postal Code* (Maximum 4 digits)">
+                </div>
+                <div id="errors"></div>
+
+            <!-- Submit Button -->
+            <button type="submit" id="submit" class="bg-white text-black py-2 px-4 rounded hover:bg-blue-800">Submit</button>
+        
+    </div>
+                        
+    <div class="flex flex-wrap justify-between mb-6">
+       
+        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:border-r md:border-blue-200 px-4">
+            <div class="border-b border-blue-500 pb-2 mb-4">
+                <h2 class="text-2xl font-bold text-blue-800">Item Information</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-6 text-blue-900 mb-6">
+                <div class="font-bold">Item Name:</div>
+                <div class="break-words">{{itemName}}</div>
+
+                <div class="font-bold">Item ID:</div>
+                <div class="break-words" id="id" data-index={{itemID}}>{{itemID}}</div>
+
+                <div class="font-bold">Price:</div>
+                <div class="break-words">{{formatPrice price}}</div>
+
+                <div class="font-bold">Amount:</div>
+                <div class="break-words" id="amount" data-index={{amount}}>{{amount}}</div>
+            </div>
+        </div>
+
+        
+        <div class="w-full md:w-1/3 pl-4">
+            <div class="border-b border-blue-500 pb-2 mb-4">
+                <h2 class="text-2xl font-bold text-blue-800">Total</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-6 text-blue-900">
+                <div class="font-bold">Total Amount:</div>
+                <div class="break-words">{{formatPrice totalAmount}}</div>
+
+            </div>
+        </div>
+    </div>
+
+                    
+                    {{#if statusIsDenied}}
+                        <div class="text-2xl font-medium text-white">Reason of denial: {{reasonOfDenial}}</div>
+                    {{/if}}
+                    <div class="text-2xl font-medium text-white">Reason of return: {{reasonOfReturn}}</div>
+                    <div class="text-2xl font-medium text-white">Comments: {{comments}}</div>
+                    <!-- Display Evidence of refund (photo) -->
+                    {{#if evidencePhotos}}
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Evidence of Refund</h3>
+                            {{#each evidencePhotos}}
+                                <img src="{{this}}" alt="Evidence Photo" class="rounded shadow-lg mb-2">
+                            {{/each}}
+                        </div>
+                    {{/if}}
+                
+            
+        
+    
+    {{> footer}}
+</body>
+</html>
+

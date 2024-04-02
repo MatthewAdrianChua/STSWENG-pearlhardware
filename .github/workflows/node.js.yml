@@ -5,6 +5,7 @@ name: Node.js CI
 
 on:
   push:
+
     branches: [ "master" , "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem", "QA-testscripts"]
   pull_request:
     branches: [ "master", "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem", "QA-testscripts" ]

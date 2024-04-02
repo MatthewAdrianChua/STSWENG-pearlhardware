@@ -313,6 +313,39 @@ const userController = {
             res.sendStatus(400);
         }
     },
+
+    getGuestOrderDetails: async function(req, res) {
+
+        const orderID = req.params.orderID;
+
+        try{
+
+            const order = await Order.findById(orderID);
+
+            res.render("guestorderdetails", {
+                layout: 'guestOrders',
+                orderID: order._id,
+                orderDate: order.date,
+                fname: order.firstName,
+                lname: order.lastName,
+                email: order.email,
+                status: order.status,
+                city: order.city,
+                postalCode: order.postalCode,
+                state: order.state,
+                line1: order.line1,
+                line2: order.line2,
+                isCancelled: order.isCancelled,
+                items: order.items,
+                amount: order.amount,
+                paymongoID: order.paymongoID,
+                //script: '../js/userOrder.js'
+            });
+        } catch {
+            res.sendStatus(400);
+        }
+    },
+
 	changePageUserPurchases: async function(req, res){
 
         try{

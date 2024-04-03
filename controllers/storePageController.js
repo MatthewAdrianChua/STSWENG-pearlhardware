@@ -3,6 +3,7 @@ import { Product } from '../model/productSchema.js';
 import { User } from '../model/userSchema.js';
 import Handlebars from 'handlebars';
 import { formatPrice } from '../util/helpers.js';
+import { Review } from "../model/reviewSchema.js";
 
 Handlebars.registerHelper('formatPrice', formatPrice);
 
@@ -139,13 +140,50 @@ const storePageController = {
     //using the product ID in the query, it will send the data to products.hbs to render
     //the webpage for that specific product
     getProduct: async function (req, res) {
-        console.log("getting product!");
+        //console.log("getting product!");
         var query = req.query.id;
+		let sumRating = 0;
+		let dateSplit;
         try {
             const product_result = await Product.find({ _id: query }, { __v: 0 }).lean();
-            //console.log(product_result);
+			let reviews = await Review.find({productID: query}, {__v: 0}).lean();
+			//Reviews are default sorted newest to oldest. Can be changed on a later date!
+			reviews.sort((a, b) => b.dateCreated - a.dateCreated);
+			
+			let userReviewIndex = -1;
+			for (let i = 0; i < reviews.length; i++){
+				//console.log(reviews[i]);
+				sumRating += reviews[i].rating;
+				reviews[i].dateCreated = formatDate(reviews[i].dateCreated)
+				if(reviews[i].dateUpdated != null && reviews[i].dateUpdated != undefined){
+					reviews[i].dateUpdated = formatDate(reviews[i].dateUpdated);
+				}
+				if(reviews[i].authorID == req.session.userID){
+					//console.log("FOUND REVIEW WRITTEN BY USER at " + i);
+					userReviewIndex = i;
+				}
+			}
+			
+			let ratingAve;
+			if(reviews.length <= 0){
+				ratingAve = 0;
+			}
+			else{
+				ratingAve = sumRating/reviews.length;
+			}
+			let user_review;
+			if(userReviewIndex != -1){
+				user_review = reviews[userReviewIndex];
+				let reviewsH = reviews.slice(0, userReviewIndex);
+				let reviewsL = reviews.slice(userReviewIndex + 1);
+				reviews = reviewsH.concat(reviewsL);
+			}
             return res.render("productDesc", {
                 product: product_result[0],
+				user_review: user_review,
+				review_list: reviews,
+				ratingAve: ratingAve.toFixed(1),
+				ratingNo: reviews.length,
                 script: "./js/add_to_cart.js",
             });
         }
@@ -159,7 +197,6 @@ async function sortProducts(product_list, sortValue) {
     if (sortValue !== undefined) {
         switch (sortValue) {
             case 'def':
-
                 break;
             case 'price_asc':
                 product_list.sort((a, b) => a.price - b.price);
@@ -252,6 +289,12 @@ async function getProducts(category, req) {
 	}catch(error){
 		console.error(error);
 	}
+}
+
+//takes a date and formats it to DAY MM. dd, YYYY HH:mm:ss
+function formatDate(d){
+	let split = d.toString().split(" ");
+	return split[1] + ". " + split[2] + ", " + split[3] + " " + split[4]; 
 }
 
 export default storePageController;

@@ -12,6 +12,7 @@ import inventoryController from '../controllers/inventoryController.js';
 import orderController from '../controllers/orderController.js';
 import emailVerificationController from '../controllers/emailVerificationController.js';
 import refundController from '../controllers/refundController.js';
+import reviewController from '../controllers/reviewController.js';
 
 import bodyParser from 'body-parser';
 import { body, validationResult } from 'express-validator';
@@ -107,6 +108,9 @@ router.post('/initiateRefund', refundController.initiateRefund);
 router.post('/createRefund', upload.array('productPic', 10), body('name').notEmpty(), body('quantity').notEmpty().isNumeric(), body('price').notEmpty(), refundController.createRefund);
 router.post('/refundCustomer', refundController.refundCustomer);
 router.post('/denyRefund', refundController.denyRefund);
+router.post('/addReview', reviewController.addReviews);
+router.post('/delReview', reviewController.delReviews);
+router.post('/editReview', reviewController.editReviews);
 
 
 export default router;

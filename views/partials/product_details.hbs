@@ -1,16 +1,49 @@
 {{#if product}}
-
 	<style>
-  #originalBtn:hover {
-      display: none;
-  }
-  #originalBtn:hover + #hoverBtn {
-      display: flex;
-  }
-  #originalBtn, #hoverBtn {
-    transition: opacity 0.3s ease;
-}
-</style>
+		#originalBtn:hover {
+			display: none;
+		}
+		#originalBtn:hover + #hoverBtn {
+			display: flex;
+		}
+		#originalBtn, #hoverBtn {
+			transition: opacity 0.3s ease;
+		}
+
+		#add-review-button {
+			user-select: none;
+			cursor: pointer;
+
+			display: flex;
+			align-items: center;
+			justify-content: space-around;
+
+			height: 2.5rem;
+			padding: 0 1vw;
+			background-color: #0980D3;
+			border-radius: 22.5px;
+
+			font-family: Inika;
+			font-size: 1.25rem;
+			color: white;
+		}
+
+		#add-review-button:hover {
+			background-color: #ffffff;
+			border-radius: 22.5px;
+			color: #0980D3;
+		}
+
+		#submitBtn:hover {
+			background-color: #ffffff;
+			border-radius: 22.5px;
+			color: #0980D3;
+		}
+
+		#submitBtn:hover img {
+			filter: invert(35%) sepia(90%) saturate(1792%) hue-rotate(184deg) brightness(89%) contrast(93%);
+		}
+	</style>
 	
 	<script>
 		console.log("Recieved product: ");
@@ -26,7 +59,25 @@
         <div class="pl-10 flex flex-col justify-start w-full">
             <h2 class="font-Inknut text-secondary text-[32px] mt-5">{{product.name}}</h2>
             <p class="font-Inknut text-secondary text-2xl pb-2">&#8369; {{formatPrice product.price}}</p>
-        
+			
+			<!-- RATING CLASS -->
+			<p class="font-Inknut text-secondary text"> 
+			Product rating: 
+			{{#if ratingAve}}
+				{{ ratingAve }}
+			{{else}}
+				0
+			{{/if}}
+			Stars
+
+			(
+			{{#if ratingNo}}
+				{{ratingNo}}
+			{{else}}
+				No
+			{{/if}} 
+			Ratings )</p>
+			
             <p class="text-[17px] pb-2">{{product.description}}</p>
             <span class="text-[17px] pb-3">In Stock: {{product.quantity}}</span>
         
@@ -37,28 +88,37 @@
                 <p id="err"></p>
                 <input type="hidden" id="p_id" value="{{product._id}}">
 				
-				<div class="relative mt-5 mb-2"  form="add">
- 				   <button id="submitBtn" class="flex items-center w-auto h-12 px-4 bg-maincolor rounded-full text-white text-2xl font-Inika ml-auto mr-5">
+				<div class="mt-5 mb-2 flex"  form="add">
+ 				   <button id="submitBtn" class="flex items-center w-auto h-10 px-3 bg-maincolor rounded-full text-white text-xl font-Inika ml-auto mr-5">
  				       <img class="w-5 mr-2" src="../uploads/cart.png" alt="Cart Icon" />
     				    Add to Cart
     				</button>
 
-    				<button id="hoverBtn" type="submit" class="w-auto h-12 px-4 pt-2 bg-white hidden border border-maincolor border-2 rounded-full text-maincolor text-2xl font-Inika ml-auto mr-5">
-    				    <img class="w-5 mr-2 pt-1" src="../uploads/basket.png" alt="Cart Icon" />
-    				    Add to Cart
-   					</button>
+                    <div id="add-review-button">
+                        <p>Add Review</p>
+                    </div>
 				</div>
-            </form>
-                            
+            </form> 
         </div>
-
     </div>
-
 </div>
 
-
-			
 	</div>
 {{else}}
 	<h1>No product found!</h1>
 {{/if}}
+
+<script>
+    function toggleReview() {
+        const reviewOverlay = document.getElementById('toggleReview');
+
+        if (reviewOverlay.style.display === 'none' || reviewOverlay.style.display === '') {
+            reviewOverlay.style.display = 'block';
+			document.body.style.overflow = "hidden"
+        }
+        else {
+            reviewOverlay.style.display = 'none';
+			document.body.style.overflow = ""
+        }
+    }
+</script>

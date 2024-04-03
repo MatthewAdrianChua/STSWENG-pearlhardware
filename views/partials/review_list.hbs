@@ -1,0 +1,269 @@
+<style>
+	.reviews-container {
+		background-color: white;
+		min-height: 20vh;
+		width: 50vw;
+		margin: 0 auto 5vh;
+
+		display: flex;
+		flex-direction: column;
+
+		font-family: Inika;
+
+		box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.1), -10px -10px 10px rgba(0, 0, 0, 0.1);
+	}
+
+	.one-review-container {
+		background-color: white;
+		width: 100%;
+		min-height: 20vh;
+		padding: 1vh 2vw;
+
+		border-bottom: 1px solid #cccccc;
+	}
+
+	#product-reviews {
+		background-color: white;
+		width: 100%;
+		height: 8vh;
+		padding-left: 1vw;
+
+		display: flex;
+		align-items: center;
+
+		font-size: 3.5vh;
+		font-weight: 700;
+
+		border-bottom: 1px solid #bbbbbb;
+	}
+
+	.star-rating {
+		background-color: white;
+		height: 8vh;
+
+		display: flex;
+		align-items:last baseline;
+
+		font-size: 3vh;
+		font-weight: 700;
+	}
+	
+	.review-user {
+		background-color: white;
+		height: 5vh;
+
+		font-size: 2vh;
+		color: #666666;
+	}
+
+	.review-header {
+		background-color: white;
+		min-height: 10vh;
+		max-height: 20vh;
+
+		display: flex;
+		align-items: center;
+
+		font-size: 4vh;
+		font-weight: 700;
+	}
+
+	.review-content {
+		background-color: white;
+		min-height: 7vh;
+		max-height: 50vh;
+
+		overflow: hidden;
+
+		font-size: 2.5vh;
+	}
+
+	.review-footer {
+		background-color: white;
+		height: 10vh;
+		padding-top: 1vh;
+		padding-bottom: 1vh;
+		padding-left: auto;
+		padding-right: auto;
+
+		display: flex;
+		align-items: center;
+	}
+
+	#no-reviews {
+		margin: 4vh auto;
+		font-size: 5vh;
+		color: #777777;
+		font-family: Inika;
+		font-weight: 800;
+	}
+	
+	.userButton{
+		margin-left: 1vw;
+		padding: 1vh 1vw;
+		color: white;
+		background-color: #0980D3;
+		border: 1px solid #0980D3;
+
+		font-size: 1.5ch;
+		font-weight: 600;
+
+		border-radius: 22px;
+
+		&:hover {
+			background-color: white;
+			color: #0980D3;
+		}
+	}
+</style>
+
+<div class="reviews-container">
+	<div id="product-reviews">
+		<p>Product Reviews</p>
+	</div>
+
+	{{#if user_review}}
+			<div class="one-review-container">
+				<input type="hidden" id="userReviewRating" value="{{user_review.rating}}" />
+				<div class="star-rating">
+					{{!-- 
+						{{#each <whatever variable use for user rating on a product>}}
+							<img src="DOWNLOAD IMAGE OF STAR FIRST">
+						{{/each}}            
+					 --}}
+					 {{user_review.rating}} stars 
+				</div>
+				<div class="review-date">
+					Reviewed on {{user_review.dateCreated}} 
+					{{#if user_review.dateUpdated}}
+					(Last edited on: {{user_review.dateUpdated}})
+					{{/if}}
+				</div>
+				<div class="review-user">
+					by: {{user_review.authorName}} (Your review)
+				</div>
+				{{#if user_review.header}}
+					<div class="review-header" id="userReviewHeader">
+						{{user_review.header}}
+					</div>
+				{{/if}}
+				
+				{{#if user_review.body}}
+					<div class="review-content" id="userReviewContent">
+						{{user_review.body}}
+					</div>
+				{{/if}}
+				
+				<div class="review-footer">
+					<button class="userButton" id="editBtn"> Edit review </button>
+					<button class="userButton" id="delBtn"> Delete review </button>
+					{{!-- I need this for testing. Please change as you see fit. The css for this is in review_list.hbs (line 92) --}}
+				</div>
+			 </div>
+			 
+	{{/if}}
+	
+	{{#if review_list}}
+		{{#each review_list}}
+			<div class="one-review-container">
+				<div class="star-rating">
+					{{!-- 
+						{{#each <whatever variable use for user rating on a product>}}
+							<img src="DOWNLOAD IMAGE OF STAR FIRST">
+						{{/each}}            
+					 --}}
+					 {{this.rating}} stars 
+				</div>
+				<div class="review-date">
+					Reviewed on {{this.dateCreated}}
+					{{#if this.dateUpdated}}
+					(Last edited on: {{this.dateUpdated}})
+					{{/if}}
+				</div>
+				<div class="review-user">
+					by: {{this.authorName}}
+				</div>
+				{{#if this.header}}
+					<div class="review-header">
+						{{this.header}}
+					</div>
+				{{/if}}
+				
+				{{#if this.body}}
+					<div class="review-content">
+						{{this.body}}
+					</div>
+				{{/if}}
+				
+				<div class="review-footer">
+					{{!-- 
+						<LIKE BUTTON>
+						<KEBAB ICON BUTTON ON THE OTHER END>
+					 --}}
+				</div>
+			 </div>
+		{{/each}}
+	{{else}}
+		{{#unless user_review}}
+			<!-- Add prompt here that product has no reviews. -->
+			<p id="no-reviews"> THIS PRODUCT HAS NO REVIEWS </p>
+
+			{{!-- The big chungus comment below can be used for basic, no-brain testing; --}}
+			{{!-- <div class="one-review-container">
+					<div class="star-rating">
+						 69.420
+					</div>
+					<div class="review-date">
+						Reviewed on {{user_review.dateCreated}} 
+						{{#if user_review.dateUpdated}}
+						(Last edited on: {{user_review.dateUpdated}})
+						{{/if}}
+					</div>
+					<div class="review-user">
+						Name NoName
+					</div>
+					<div class="review-header">
+						Jusko Po BAD PRODUCT
+					</div>
+					<div class="review-content">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et hendrerit nisl, et ultricies nibh. Donec facilisis dolor sed auctor varius. Integer at ante non lectus convallis pretium eget vitae tellus. Duis tempus, metus ac pretium blandit, purus tellus iaculis turpis, id eleifend nulla enim et quam. Proin suscipit velit id justo maximus pulvinar. Nulla ultrices rhoncus turpis, eu semper sem pellentesque at. Ut ac augue nec orci blandit venenatis eget et velit. Ut rhoncus magna id arcu tempus semper. Ut varius ex et nisl consectetur, vel tincidunt sem scelerisque. Phasellus maximus lacus quis diam imperdiet, eu luctus elit volutpat. Nulla ac tellus sit amet mauris luctus porttitor eu ut magna. Vivamus dolor ipsum, consectetur in nulla nec, accumsan iaculis lorem. Nullam varius lacus hendrerit lacus facilisis, vel iaculis arcu ullamcorper.
+						<br>
+						Morbi fringilla lectus lectus, sit amet maximus elit congue sed. Sed aliquam est sit amet dui venenatis, quis interdum mauris pretium. Nullam a leo sed tortor scelerisque sodales sed sed orci. Phasellus dictum, ante vitae hendrerit elementum, est ipsum finibus erat, non sagittis felis nisl nec ipsum. Morbi dapibus purus in interdum sagittis. Nullam gravida sollicitudin turpis. Nulla nibh metus, tincidunt in quam eget, tincidunt accumsan diam. Donec suscipit.
+					</div>
+					<div class="review-footer">
+						<button class="userButton" id="editBtn"> LIKEY </button>
+						<button class="userButton" id="editBtn"> Edit review </button>
+						<button class="userButton" id="delBtn"> Delete review </button>
+					</div>
+			</div>
+			<div class="one-review-container">
+					<div class="star-rating">
+						 69.420
+					</div>
+					<div class="review-date">
+						Reviewed on {{user_review.dateCreated}} 
+						{{#if user_review.dateUpdated}}
+						(Last edited on: {{user_review.dateUpdated}})
+						{{/if}}
+					</div>
+					<div class="review-user">
+						Name NoName
+					</div>
+					<div class="review-header">
+						Jusko Po BAD PRODUCT
+					</div>
+					<div class="review-content">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc et hendrerit nisl, et ultricies nibh. Donec facilisis dolor sed auctor varius. Integer at ante non lectus convallis pretium eget vitae tellus. Duis tempus, metus ac pretium blandit, purus tellus iaculis turpis, id eleifend nulla enim et quam. Proin suscipit velit id justo maximus pulvinar. Nulla ultrices rhoncus turpis, eu semper sem pellentesque at. Ut ac augue nec orci blandit venenatis eget et velit. Ut rhoncus magna id arcu tempus semper. Ut varius ex et nisl consectetur, vel tincidunt sem scelerisque. Phasellus maximus lacus quis diam imperdiet, eu luctus elit volutpat. Nulla ac tellus sit amet mauris luctus porttitor eu ut magna. Vivamus dolor ipsum, consectetur in nulla nec, accumsan iaculis lorem. Nullam varius lacus hendrerit lacus facilisis, vel iaculis arcu ullamcorper.
+						<br>
+						Morbi fringilla lectus lectus, sit amet maximus elit congue sed. Sed aliquam est sit amet dui venenatis, quis interdum mauris pretium. Nullam a leo sed tortor scelerisque sodales sed sed orci. Phasellus dictum, ante vitae hendrerit elementum, est ipsum finibus erat, non sagittis felis nisl nec ipsum. Morbi dapibus purus in interdum sagittis. Nullam gravida sollicitudin turpis. Nulla nibh metus, tincidunt in quam eget, tincidunt accumsan diam. Donec suscipit.
+					</div>
+					<div class="review-footer">
+						<button class="userButton" id="editBtn"> LIKEY </button>
+						<button class="userButton" id="editBtn"> Edit review </button>
+						<button class="userButton" id="delBtn"> Delete review </button>
+					</div>
+			</div> --}}
+		{{/unless}}
+	{{/if}}
+	<script src="./js/review.js"></script>
+</div>

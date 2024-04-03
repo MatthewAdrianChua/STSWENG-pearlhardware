@@ -58,17 +58,20 @@
 
 	.review-header {
 		background-color: white;
-		height: 10vh;
+		min-height: 10vh;
+		max-height: 20vh;
 
 		display: flex;
 		align-items: center;
 
 		font-size: 4vh;
+		font-weight: 700;
 	}
 
 	.review-content {
 		background-color: white;
-		height: 50vh;
+		min-height: 7vh;
+		max-height: 50vh;
 
 		overflow: hidden;
 
@@ -104,6 +107,8 @@
 
 		font-size: 1.5ch;
 		font-weight: 600;
+
+		border-radius: 22px;
 
 		&:hover {
 			background-color: white;

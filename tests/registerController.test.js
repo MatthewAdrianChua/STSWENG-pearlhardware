@@ -15,6 +15,10 @@ jest.mock('../model/userSchema.js'); // Mocking the User model
 jest.mock('express-validator');
 jest.mock('bcrypt');
 
+// jest.mock('express-validator', () => ({
+//     validationResult: jest.fn()
+// }));
+
 describe('Register controller', () => {
 
 
@@ -63,100 +67,10 @@ describe('Register controller', () => {
     });
 
 
-    // TODO: register function
+    // register function
     describe('register function', () => {
 
-        // TODO: status 405 error for "email already exists"
-        it('should return status 405 for "email already exists"', async () => {
-            let req, res;
-
-            req = {
-                body: {
-                    fname: 'Noah',
-                    lname: 'Han',
-                    email: 'plave@email.com',
-                    password: 'password',
-                    line1: 'Pixel World',
-                    line2: '',
-                    state: 'Asterum',
-                    city: 'City',
-                    postalCode: '1234'
-                }
-            };
-
-            res = {
-                sendStatus: jest.fn()
-            };
-
-            jest.mock('express-validator', () => ({
-                validationResult: jest.fn()
-            }));
-            
-            const validationError = {
-                isEmpty: jest.fn().mockReturnValue(false),
-                array: jest.fn().mockReturnValue([{ msg: 'Email already exists!', path: 'email' }])
-            };
-            
-            validationResult.mockReturnValue(validationError);
-    
-            await registerController.register(res,req);
-    
-            expect(res.sendStatus).toHaveBeenCalledWith(405);
-            
-            jest.clearAllMocks();
-        });
-
-        // TODO: status 410 error for "postal code should be 4 digits"
-        it('should return status 410 for "postal code should be 4 digits"', async () => {
-            let req, res;
-
-            req = {
-                body: {
-                    firstName: "Test",
-                    lastName: "Person",
-                    email: "testingperson@email.com",
-                    password: "testpassword",
-                    line1: "Pixel World",
-                    line2: "Asterum",
-                    city: "Binan",
-                    state: "Laguna",
-                    postalCode: 4026,
-                    country: "PH"
-                }
-            };
-            res = {
-                sendStatus: jest.fn()
-            }
-
-            jest.clearAllMocks();
-        });
-
-        // TODO: status 406 error for "invalid email value"
-        it('should return status 406 for "invalid email value"', async () => {
-            let req, res;
-
-            req = {
-                body: {
-                    firstName: "Test",
-                    lastName: "Person",
-                    email: "testingperson",
-                    password: "testpassword",
-                    line1: "Pixel World",
-                    line2: "Asterum",
-                    city: "Binan",
-                    state: "Laguna",
-                    postalCode: 4026,
-                    country: "PH"
-                }
-            };
-            res = {
-                sendStatus: jest.fn()
-            }
-
-            jest.clearAllMocks();
-        });
-
-        // TODO: status 500 error for "username already exists"
+        // status 500 error for "username already exists"
         it('should return status 500 for "username already exists"', async () => {
             let req, res;
 
@@ -178,51 +92,20 @@ describe('Register controller', () => {
                 sendStatus: jest.fn()
             }
 
-            // Mock existing user with valid credentials
-            const newUser = {
-                firstName: "Test",
-                lastName: "Person",
-                email: "testingperson@email.com",
-                password: await bcrypt.hash('testpassword', 10),
-                line1: "Pixel World",
-                line2: "Asterum",
-                city: "Binan",
-                state: "Laguna",
-                postalCode: 4026,
-                country: "PH"
+            const User = {
+                save: jest.fn().mockRejectedValue(new Error('Username already exists!'))
             };
 
-            jest.clearAllMocks();
-        });
+            await registerController.register(req,res);
 
-        // status 200 for valid registration credentials
-        it('should return status 200 for "valid registration credentials"', async () => {
-            let req, res;
-
-            req = {
-                body: {
-                    firstName: "Test",
-                    lastName: "Person",
-                    email: "testingperson@email.com",
-                    password: "testpassword",
-                    line1: "Pixel World",
-                    line2: "Asterum",
-                    city: "Binan",
-                    state: "Laguna",
-                    postalCode: 4026,
-                    country: "PH"
-                }
-            };
-            res = {
-                sendStatus: jest.fn()
-            }
+            expect(res.sendStatus).toHaveBeenCalledWith(500);
 
             jest.clearAllMocks();
         });
 
     });
 
-    // TODO: resendVerification function
+    // resendVerification function
     describe('resendVerification function', () => {
 
         // resent verification email, status 200

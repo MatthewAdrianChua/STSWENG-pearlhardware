@@ -82,3 +82,10 @@
             <div><a href='/register' action="GET" class="signup-link">Not Registered? Sign Up</a></div>
         </div>
     </div>
+	<script>
+	document.addEventListener('keyup', function(x) { //make login button work with enter key
+		if(x.keyCode == 13){
+			document.querySelector("#logsubmit").click();
+		}
+	});
+	</script>

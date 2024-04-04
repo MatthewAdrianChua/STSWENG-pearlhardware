@@ -173,11 +173,12 @@ function selectOption(option) {
         </div>
         <div class="w-[200px] text-lg text-right">Total</div>
     </div>
+     {{#if (eq status "delivered")}}
        {{#each items}}	
     <div class="grid grid-cols-5 gap-2 gap-x-0 mb-2 m-2 bg-white rounded-lg ">
  	
             <div class="flex flex-wrap items-center pl-10">
-                <img class="w-[50px] h-[100%] mr-8 mb-2 py-2" src={{image}} alt="product image">
+                <img class="w-[50px] h-[100%] mr-8 mb-2 py-2" src={{this.image}} alt="product image">
             </div>
             <div class="col-span-2 flex flex-wrap items-center pl-10">
                 <div class="text-secondary text-lg">{{this.name}}</div>
@@ -202,6 +203,30 @@ function selectOption(option) {
 
     </div>
         {{/each}}
+        {{else}}
+        {{#each items}}	
+    <div class="grid grid-cols-5 gap-2 gap-x-0 mb-2 m-2 bg-white rounded-lg ">
+ 	
+            <div class="flex flex-wrap items-center pl-10">
+                <img class="w-[50px] h-[100%] mr-8 mb-2 py-2" src={{this.image}} alt="product image">
+            </div>
+            <div class="col-span-2 flex flex-wrap items-center pl-10">
+                <div class="text-secondary text-lg">{{this.name}}</div>
+            </div>
+            <div class="flex flex-wrap items-center justify-end">
+                <div class="w-[100px] text-secondary text-lg border border-r-maincolor border-l-maincolor border-t-0 border-b-0 text-center">{{this.amount}}</div>
+                <div class="w-[100px] text-secondary text-lg border border-r-maincolor border-t-0 border-l-0 border-b-0 text-center">&#8369; {{formatPrice this.price}}</div>
+            </div>
+            <div class="flex flex-wrap items-center justify-center rounded-[0px_10px_10px_0px]">
+                <div class="text-secondary text-lg text-center">&#8369; {{multiply this.amount this.price}}</div>
+            </div>
+
+            
+
+    </div>
+        {{/each}}
+        {{/if}}
+        
         <div class="grid grid-cols-3">
     <div class="col-end-4 w-full bg-white flex flex-wrap rounded-lg pr-4 mt-2">
         <div class="grid grid-cols-2 w-full gap-x-0 gap-y-0">

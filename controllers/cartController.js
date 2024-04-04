@@ -1,6 +1,11 @@
 import database from '../model/db.js';
 import { User } from '../model/userSchema.js';
 import { Product } from '../model/productSchema.js';
+import Handlebars from 'handlebars';
+import { formatPrice } from '../util/helpers.js';
+
+Handlebars.registerHelper('formatPrice', formatPrice);
+
 
 const cartController = {
 	//getCart

@@ -12,6 +12,7 @@ import inventoryController from '../controllers/inventoryController.js';
 import orderController from '../controllers/orderController.js';
 import emailVerificationController from '../controllers/emailVerificationController.js';
 import refundController from '../controllers/refundController.js';
+import reviewController from '../controllers/reviewController.js';
 
 import bodyParser from 'body-parser';
 import { body, validationResult } from 'express-validator';
@@ -44,6 +45,7 @@ router.get('/searchProducts', storePageController.searchProducts);
 router.get('/userprofile', userController.getUserProfile);
 router.get('/userpurchases/:status', userController.getUserPurchases);
 router.get('/userorderdetails/:orderID', userController.getUserOrderDetails);
+router.get('/guestorderdetails/:orderID', userController.getGuestOrderDetails);
 router.get('/userSearchPurchases', userController.searchUserPurchases);
 
 //router.get('/searchProducts', controller.searchProducts); Possible duplicate
@@ -74,6 +76,8 @@ router.get('/getUserRefundDetails/:refundID', refundController.getUserRefundDeta
 
 router.get('/emailVerify', emailVerificationController.getEmailVerify);
 router.get('/verify', emailVerificationController.getVerify);
+
+router.get('/getGuestDetails', checkoutController.getGuestDetails);
 
 //POSTS
 router.post('/register', body('fname').notEmpty(), body('lname').notEmpty(), body('email').notEmpty().isEmail().normalizeEmail().custom(async value => {
@@ -107,6 +111,15 @@ router.post('/initiateRefund', refundController.initiateRefund);
 router.post('/createRefund', upload.array('productPic', 10), body('name').notEmpty(), body('quantity').notEmpty().isNumeric(), body('price').notEmpty(), refundController.createRefund);
 router.post('/refundCustomer', refundController.refundCustomer);
 router.post('/denyRefund', refundController.denyRefund);
+router.post('/buyNow', checkoutController.buyNow)
+router.post('/initializeGuest',body('fname').notEmpty(), body('lname').notEmpty(), body('email').notEmpty().isEmail().normalizeEmail(), body('line1').notEmpty(), body('state').notEmpty(), body('city').notEmpty(), body('postalCode').notEmpty().isNumeric().custom(async value => {
+    if(value.toString().length != 4){
+        return Promise.reject('Postal code should be 4 digits')
+    }
+}), checkoutController.initializeGuest)
+router.post('/addReview', reviewController.addReviews);
+router.post('/delReview', reviewController.delReviews);
+router.post('/editReview', reviewController.editReviews);
 
 
 export default router;

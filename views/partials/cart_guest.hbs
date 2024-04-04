@@ -1,0 +1,103 @@
+<div class="container flex flex-col gap-4 mx-auto px-4 py-8  bg-white bg-opacity-80 shadow-md rounded-md">
+    
+    <div class=" m-5 py-1 pl-2 border-b-2 border-b-maincolor font-Inika text-2xl w-48 ">Product</div>
+
+	<div class="flex flex-wrap justify-between mb-6 px-2 py-3 border border-1">
+       
+        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:border-r md:border-blue-200 px-4 pt-3">
+            <div class="border-b border-blue-500 mb-4">
+                <h2 class="text-2xl font-bold text-blue-800">Item Information</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-6 text-blue-900 mb-6">
+                <div class="font-bold">Item Name:</div>
+                <div class="break-words">{{itemName}}</div>
+
+                <div class="font-bold">Item ID:</div>
+                <div class="break-words" id="id" data-index={{itemID}}>{{itemID}}</div>
+
+                <div class="font-bold">Price:</div>
+                <div class="break-words">{{formatPrice price}}</div>
+
+                <div class="font-bold">Amount:</div>
+                <div class="break-words" id="amount" data-index={{amount}}>{{amount}}</div>
+            </div>
+        </div>
+
+		{{!-- <div class="my-5 ml-4 border border-2 max-h-[500px] max-w-[500px] w-[200px] h-[500px]">
+			<img class="w-full h-full object-cover" src="../../public/uploads/torch_head.jpg"{{product.productpic}} --}} {{!-- alt="Product Image">
+		</div> --}}
+
+		<img class="max-w-[400px] max-f-full w-full h-full object-cover pr-10 my-5 ml-4 my-2 border border-1 border-secondary" src="{{product.productpic}}" alt="Product Image">
+
+        <div class="w-full md:w-1/3 px-4">
+            <div class="border-b border-blue-500 pb-2 mb-4">
+                <h2 class="text-2xl font-bold text-blue-800">Total</h2>
+            </div>
+            <div class="grid grid-cols-2 gap-6 text-blue-900">
+                <div class="font-bold">Total Amount:</div>
+                <div class="break-words">{{formatPrice totalAmount}}</div>
+
+            </div>
+        </div>
+</div>
+<div class="container flex flex-col gap-4 mx-auto px-4 py-8  bg-white bg-opacity-80 shadow-md rounded-md">
+	<div class=" m-5 py-1 pl-2 border-b-2 border-b-maincolor font-Inika text-2xl w-48 ">Guest Details</div>
+				<div class="flex flex-col bg-white p-2 mx-5 rounded-md ">
+			
+					<div class="grid grid-cols-2 gap-2 h-[300px]">
+							<div class="md:w-1/2 md:order-1 p-6 bg-white rounded-lg shadow-md md:mr-4">
+								<div class="mb-4">
+									<label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
+									<input type="text" id="regfname" name="firstName" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm" required>
+								</div>
+
+								<div class="mb-4">
+									<label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
+									<input type="text" id="reglname" name="lastName" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm" required>
+								</div>
+
+								<div class="mb-4">
+									<label for="state" class="block text-sm font-medium text-gray-700">State</label>
+									<input type="text" id="regstate" name="state" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm" required>
+								</div>
+
+								<div class="mb-4">
+									<label for="state" class="block text-sm font-medium text-gray-700">Email</label>
+									<input type="text" id="regemail" name="amil" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm" required>
+								</div>
+							</div>
+
+							<div class="md:w-1/2 md:order-2 p-6 bg-white rounded-lg shadow-md md:mr-4">
+								<div class="mb-4">
+									<label for="city" class="block text-sm font-medium text-gray-700">City</label>
+									<input type="text" id="regcity" name="city" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm" required>
+								</div>
+
+								<div class="mb-4">
+									<label for="postal-code" class="block text-sm font-medium text-gray-700">Postal Code</label>
+									<input type="text" id="regpostalcode" name="postalCode" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm" required>
+								</div>
+
+								<div class="mb-4">
+									<label for="address-1" class="block text-sm font-medium text-gray-700">Address 1</label>
+									<input type="text" id="regline1" name="address1" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm" required>
+								</div>
+
+								<div class="mb-4">
+									<label for="address-2" class="block text-sm font-medium text-gray-700">Address 2 (Optional)</label>
+									<input type="text" id="regline2" name="address2" class="mt-1 p-3 w-full border bg-white border-gray-300 rounded-md shadow-sm">
+								</div>
+							</div>
+					</div>
+
+				</div>
+
+		
+							<div class="md:w-1/2 md:order-3 p-6 bg-white rounded-lg ">
+									<div class="flex -mx-3">
+									
+											<button class=" bg-maincolor w-80 py-5 text-white mx-auto" id="submit" type="submit">Checkout ₱{{total}}</button>
+									
+									</div>										
+							</div>
+</div>

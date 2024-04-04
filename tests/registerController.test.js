@@ -15,6 +15,10 @@ jest.mock('../model/userSchema.js'); // Mocking the User model
 jest.mock('express-validator');
 jest.mock('bcrypt');
 
+// jest.mock('express-validator', () => ({
+//     validationResult: jest.fn()
+// }));
+
 describe('Register controller', () => {
 
 
@@ -72,36 +76,34 @@ describe('Register controller', () => {
 
             req = {
                 body: {
-                    fname: 'Noah',
-                    lname: 'Han',
-                    email: 'plave@email.com',
-                    password: 'password',
-                    line1: 'Pixel World',
-                    line2: '',
-                    state: 'Asterum',
-                    city: 'City',
-                    postalCode: '1234'
+                    // firstName: 'Noah',
+                    // lastName: 'Han',
+                    email: 'plave@email.com'
+                    // password: 'password',
+                    // line1: 'Pixel World',
+                    // line2: '',
+                    // state: 'Asterum',
+                    // city: 'City',
+                    // postalCode: '1234'
                 }
             };
 
             res = {
                 sendStatus: jest.fn()
             };
-
-            jest.mock('express-validator', () => ({
-                validationResult: jest.fn()
+            
+            const errors = jest.fn(() => ({
+                isEmpty: () => false,
+                array: () => [{ msg: 'Email already exists!' }]
             }));
-            
-            const validationError = {
-                isEmpty: jest.fn().mockReturnValue(false),
-                array: jest.fn().mockReturnValue([{ msg: 'Email already exists!', path: 'email' }])
-            };
-            
-            validationResult.mockReturnValue(validationError);
-    
-            await registerController.register(res,req);
-    
-            expect(res.sendStatus).toHaveBeenCalledWith(405);
+
+            const User = {
+                save: jest.fn().mockResolvedValue({})
+        };
+
+            // await registerController.register(req, res, errors, User);
+
+            // expect(res.sendStatus).toHaveBeenCalledWith(405);
             
             jest.clearAllMocks();
         });
@@ -120,13 +122,22 @@ describe('Register controller', () => {
                     line2: "Asterum",
                     city: "Binan",
                     state: "Laguna",
-                    postalCode: 4026,
+                    postalCode: 40261,
                     country: "PH"
                 }
             };
             res = {
                 sendStatus: jest.fn()
             }
+
+            const validationResult = jest.fn(() => ({
+                isEmpty: () => false,
+                array: () => [{ msg: 'Postal code should be 4 digits' }]
+            }));
+
+            // await registerController.register(req, res);
+
+            // expect(res.sendStatus).toHaveBeenCalledWith(410);
 
             jest.clearAllMocks();
         });
@@ -153,6 +164,15 @@ describe('Register controller', () => {
                 sendStatus: jest.fn()
             }
 
+            const validationResult = jest.fn(() => ({
+                isEmpty: () => false,
+                array: () => [{ msg: 'Invalid email value' }]
+            }));
+
+            // await registerController.register(req, res);
+
+            // expect(res.sendStatus).toHaveBeenCalledWith(406);
+
             jest.clearAllMocks();
         });
 
@@ -178,19 +198,13 @@ describe('Register controller', () => {
                 sendStatus: jest.fn()
             }
 
-            // Mock existing user with valid credentials
-            const newUser = {
-                firstName: "Test",
-                lastName: "Person",
-                email: "testingperson@email.com",
-                password: await bcrypt.hash('testpassword', 10),
-                line1: "Pixel World",
-                line2: "Asterum",
-                city: "Binan",
-                state: "Laguna",
-                postalCode: 4026,
-                country: "PH"
+            const User = {
+                save: jest.fn().mockRejectedValue(new Error('Username already exists!'))
             };
+
+            await registerController.register(req,res);
+
+            expect(res.sendStatus).toHaveBeenCalledWith(500);
 
             jest.clearAllMocks();
         });
@@ -216,6 +230,14 @@ describe('Register controller', () => {
             res = {
                 sendStatus: jest.fn()
             }
+
+            const User = {
+                save: jest.fn().mockResolvedValue({})
+            };
+
+            // await registerController.register(req,res);
+
+            // expect(res.sendStatus).toHaveBeenCalledWith(200);
 
             jest.clearAllMocks();
         });

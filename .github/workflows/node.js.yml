@@ -5,9 +5,10 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ "master" , "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem"]
+
+    branches: [ "master" , "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem", "QA-testscripts"]
   pull_request:
-    branches: [ "master", "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem" ]
+    branches: [ "master", "staging", "QA-feature-refactoring", "QA-feature-emailVerification", "QA-feature-refundSystem", "QA-testscripts" ]
 
 jobs:
   build:
@@ -52,8 +53,8 @@ jobs:
   deploy:
 
     runs-on: windows-latest
-    if: github.ref == 'refs/heads/master'
     needs: [test]
+    if: github.ref == 'refs/heads/master'
 
     strategy:
       matrix:

@@ -1,0 +1,237 @@
+<style>
+    .review-add-toggle-container {
+        display: none;
+
+        background-color: rgba(0, 0, 0, 0.4);
+        height: 100%;
+        width: 100vw;
+
+        position: fixed;
+        top: 0;
+        z-index: 999;
+
+        overflow-y: scroll;
+    }
+
+    .review-add-container {
+        background-color: rgba(9, 128, 211, 1);
+        opacity: 1;
+
+        color: white;
+        font-family: Inika;
+
+        width: 40vw;
+
+        margin: 10vh auto;
+
+        border-radius: 23px;
+    }
+
+    .review-add-title {
+        height: 10vh;
+        padding: 2vh 2vw;
+
+        font-size: 4vh;
+        font-weight: 600;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .review-add-inputs {
+        background-color: white;
+        border-radius: 0 0 23px 23px;
+    }
+
+    {{!-- HEADER STYLES --}}
+    .review-input-header {
+        width: 100%;
+
+        color: black;
+
+        padding: 2vh 2vw;
+    }
+
+    .review-input-header label {
+        font-weight: 600;
+        font-size: 3vh;
+    }
+
+    .header-textbox {
+        width: 100%;
+        height: 15vh;
+
+        border: 1px solid #888888;
+        margin-top: 1vh;
+        padding: 1vh 1vw;
+
+        overflow: clip;
+
+        font-size: 2.5vh;
+
+        resize: none;
+    }
+
+    {{!-- CONTENT STYLES --}}
+    .review-input-content {
+        color: black;
+
+        padding: 2vh 2vw;
+    }
+
+    .review-input-content label {
+        font-weight: 600;
+        font-size: 3vh;
+    }
+
+    .content-textbox {
+        width: 100%;
+        height: 50vh;
+
+        border: 1px solid #888888;
+        margin-top: 1vh;
+        padding: 1vh 1vw;
+
+        overflow: clip;
+
+        font-size: 2.5vh;
+
+        resize: none;
+    }
+
+    .header-limit, .content-limit {
+        width: 100%;
+        height: 2vh;
+        color: #777777;
+        font-size: 2vh;
+        text-align: end;
+    }
+
+    {{!-- SUBMIT BUTTON --}}
+    .review-add-submit {
+        background-color: rgba(9, 128, 211, 1);
+        height: auto;
+
+        margin-top: 2vh;
+        margin-left: 3vw;
+        margin-bottom: 4vh;
+        padding: 1vh 2vw;
+        
+        font-size: 3vh;
+        font-weight: 600;
+
+        border: 1px solid rgb(9, 128, 211);
+        border-radius: 90px;
+
+        user-select: none;
+    }
+
+    .review-add-submit:hover {
+        color: rgb(9, 128, 211);
+        background-color: white;
+        border-radius: 90px;
+    }
+
+    .cancel-overlay {
+        background-color: white;
+        color: black;
+        width: 10vw;
+        height: auto;
+        padding: 1vh 2vw;
+        
+        font-size: 2.5vh;
+        
+        margin-left: 1vw;
+
+        border: 1px solid #f0f0f0;
+        border-radius: 90px;
+
+        user-select: none;
+        cursor: pointer;
+    }
+
+    .cancel-overlay:hover {
+        background-color: #aaaaaa;
+    }
+	
+	.review-input-rating{
+		color:black;
+	}
+
+    {{!-- SHARED --}}
+    .header-textbox, .content-textbox {
+        border-radius: 12px;
+
+        overflow-y: auto;
+    }
+
+    .review-input-rating, #errText {
+        margin-left: 2vw;
+        margin-bottom: 1vh;
+
+        font-size: 2ch;
+
+        & label {
+            margin-right: 0.5vw;
+        }
+    }
+
+    #anonCheck {
+        margin-left: 2vw;
+        font-size: 2ch;
+    }
+</style>
+
+<div class="review-add-toggle-container" id="toggleReview" onclick="">
+    <div class="review-add-container">
+        <p class="review-add-title">Review the product</p>
+        <div class="review-add-inputs">
+            <!-- <form method="POST" enctype="application/x-www-form-urlencoded"> -->
+                <div class="review-input-header">
+                    <label>Review Header</label>
+                    <textarea class="header-textbox" name="rev-head" rows="3" columns="100" placeholder="Type your review summary here..."></textarea>
+                    <p class="header-limit">
+                        50
+                        {{!-- {{this.header_limit}} --}}
+                    </p>
+                </div>
+				<div class="review-input-rating">
+					<p>Rating: 
+					<input type="radio" id="rating1" name="ratingVal" value=1 />
+					<label for="rating1">1⭐</label>
+					
+					<input type="radio" id="rating2" name="ratingVal" value=2 />
+					<label for="rating2">2⭐</label>
+					
+					<input type="radio" id="rating3" name="ratingVal" value=3 />
+					<label for="rating3">3⭐</label>
+					
+					<input type="radio" id="rating4" name="ratingVal" value=4 />
+					<label for="rating4">4⭐</label>
+					
+					<input type="radio" id="rating5" name="ratingVal" value=5 />
+					<label for="rating5">5⭐</label>
+					</p>
+				</div>
+                <div class="review-input-content">
+                    <label>Review Content</label>
+                    <textarea class="content-textbox" name="rev-cont" columns="100" placeholder="Type your product review here..."></textarea>
+                    <p class="content-limit">
+                        500
+                        {{!-- {{this.content_limit}} --}}
+                    </p>
+                </div>
+					<div id="anonCheck">
+						<input type="checkbox" id="anon"><span style="color:black;"> Review anonymously</span>
+					</div>
+					<p id="errText" style="color:red; display:none;">Test</p>
+                    <button type="submit" class="review-add-submit">
+                        Submit
+                    </button>
+                    <span class="cancel-overlay" onclick="toggleReview()">
+                        Cancel
+                    </span>
+            <!-- </form> -->
+        </div>
+    </div>
+</div>

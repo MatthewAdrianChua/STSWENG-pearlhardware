@@ -99,7 +99,7 @@ const inventoryController = {
     
         }catch(err){
             console.error(err);
-            
+            res.sendStatus(400);
         }
     },
 	editProduct: async function (req, res) {
@@ -147,7 +147,7 @@ const inventoryController = {
             res.redirect('/adminInventory/' + currentCategory);
 
         } catch {
-            res.sendStatus(400);
+            res.sendStatus(500);
         }
     },
 	//searchInventory
@@ -160,7 +160,8 @@ const inventoryController = {
 
         console.log("Searching for " + query);
 
-        const resp = await Product.find({ name: new RegExp('.*' + query + '.*', 'i') }, { __v: 0 }).lean();
+        //const resp = await Product.find({ name: new RegExp('.*' + query + '.*', 'i') }, { __v: 0 }).lean();
+        const resp = await Product.find({ name: new RegExp('.*' + query + '.*', 'i') }, { __v: 0 });
         
         for (let i = 0; i < resp.length; i++) {
             product_list.push({
@@ -183,7 +184,7 @@ const inventoryController = {
     }
 }
 //Helper functions
-async function getProductsAdmin(category, req) {
+export async function getProductsAdmin(category, req) {
     try{
 		var product_list = [];
 		let resp;

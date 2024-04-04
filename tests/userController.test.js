@@ -144,85 +144,85 @@ describe('User Controller', () => {
 
   });
   
-  //getUserPurchases
-  // describe('getUserPurchases', () => {
-  //   let req;
-  //   let res;
+  getUserPurchases
+  describe('getUserPurchases', () => {
+    let req;
+    let res;
 
-  //   beforeEach(() => {
-  //       req = { 
-  //           session: { 
-  //               userID: 'mockUserID', 
-  //               pageIndex: null // Initial page index
-  //           }, 
-  //           params: { 
-  //               status: 'allOrders' // Initial category
-  //           },
-  //           query: {} // No query initially
-  //       };
-  //       res = { 
-  //           render: jest.fn(),
-  //           sendStatus: jest.fn()
-  //       };
-  //       jest.clearAllMocks();
-  //   });
+    beforeEach(() => {
+        req = { 
+            session: { 
+                userID: 'mockUserID', 
+                pageIndex: null // Initial page index
+            }, 
+            params: { 
+                status: 'allOrders' // Initial category
+            },
+            query: {} // No query initially
+        };
+        res = { 
+            render: jest.fn(),
+            sendStatus: jest.fn()
+        };
+        jest.clearAllMocks();
+    });
 
-  //   it('should render user purchases for all orders with default sorting', async () => {
-  //       const mockOrders = [
-  //           {
-  //               _id: 'mockOrderID1',
-  //               firstName: 'Test',
-  //               lastName: 'User',
-  //               email: 'test.user@example.com',
-  //               date: new Date(),
-  //               status: 'succeeded',
-  //               amount: 100,
-  //               items: ['Hammer'], // Mock items
-  //               paymongoID: 'mockPaymongoID1',
-  //               isCancelled: false
-  //           },
-  //           {
-  //               _id: 'mockOrderID2',
-  //               firstName: 'TestTwo',
-  //               lastName: 'User',
-  //               email: 'testtwo.user@example.com',
-  //               date: new Date(),
-  //               status: 'delivered',
-  //               amount: 150,
-  //               items: ['Gloves'], // Mock items
-  //               paymongoID: 'mockPaymongoID2',
-  //               isCancelled: false
-  //           }
-  //       ];
+    it('should render user purchases for all orders with default sorting', async () => {
+        const mockOrders = [
+            {
+                _id: 'mockOrderID1',
+                firstName: 'Test',
+                lastName: 'User',
+                email: 'test.user@example.com',
+                date: new Date(),
+                status: 'succeeded',
+                amount: 100,
+                items: ['Hammer'], // Mock items
+                paymongoID: 'mockPaymongoID1',
+                isCancelled: false
+            },
+            {
+                _id: 'mockOrderID2',
+                firstName: 'TestTwo',
+                lastName: 'User',
+                email: 'testtwo.user@example.com',
+                date: new Date(),
+                status: 'delivered',
+                amount: 150,
+                items: ['Gloves'], // Mock items
+                paymongoID: 'mockPaymongoID2',
+                isCancelled: false
+            }
+        ];
 
-  //       // Mock the behavior of Order.find
-  //       jest.spyOn(Order, 'find').mockResolvedValueOnce(mockOrders);
+        // Mock the behavior of Order.find
+        jest.spyOn(Order, 'find').mockResolvedValueOnce(mockOrders);
 
-  //       // Call the function
-  //       await userController.getUserPurchases(req, res);
+        // Call the function
+        await userController.getUserPurchases(req, res);
 
-  //       // Check if render is called with the correct parameters
-  //       expect(res.render).toHaveBeenCalledWith('userpurchases', {
-  //           layout: 'userOrders',
-  //           script: '/./js/userPurchases.js',
-  //           orders: ["Hammer", "Gloves"],
-  //           category: 'allOrders',
-  //           nextPage: true,
-  //           prevPage: false
-  //       });
-  //   });
+        // Check if render is called with the correct parameters
+        expect(res.render).toHaveBeenCalledWith('userpurchases', {
+            layout: 'userOrders',
+            script: '/./js/userPurchases.js',
+            orders: ["Hammer", "Gloves"],
+            category: 'allOrders',
+            nextPage: true,
+            prevPage: false
+        });
+    });
 
-  //   it('should handle errors and send status 400', async () => {
-  //       // Mock the behavior of Order.find to throw an error
-  //       jest.spyOn(Order, 'find').mockRejectedValueOnce(new Error('Mock Error'));
+    it('should handle errors and send status 400', async () => {
+        // Mock the behavior of Order.find to throw an error
+        jest.spyOn(Order, 'find').mockRejectedValueOnce(new Error('Mock Error'));
 
-  //       // Call the function
-  //       await userController.getUserPurchases(req, res);
+        // Call the function
+        await userController.getUserPurchases(req, res);
 
-  //       // Check if sendStatus is called with 400
-  //       expect(res.sendStatus).toHaveBeenCalledWith(400);
-  //   });
-  // });
+        // Check if sendStatus is called with 400
+        expect(res.sendStatus).toHaveBeenCalledWith(400);
+    });
+  });
 
   // searchUserPurchases
   // describe('searchUserPurchases', () => {

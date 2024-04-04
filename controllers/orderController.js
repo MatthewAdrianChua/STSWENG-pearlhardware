@@ -4,6 +4,7 @@ import database from '../model/db.js';
 import { User } from '../model/userSchema.js';
 import { Order } from '../model/orderSchema.js';
 import { ObjectId } from 'mongodb';
+import mongoose from 'mongoose';
 import { Product } from '../model/productSchema.js';
 
 let currentCategory = "allproducts";
@@ -42,6 +43,26 @@ const orderController = {
             res.sendStatus(400);
         }
     },
+	
+	//gets a product ID and uses session userID to check if the user has bought the product
+	checkUserHasProduct: async function(req,res){
+		let {id} = req.body;
+		const productID = new mongoose.Types.ObjectId(id);
+		try{
+			let orders = await Order.find(
+				{ userID: req.session.userID, items: { $elemMatch: { ID: productID} } },
+				{ _id : 0}
+			);
+			if(orders.length > 0){
+				res.sendStatus(200);
+			}
+			else{
+				res.sendStatus(404);
+			}
+		}catch(e){
+			res.sendStatus(500);
+		}
+	},
 	//searchOrders
 	//specialized search and sort for admin
 	searchOrders: async function (req, res) {

@@ -52,30 +52,30 @@
 		background-color: white;
 		height: 5vh;
 
-		font-size: 2vh;
+		font-size: 1.5vh;
 		color: #666666;
 	}
 
 	.review-header {
 		background-color: white;
-		min-height: 10vh;
-		max-height: 20vh;
+		min-height: 5vh;
+		max-height: 10vh;
 
 		display: flex;
 		align-items: center;
 
-		font-size: 4vh;
+		font-size: 2vh;
 		font-weight: 700;
 	}
 
 	.review-content {
 		background-color: white;
-		min-height: 7vh;
-		max-height: 50vh;
+		min-height: 4vh;
+		max-height: 30vh;
 
 		overflow: hidden;
 
-		font-size: 2.5vh;
+		font-size: 2vh;
 	}
 
 	.review-footer {
@@ -150,8 +150,8 @@
 					(Last edited on: {{user_review.dateUpdated}})
 					{{/if}}
 				</div>
-				<div class="review-user">
-					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;by: {{user_review.authorName}} (Your review)
+				<div class="review-user" style="font-size:0.5vh">
+					by: {{user_review.authorName}} (Your review)
 				</div>
 				
 				<div class="review-footer">
@@ -194,7 +194,7 @@
 				<div class="review-user">
 					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;by: {{this.authorName}}
 				</div>
-				
+				<hr>
 				<div class="review-footer">
 					{{!-- 
 						<LIKE BUTTON>

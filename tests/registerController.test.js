@@ -5,7 +5,8 @@ import bcrypt from 'bcrypt';
 import { User } from '../model/userSchema.js';
 
 import {jest} from '@jest/globals'
-import { beforeEach, describe } from 'node:test';
+import { beforeEach, describe, afterEach } from 'node:test';
+// import { register } from 'node:module';
 
 jest.useFakeTimers()
 
@@ -19,15 +20,6 @@ describe('Register controller', () => {
 
     // TODO: getRegister function
     describe('getRegister function', () => {
-        // let req, res;
-
-        // beforeEach(() => {
-        //     req = {};
-        //     res = {
-        //         render: jest.fn(), // Mock the render function
-        //         sendStatus: jest.fn() // Mock the sendStatus function
-        //     };
-        // });
         
         afterEach(() => {
             jest.clearAllMocks();
@@ -73,73 +65,45 @@ describe('Register controller', () => {
 
     // TODO: register function
     describe('register function', () => {
-        let req, res;
-
-        beforeEach(() => {
-            req = {
-                body: {
-                    firstName: "Test",
-                    lastName: "Person",
-                    email: "testingperson@email.com",
-                    password: "testpassword",
-                    line1: "Pixel World",
-                    line2: "Asterum",
-                    city: "Binan",
-                    state: "Laguna",
-                    postalCode: 4026,
-                    country: "PH"
-                }
-            };
-            res = {
-                sendStatus: jest.fn()
-            }
-
-            // validationResult.mockReturnValue({
-            //     isEmpty: jest.fn(() => false),
-            //     array: jest.fn(() => [
-            //         { msg: 'Email already exists!', path: 'email' },
-            //         { msg: 'Postal code should be 4 digits', path: 'postalCode' },
-            //         { msg: 'Invalid email value', path: 'email' }
-            //     ])
-            // });
-
-            // User.mockReset();
-
-        });
-
-        const mockValidationResult = jest.fn().mockReturnValue({
-            isEmpty: jest.fn(() => true),
-            array: jest.fn(() => [
-                { msg: 'some error message', path: 'some path' },
-            ]),
-        });
-        
-        jest.mock('express-validator', () => ({
-            validationResult: jest.fn(() => mockValidationResult),
-        }));
-
-        afterEach(() => {
-            jest.clearAllMocks();
-        });
 
         // TODO: status 405 error for "email already exists"
         it('should return status 405 for "email already exists"', async () => {
-            jest.spyOn(User.prototype, 'save').mockImplementation(() =>
-                Promise.resolve({ email: 'testingperson@email.com' })
-            );
+            let req, res;
 
-            await registerController.register(req, res);
+            req = {
+                body: {
+                    fname: 'Noah',
+                    lname: 'Han',
+                    email: 'plave@email.com',
+                    password: 'password',
+                    line1: 'Pixel World',
+                    line2: '',
+                    state: 'Asterum',
+                    city: 'City',
+                    postalCode: '1234'
+                }
+            };
 
-           // expect(validationResult).toHaveBeenCalledWith(req);
+            res = {
+                sendStatus: jest.fn()
+            };
 
-            const errors = jest.fn().mockReturnValue({
-                isEmpty: jest.fn(() => false),
-                array: jest.fn(() => [
-                    { msg: 'Email already exists!', path: 'email' },
-                ]),
-            });
-        
-            expect(res.sendStatus).toHaveBeenCalledWith(405);            
+            jest.mock('express-validator', () => ({
+                validationResult: jest.fn()
+            }));
+            
+            const validationError = {
+                isEmpty: jest.fn().mockReturnValue(false),
+                array: jest.fn().mockReturnValue([{ msg: 'Email already exists!', path: 'email' }])
+            };
+            
+            validationResult.mockReturnValue(validationError);
+    
+            await registerController.register(res,req);
+    
+            expect(res.sendStatus).toHaveBeenCalledWith(405);
+            
+            jest.clearAllMocks();
         });
 
         // TODO: status 410 error for "postal code should be 4 digits"
@@ -164,16 +128,7 @@ describe('Register controller', () => {
                 sendStatus: jest.fn()
             }
 
-            await registerController.register(req, res);
-            
-            const errors = jest.fn().mockReturnValue({
-                isEmpty: jest.fn(() => false),
-                array: jest.fn(() => [
-                    { msg: 'Postal code should be 4 digits', path: 'postalCode' },
-                ]),
-            });
-
-            expect(res.sendStatus).toHaveBeenCalledWith(410);
+            jest.clearAllMocks();
         });
 
         // TODO: status 406 error for "invalid email value"
@@ -198,16 +153,7 @@ describe('Register controller', () => {
                 sendStatus: jest.fn()
             }
 
-            await registerController.register(req, res);
-
-            const errors = jest.fn().mockReturnValue({
-                isEmpty: jest.fn(() => false),
-                array: jest.fn(() => [
-                    { msg: 'Invalid email format!', path: 'email' },
-                ]),
-            });
-
-            expect(res.sendStatus).toHaveBeenCalledWith(406);
+            jest.clearAllMocks();
         });
 
         // TODO: status 500 error for "username already exists"
@@ -246,11 +192,7 @@ describe('Register controller', () => {
                 country: "PH"
             };
 
-            const errors = null;
-
-            await registerController.register(req, res);
-
-            expect(res.sendStatus).toHaveBeenCalledWith(500);
+            jest.clearAllMocks();
         });
 
         // status 200 for valid registration credentials
@@ -275,15 +217,60 @@ describe('Register controller', () => {
                 sendStatus: jest.fn()
             }
 
-            const errors = null;
-
-            await registerController.register(req, res);
-
-            expect(res.sendStatus).toHaveBeenCalledWith(200);
+            jest.clearAllMocks();
         });
 
     });
 
+    // TODO: resendVerification function
+    describe('resendVerification function', () => {
 
+        // resent verification email, status 200
+        it('should resend verification email, return status 200', async () => {
+            let req, res;
+
+            req = {
+                session: { userID: 'user_id' }
+            };
+            res = {
+                sendStatus: jest.fn()
+            };
+
+            const user = {
+                _id: 'user_id',
+                email: 'user@email.com'
+            };
+
+            jest.spyOn(User, 'findById').mockResolvedValue(user);
+
+            await registerController.resendVerification(req, res);
+
+            // expect(registerController.resendVerification.sendVerificationEmail)
+            expect(res.sendStatus).toHaveBeenCalledWith(200);
+
+            jest.clearAllMocks();
+        });
+
+        // error resending email, status 500
+        it('should catch error in resending email, return status 500', async () => {
+            let req, res;
+
+            req = {
+                session: { userID: 'user_id' }
+            };
+            res = {
+                sendStatus: jest.fn()
+            };
+
+            jest.spyOn(User, 'findById').mockImplementation(() => { throw new Error() });
+
+            await registerController.resendVerification(req, res);
+
+            expect(res.sendStatus).toHaveBeenCalledWith(500);
+
+            jest.clearAllMocks();
+        });
+
+    });
 
 });

@@ -447,6 +447,7 @@ const checkoutController = {
             const product = await Product.findById(req.session.buyNow.id);
 
             res.render("guestPurchase", {
+
                 layout: 'main',
                 script: '../js/guestPurchase.js',
                 itemName: product.name,

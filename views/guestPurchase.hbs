@@ -1,34 +1,91 @@
+
+<style>
+    .input-container {
+        width: 40vw;
+        font-family: Inika, sans-serif;
+        font-size: 1em;
+
+        & label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            text-align: right;
+        }
+
+        & input {
+            width: 25vw;
+            border: 1.5px solid black;
+            border-radius: 22px;
+            margin-left: 1vw;
+            margin-right: 12%;
+            padding: 1vh 1vw;
+        }
+    }
+
+    #regemail {
+        margin-bottom: 3vh;
+    }
+</style>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <body class="flex flex-col bg-white">
-<div class="bg-white p-6 rounded-lg shadow-md max-w-7xl mx-auto my-8">
-    <div class="flex flex-col justify-center items-center h-full lg:w-1/2 p-4 mx-auto">
+
+<div class="bg-white p-6 rounded-lg shadow-md w-[60vw] mx-auto my-8">
+    <div class="flex flex-col justify-center mx-5 items-center w-[50vw] p-4 mx-auto border border-1">
         
             <div class="input-container">
+                <label>First Name: 
                     <input type="text" id ="regfname" placeholder="First name*">
+                </label>
+                
+                <br>
+                <label>Last Name: 
                     <input type="text" id ="reglname" placeholder="Last name*">
+                </label>
+                
+                <br>
+                <label>Email: 
                     <input type="text" id ="regemail" placeholder="Email*">
-                </div>
-            
-                <div class="input-container">
+                </label>
+                
+            </div>
+        
+            <div class="input-container">
+                <label>Address Line 1: 
                     <input type="text" id= "regline1" placeholder="Address line 1*">
+                </label>
+                <br>
+                <label>Address Line 2: 
                     <input type="text" id= "regline2" placeholder="Address line 2">
+                </label>
+                <br>
+                <label>City: 
                     <input type="text" id= "regcity" placeholder="City*">
+                </label>
+                <br>
+                <label>State: 
                     <input type="text" id= "regstate" placeholder="State*">
+                </label>
+                <br>
+                <label>Postal Code: 
                     <input type="text" id= "regpostalcode" placeholder="Postal Code* (Maximum 4 digits)">
-                </div>
-                <div id="errors"></div>
+                </label>
+            </div>
+            <div id="errors"></div>
 
-            <!-- Submit Button -->
-            <button type="submit" id="submit" class="bg-white text-black py-2 px-4 rounded hover:bg-blue-800">Submit</button>
+        <!-- Submit Button -->
+        <button type="submit" id="submit" class="bg-white text-black py-2 px-4 rounded hover:bg-blue-800">Submit</button>
         
     </div>
                         
-    <div class="flex flex-wrap justify-between mb-6">
+    <div class="flex flex-wrap justify-between mb-6 px-[2vw] border border-1 border-t-0">
        
-        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:border-r md:border-blue-200 px-4">
-            <div class="border-b border-blue-500 pb-2 mb-4">
+        <div class="w-full md:w-1/3 mb-4 md:mb-0 md:border-r md:border-blue-200 px-4 pt-3">
+            <div class="border-b border-blue-500 mb-4">
+
                 <h2 class="text-2xl font-bold text-blue-800">Item Information</h2>
             </div>
             <div class="grid grid-cols-2 gap-6 text-blue-900 mb-6">
@@ -47,7 +104,9 @@
         </div>
 
         
-        <div class="w-full md:w-1/3 pl-4">
+
+        <div class="w-full md:w-1/3 px-4">
+
             <div class="border-b border-blue-500 pb-2 mb-4">
                 <h2 class="text-2xl font-bold text-blue-800">Total</h2>
             </div>
@@ -59,26 +118,8 @@
         </div>
     </div>
 
-                    
-                    {{#if statusIsDenied}}
-                        <div class="text-2xl font-medium text-white">Reason of denial: {{reasonOfDenial}}</div>
-                    {{/if}}
-                    <div class="text-2xl font-medium text-white">Reason of return: {{reasonOfReturn}}</div>
-                    <div class="text-2xl font-medium text-white">Comments: {{comments}}</div>
-                    <!-- Display Evidence of refund (photo) -->
-                    {{#if evidencePhotos}}
-                        <div>
-                            <h3 class="text-lg font-semibold mb-2">Evidence of Refund</h3>
-                            {{#each evidencePhotos}}
-                                <img src="{{this}}" alt="Evidence Photo" class="rounded shadow-lg mb-2">
-                            {{/each}}
-                        </div>
-                    {{/if}}
-                
-            
-        
-    
-    {{> footer}}
+    {{!-- {{> footer}} --}}
+
 </body>
 </html>
 

@@ -179,7 +179,7 @@ describe('Refund Controller', () => {
                 status: 'For review',
                 reason: 'Test reason',
                 comments: 'Test comments',
-                evidence: ['http://localhost:3000/refundImage/imageID1', 'http://localhost:3000/refundImage/imageID2'],
+                evidence: ['https://pearl-hardware-ph.onrender.com/refundImage/imageID1', 'https://pearl-hardware-ph.onrender.com/refundImage/imageID2'],
                 paymentID: 'paymentID',
                 denialReason: ''
             });
@@ -543,7 +543,7 @@ describe('Refund Controller', () => {
                 status: 'For review',
                 reason: 'Test reason',
                 comments: 'Test comments',
-                evidence: ['http://localhost:3000/refundImage/imageID1', 'http://localhost:3000/refundImage/imageID2'],
+                evidence: ['https://pearl-hardware-ph.onrender.com/refundImage/imageID1', 'https://pearl-hardware-ph.onrender.com/refundImage/imageID2'],
                 paymentID: 'paymentID',
                 denialReason: ''
             });

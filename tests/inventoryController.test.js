@@ -193,7 +193,7 @@ describe('inventory controller', () => {
                 type: 'Updated Product Type',
                 quantity: 50,
                 price: 99.99,
-                productpic: 'http://localhost:3000/image/image_id',
+                productpic: 'https://pearl-hardware-ph.onrender.com/image/image_id',
                 description: 'Updated product description'
             });
             expect(res.redirect).toHaveBeenCalledWith('/adminInventory/allproducts');

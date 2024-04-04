@@ -133,26 +133,26 @@
 					 --}}
 					 {{user_review.rating}} stars 
 				</div>
-				<div class="review-date">
-					Reviewed on {{user_review.dateCreated}} 
-					{{#if user_review.dateUpdated}}
-					(Last edited on: {{user_review.dateUpdated}})
-					{{/if}}
-				</div>
-				<div class="review-user">
-					by: {{user_review.authorName}} (Your review)
-				</div>
 				{{#if user_review.header}}
 					<div class="review-header" id="userReviewHeader">
-						{{user_review.header}}
+						&nbsp;&nbsp;&nbsp;&nbsp;{{user_review.header}}
 					</div>
 				{{/if}}
 				
 				{{#if user_review.body}}
 					<div class="review-content" id="userReviewContent">
-						{{user_review.body}}
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{user_review.body}}
 					</div>
 				{{/if}}
+				<div class="review-date">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reviewed on {{user_review.dateCreated}} 
+					{{#if user_review.dateUpdated}}
+					(Last edited on: {{user_review.dateUpdated}})
+					{{/if}}
+				</div>
+				<div class="review-user">
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;by: {{user_review.authorName}} (Your review)
+				</div>
 				
 				<div class="review-footer">
 					<button class="userButton" id="editBtn"> Edit review </button>
@@ -174,26 +174,26 @@
 					 --}}
 					 {{this.rating}} stars 
 				</div>
-				<div class="review-date">
-					Reviewed on {{this.dateCreated}}
+				{{#if this.header}}
+					<div class="review-header" style="font-size:1.5vw">
+					&nbsp;&nbsp;&nbsp;&nbsp;{{this.header}}
+					</div>
+				{{/if}}
+				
+				{{#if this.body}}
+					<div class="review-content" style="font-size:1vw">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{this.body}}
+					</div>
+				{{/if}}
+				<div class="review-date" >
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Reviewed on {{this.dateCreated}}
 					{{#if this.dateUpdated}}
 					(Last edited on: {{this.dateUpdated}})
 					{{/if}}
 				</div>
 				<div class="review-user">
-					by: {{this.authorName}}
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;by: {{this.authorName}}
 				</div>
-				{{#if this.header}}
-					<div class="review-header">
-						{{this.header}}
-					</div>
-				{{/if}}
-				
-				{{#if this.body}}
-					<div class="review-content">
-						{{this.body}}
-					</div>
-				{{/if}}
 				
 				<div class="review-footer">
 					{{!-- 

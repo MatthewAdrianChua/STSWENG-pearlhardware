@@ -133,7 +133,7 @@ const refundController = {
             const images = [];
 
             for(let x = 0; x < refund.evidence.length; x++){
-                images.push('http://localhost:3000/refundImage/' + refund.evidence[x]);
+                images.push('https://pearl-hardware-ph.onrender.com/refundImage/' + refund.evidence[x]);
             }
 
             console.log(order.paymentID)
@@ -374,7 +374,7 @@ const refundController = {
             const images = [];
 
             for(let x = 0; x < refund.evidence.length; x++){
-                images.push('http://localhost:3000/refundImage/' + refund.evidence[x]);
+                images.push('https://pearl-hardware-ph.onrender.com/refundImage/' + refund.evidence[x]);
             }
 
             console.log(order.paymentID)

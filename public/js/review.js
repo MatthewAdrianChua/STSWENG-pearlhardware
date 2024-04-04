@@ -12,9 +12,37 @@ let editButton = doc.querySelector("#editBtn");
 let errText = doc.querySelector("#errText");
 let anonCheck = doc.querySelector("#anonCheck");
 
-//hide review button if not logged in
-if(!doc.querySelector("form[action='/logout']")){
-	addButton.style.display="none";
+
+addButton.style.display="none";
+//check if user is logged in, then check if they have bought the product
+if(doc.querySelector("form[action='/logout']")){
+	checkUserHasBought();
+}
+
+//check if user has bought the product
+async function checkUserHasBought(){
+	console.log("Checking if bought!");
+	let id = doc.querySelector('#p_id').value;
+	const resp = await fetch('/userHasBoughtProduct', {
+		method: "POST",
+		body: JSON.stringify({id}),
+		headers:{
+			"Content-Type": "application/json"
+		}
+	});
+	if (resp.status == 200){
+		console.log("BOUGHT!");
+		addButton.style.display="block";
+		return true;
+	}
+	else if (resp.status == 404){
+		console.log("NOT BOUGHT");
+		return false;
+	}
+	else{
+		console.log("Severe error checking if user has bought product");
+		return false;
+	}
 }
 
 //Attach eventlistener to remove the error text in rating

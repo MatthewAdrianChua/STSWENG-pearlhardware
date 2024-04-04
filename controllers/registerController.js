@@ -115,7 +115,7 @@ const registerController = {
 
 const sendVerificationEmail = async ({_id, email}, res) => {
 	//url to be used in email
-	const currentUrl = "http://localhost:3000/"
+	const currentUrl = "https://pearl-hardware-ph.onrender.com/"
 	const uniqueString = uuidv4() + _id;
 	let url = currentUrl + "verify?t=" + _id + "&s="+ uniqueString;
 	const mailOptions = {
